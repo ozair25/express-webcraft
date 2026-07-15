@@ -27,8 +27,8 @@ const alex = Alex_Brush({
 });
 
 export const metadata: Metadata = {
-  title: 'Express Webcraft — Bespoke Web Design & High-Performance Engineering Studio',
-  description: 'Express Webcraft is a premium web agency providing bespoke Custom Website Design, Web Development, High-Converting Landing Pages, E-commerce Solutions, SEO & Performance, UI/UX Design, Website Maintenance, and Analytics & Growth.',
+  title: 'Express Webcraft — Customised Web Design & High-Performance Engineering Studio',
+  description: 'Express Webcraft is a premium web agency providing Custom Website Design, Web Development, High-Converting Landing Pages, E-commerce Solutions, SEO & Performance, UI/UX Design, Website Maintenance, and Analytics & Growth.',
   keywords: [
     'custom website design',
     'premium web development',
