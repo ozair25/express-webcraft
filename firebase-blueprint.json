@@ -1,0 +1,73 @@
+{
+  "entities": {
+    "enquiry": {
+      "title": "Enquiry",
+      "description": "User business and service request enquiries",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100,
+          "description": "The name of the sender"
+        },
+        "company": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "The company name of the sender"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Sender's email address"
+        },
+        "phone": {
+          "type": "string",
+          "maxLength": 20,
+          "description": "Sender's contact number"
+        },
+        "service": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Selected service of interest"
+        },
+        "budget": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "The budget tier or range"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 5000,
+          "description": "The message body describing their request"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO timestamp when the enquiry was submitted"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["New", "Contacted", "Closed"],
+          "description": "Status of the enquiry in the pipeline"
+        },
+        "ip": {
+          "type": "string",
+          "description": "Submitter's IP address"
+        },
+        "userAgent": {
+          "type": "string",
+          "description": "Submitter's browser User Agent"
+        }
+      },
+      "required": ["name", "email", "message", "service", "budget", "createdAt", "status"]
+    }
+  },
+  "firestore": {
+    "/enquiries/{enquiryId}": {
+      "schema": "enquiry",
+      "description": "Submissions made through the contact/enquiry form"
+    }
+  }
+}

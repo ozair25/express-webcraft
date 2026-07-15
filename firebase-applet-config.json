@@ -1,0 +1,11 @@
+{
+  "projectId": "express-webcraft-prod",
+  "appId": "1:37470881640:web:b6043ba62684f8286fb8dd",
+  "apiKey": "AIzaSyBX3rkJmwbAupFYyRPfj8d3ZKvZ_qZqKjg",
+  "authDomain": "express-webcraft-prod.firebaseapp.com",
+  "storageBucket": "express-webcraft-prod.firebasestorage.app",
+  "messagingSenderId": "37470881640",
+  "measurementId": "G-F4FNMRRP2C",
+  "oAuthClientId": "",
+  "recaptchaSiteKey": ""
+}

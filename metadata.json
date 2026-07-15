@@ -1,0 +1,6 @@
+{
+  "name": "Express Webcraft",
+  "description": "An elegant, premium organic-aesthetic digital studio landing page and interactive showcase featuring Gemini-powered copy and design crafting.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
