@@ -27,8 +27,8 @@ const alex = Alex_Brush({
 });
 
 export const metadata: Metadata = {
-  title: 'Express Webcraft — Customised Web Design & High-Performance Engineering Studio',
-  description: 'Express Webcraft is a premium web agency providing Custom Website Design, Web Development, High-Converting Landing Pages, E-commerce Solutions, SEO & Performance, UI/UX Design, Website Maintenance, and Analytics & Growth.',
+  title: 'Express Webcraft — Bespoke Web Design & High-Performance Engineering Studio',
+  description: 'Express Webcraft is a premium web agency providing bespoke Custom Website Design, Web Development, High-Converting Landing Pages, E-commerce Solutions, SEO & Performance, UI/UX Design, Website Maintenance, and Analytics & Growth.',
   keywords: [
     'custom website design',
     'premium web development',
@@ -42,14 +42,14 @@ export const metadata: Metadata = {
     'express webcraft services',
     'luxury creative agency'
   ],
-  metadataBase: new URL('https://expresswebcraft.com'),
+  metadataBase: new URL('https://www.expresswebcraft.com'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: 'Express Webcraft — Bespoke Web Design & High-Performance Engineering Studio',
     description: 'Explore our elite digital services: bespoke Website Design, scalable Web Development, conversion-optimized Landing Pages, E-commerce, Technical SEO, UI/UX design, Maintenance, and Analytics.',
-    url: 'https://expresswebcraft.com',
+    url: 'https://www.expresswebcraft.com',
     siteName: 'Express Webcraft',
     locale: 'en_US',
     type: 'website',

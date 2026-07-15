@@ -83,75 +83,63 @@ export async function POST(req: NextRequest) {
     const docRef = await addDoc(collection(db, "enquiries"), enquiryData);
 
     // 7. Send Email Notification via Resend API
-    const resendApiKey = process.env.RESEND_API_KEY;
-    if (resendApiKey) {
-      try {
-        const emailResponse = await fetch("https://api.resend.com/emails", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${resendApiKey}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            from: "Express Webcraft <onboarding@resend.dev>",
-            to: "sayedozair25@gmail.com",
-            subject: `New Enquiry from ${cleanName} - Express Webcraft`,
-            html: `
-              <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 5px;">
-                <h2 style="color: #c9a227; text-transform: uppercase; border-bottom: 2px solid #c9a227; padding-bottom: 10px;">New Website Enquiry</h2>
-                <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-                  <tr>
-                    <td style="padding: 8px 0; font-weight: bold; width: 150px; color: #555;">Name:</td>
-                    <td style="padding: 8px 0; color: #111;">${cleanName}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 8px 0; font-weight: bold; color: #555;">Company:</td>
-                    <td style="padding: 8px 0; color: #111;">${cleanCompany || "Not Specified"}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 8px 0; font-weight: bold; color: #555;">Email:</td>
-                    <td style="padding: 8px 0; color: #111;"><a href="mailto:${cleanEmail}" style="color: #c9a227; text-decoration: none;">${cleanEmail}</a></td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 8px 0; font-weight: bold; color: #555;">Phone:</td>
-                    <td style="padding: 8px 0; color: #111;">${cleanPhone || "Not Specified"}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 8px 0; font-weight: bold; color: #555;">Selected Service:</td>
-                    <td style="padding: 8px 0; color: #111;">${cleanService}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 8px 0; font-weight: bold; color: #555;">Budget Range:</td>
-                    <td style="padding: 8px 0; color: #111;">${cleanBudget}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 8px 0; font-weight: bold; color: #555; vertical-align: top;">Message:</td>
-                    <td style="padding: 8px 0; color: #111; line-height: 1.5; background: #f9f9f9; padding: 10px; border-radius: 4px;">${cleanMessage.replace(/\n/g, "<br>")}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 8px 0; font-weight: bold; color: #555;">Submission Time:</td>
-                    <td style="padding: 8px 0; color: #111;">${new Date().toLocaleString("en-US", { timeZone: "UTC" })} UTC</td>
-                  </tr>
-                </table>
-                <div style="margin-top: 30px; font-size: 11px; color: #888; text-align: center; border-top: 1px solid #eee; padding-top: 15px;">
-                  Sent from IP ${ip} using ${userAgent.substring(0, 50)}...
-                </div>
-              </div>
-            `,
-          }),
-        });
+    try {
+      const { sendEmail } = await import("@/lib/services/resend");
+      const emailResponse = await sendEmail({
+        from: "Express Webcraft <onboarding@resend.dev>",
+        to: "sayedozair25@gmail.com",
+        subject: `New Enquiry from ${cleanName} - Express Webcraft`,
+        html: `
+          <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 5px;">
+            <h2 style="color: #c9a227; text-transform: uppercase; border-bottom: 2px solid #c9a227; padding-bottom: 10px;">New Website Enquiry</h2>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+              <tr>
+                <td style="padding: 8px 0; font-weight: bold; width: 150px; color: #555;">Name:</td>
+                <td style="padding: 8px 0; color: #111;">${cleanName}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0; font-weight: bold; color: #555;">Company:</td>
+                <td style="padding: 8px 0; color: #111;">${cleanCompany || "Not Specified"}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0; font-weight: bold; color: #555;">Email:</td>
+                <td style="padding: 8px 0; color: #111;"><a href="mailto:${cleanEmail}" style="color: #c9a227; text-decoration: none;">${cleanEmail}</a></td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0; font-weight: bold; color: #555;">Phone:</td>
+                <td style="padding: 8px 0; color: #111;">${cleanPhone || "Not Specified"}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0; font-weight: bold; color: #555;">Selected Service:</td>
+                <td style="padding: 8px 0; color: #111;">${cleanService}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0; font-weight: bold; color: #555;">Budget Range:</td>
+                <td style="padding: 8px 0; color: #111;">${cleanBudget}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0; font-weight: bold; color: #555; vertical-align: top;">Message:</td>
+                <td style="padding: 8px 0; color: #111; line-height: 1.5; background: #f9f9f9; padding: 10px; border-radius: 4px;">${cleanMessage.replace(/\n/g, "<br>")}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 0; font-weight: bold; color: #555;">Submission Time:</td>
+                <td style="padding: 8px 0; color: #111;">${new Date().toLocaleString("en-US", { timeZone: "UTC" })} UTC</td>
+              </tr>
+            </table>
+            <div style="margin-top: 30px; font-size: 11px; color: #888; text-align: center; border-top: 1px solid #eee; padding-top: 15px;">
+              Sent from IP ${ip} using ${userAgent.substring(0, 50)}...
+            </div>
+          </div>
+        `,
+      });
 
-        if (!emailResponse.ok) {
-          const errText = await emailResponse.text();
-          console.error("Resend API failed:", errText);
-        } else {
-          console.log("Email notification sent successfully.");
-        }
-      } catch (emailErr) {
-        console.error("Error sending email via Resend:", emailErr);
+      if (emailResponse.error) {
+        console.error("Resend SDK reported an error:", emailResponse.error);
+      } else {
+        console.log("Email notification sent successfully via Resend SDK:", emailResponse.data?.id);
       }
-    } else {
-      console.warn("RESEND_API_KEY environment variable is missing. Email notification skipped.");
+    } catch (emailErr) {
+      console.warn("Could not send email via Resend SDK (might be due to missing RESEND_API_KEY):", emailErr);
     }
 
     return NextResponse.json({

@@ -227,7 +227,7 @@ export default function Home() {
   // Navigation Items defined dynamically
   const navItems = [
     { label: "Home", href: "#home" },
-    { label: "Our Motto", href: "#atelier" },
+    { label: "Our Services", href: "#atelier" },
     { label: "Portfolio", href: "#portfolio" },
     { label: "Why Us", href: "#process" },
     { label: "Contact Us", href: "#contact" }
@@ -366,9 +366,11 @@ export default function Home() {
       errors.phone = "Please enter a valid phone number format.";
     }
 
-    // Validate vision outline (Now Optional)
-    if (contactVision.trim() && contactVision.trim().length < 10) {
-      errors.vision = "If provided, vision outline must be at least 10 characters long.";
+    // Validate vision outline (Now Required)
+    if (!contactVision.trim()) {
+      errors.vision = "Please enter your vision outline.";
+    } else if (contactVision.trim().length < 10) {
+      errors.vision = "Vision outline must be at least 10 characters long.";
     }
 
     if (Object.keys(errors).length > 0) {
@@ -1073,7 +1075,7 @@ export default function Home() {
                 </a>
                 <a
                   href="#atelier"
-                  onClick={() => setActiveNav("Our Motto")}
+                  onClick={() => setActiveNav("Our Services")}
                   className="px-6 py-4 border-2 border-brand-charcoal hover:border-brand-red text-brand-charcoal hover:text-brand-red text-xs font-bold uppercase tracking-widest transition-all hover:bg-brand-red/5"
                 >
                   Our Services ↗
@@ -1268,7 +1270,7 @@ export default function Home() {
             
             <div className="flex flex-col items-start space-y-2">
               <span className="font-sans text-[11px] font-black tracking-[0.3em] text-brand-clay uppercase block drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
-                OUR MOTTO
+                OUR SERVICES
               </span>
               <div className="h-[2px] bg-brand-gold w-12" />
             </div>
@@ -2178,11 +2180,12 @@ export default function Home() {
 
                   <div className="flex flex-col space-y-1">
                     <label htmlFor="c_v_no_autofill" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
-                      Vision Outline <span className="text-brand-cream/35">(Optional)</span>
+                      Vision Outline <span className="text-brand-gold">*</span>
                     </label>
                     <textarea
                       id="c_v_no_autofill"
                       rows={3}
+                      required
                       value={contactVision}
                       onChange={(e) => setContactVision(e.target.value)}
                       placeholder=""
@@ -2330,7 +2333,7 @@ export default function Home() {
             <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-brand-cream/40">
               <span className="text-[9px] text-brand-gold/60 uppercase">Useful Links:</span>
               <a href="#home" className="hover:text-brand-cream transition-colors uppercase">Home</a>
-              <a href="#atelier" className="hover:text-brand-cream transition-colors uppercase">Our Motto</a>
+              <a href="#atelier" className="hover:text-brand-cream transition-colors uppercase">Our Services</a>
               <a href="#portfolio" className="hover:text-brand-cream transition-colors uppercase">Portfolio</a>
               <a href="#process" className="hover:text-brand-cream transition-colors uppercase">Why Us</a>
               <a href="#contact" className="hover:text-brand-cream transition-colors uppercase">Contact Us</a>

@@ -278,7 +278,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title,
       description,
-      url: `https://expresswebcraft.com/services/${slug}`,
+      url: `https://www.expresswebcraft.com/services/${slug}`,
       type: "website",
       siteName: "Express Webcraft",
       locale: "en_US",
@@ -324,25 +324,25 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    "@id": `https://expresswebcraft.com/services/${slug}/#breadcrumb`,
+    "@id": `https://www.expresswebcraft.com/services/${slug}/#breadcrumb`,
     "itemListElement": [
       {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://expresswebcraft.com"
+        "item": "https://www.expresswebcraft.com"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Services",
-        "item": "https://expresswebcraft.com/#services"
+        "item": "https://www.expresswebcraft.com/#services"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": service.title,
-        "item": `https://expresswebcraft.com/services/${slug}`
+        "item": `https://www.expresswebcraft.com/services/${slug}`
       }
     ]
   };
@@ -350,15 +350,15 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    "@id": `https://expresswebcraft.com/services/${slug}/#service`,
+    "@id": `https://www.expresswebcraft.com/services/${slug}/#service`,
     "name": service.title,
     "description": service.longDesc,
     "serviceType": service.title,
     "provider": {
       "@type": "ProfessionalService",
-      "@id": "https://expresswebcraft.com/#localbusiness",
+      "@id": "https://www.expresswebcraft.com/#localbusiness",
       "name": "Express Webcraft",
-      "url": "https://expresswebcraft.com"
+      "url": "https://www.expresswebcraft.com"
     },
     "areaServed": {
       "@type": "Country",
@@ -571,11 +571,11 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
               <h3 className="font-sans font-bold text-[11px] text-brand-charcoal uppercase tracking-wider">STUDIO LOCATION</h3>
               <p className="leading-relaxed">
                 EXPRESS WEBCRAFT CO.<br />
-                MP, 452001<br />
-                INDIA (GLOBAL COMMISSIONS)
+                MP, 452001 <br />
+                India (GLOBAL COMMISSIONS)
               </p>
-              <p>TEL: +91 7470857424</p>
-              <p>HOURS: MON - FRI, 09:00 - 18:00</p>
+              <p>TEL: +62 812 3456 7890</p>
+              <p>HOURS: MON - FRI, 09:00 - 18:00 </p>
             </div>
 
           </div>
