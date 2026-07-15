@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { Analytics } from "@/lib/analytics";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
@@ -42,8 +43,7 @@ import {
   ArrowRight,
   Zap,
   Shield,
-  Globe,
-  Check
+  Globe
 } from "lucide-react";
 
 // Curated luxury presets matching the premium vintage & modern editorial style of the reference
@@ -68,10 +68,10 @@ const BRAND_PRESETS: Record<string, any> = {
         img: "/friends.png"
       },
       {
-        id: "rallypizza",
-        title: "Rally Pizza",
-        category: "Bespoke Culinary & Pizzeria Platform",
-        img: "/rallypizzerialive.netlify.app_.jpg"
+        id: "shrikalyan",
+        title: "Shree Kalyan",
+        category: "Financial Heritage & Investment Redesign",
+        img: "https://res.cloudinary.com/dtrvyelcg/image/upload/v1784136246/screencapture-shree-kalyan-new-vercel-app-2026-07-15-20_45_51_p8h7cg.jpg"
       },
       {
         id: "agroshore",
@@ -182,70 +182,52 @@ const BRAND_PRESETS: Record<string, any> = {
   }
 };
 
-const launchPillars = [
+const TESTIMONIALS = [
   {
-    id: "01",
-    icon: "🎨",
-    title: "Experience & Design",
-    shortDesc: "Premium aesthetic meets fluid UX. Handcrafted interfaces that capture your brand's soul.",
-    items: [
-      { name: "Custom UI/UX Design", desc: "No generic templates. Bespoke layout architecture custom-built for your target customer." },
-      { name: "Mobile Optimization", desc: "Fluid, touch-optimized responsiveness across desktop, tablet, and mobile screens." },
-      { name: "WCAG Accessibility", desc: "Compliant contrast ratios, keyboard navigation, and semantic ARIA labeling." },
-      { name: "Unlimited Revisions", desc: "Collaborative design iteration until every pixel, margin, and typography alignment is perfect." },
-      { name: "Creative Art Direction", desc: "Sophisticated styling, custom vector ornaments, and premium high-contrast theme selection." }
-    ]
+    quote: "Express Webcraft designed a masterpiece for our boutique agency. The attention to typography, custom animations, and layout is unlike anything we've seen. Absolute elite standard.",
+    author: "Marcus Vance",
+    role: "Creative Director",
+    company: "Atelier Vance",
+    project: "Bespoke Portfolio Platform",
+    metric: "100% Custom Layout"
   },
   {
-    id: "02",
-    icon: "⚡",
-    title: "Performance & Code",
-    shortDesc: "Built on lightning-fast architectures. Absolute speed, maximum stability, and clean engineering.",
-    items: [
-      { name: "Lightning Fast Loads", desc: "Sub-second initial server response driven by progressive static generation." },
-      { name: "Core Web Vitals", desc: "Guaranteed 95+ PageSpeed optimizations to secure superior organic search rankings." },
-      { name: "Edge CDN Delivery", desc: "Global asset delivery networks to load pages instantly in any geographical region." },
-      { name: "Seamless Hosting & Domain", desc: "Hands-off domain configuration, automated SSL certificates, and secure DNS connection." },
-      { name: "Maintenance & Support", desc: "Proactive security patching, system performance tracking, and direct technical support." }
-    ]
+    quote: "Sub-second load times coupled with high-end, responsive aesthetics. Our inbound conversion rates spiked by 42% within the first month of deployment. Simply outstanding.",
+    author: "Elena Rostova",
+    role: "Founder",
+    company: "Rostova Galleries",
+    project: "Art Acquisition Portal",
+    metric: "+42% Conversions"
   },
   {
-    id: "03",
-    icon: "🔍",
-    title: "Growth & Visibility",
-    shortDesc: "Engineered to rank, capture leads, and convert. Built-in search optimization and telemetry.",
-    items: [
-      { name: "Technical SEO Suite", desc: "Perfect semantic layouts, structured robots.txt, dynamic XML sitemaps, and Schema.org." },
-      { name: "Google Analytics 4 & GTM", desc: "Complete integration of GA4 and GTM triggers for precise user behavior insights." },
-      { name: "Conversion Event Maps", desc: "Smart telemetry for call-to-actions, contact form submissions, and direct WhatsApp taps." },
-      { name: "Local Business Setup", desc: "Complete registration of Google Business Profiles and native interactive maps." },
-      { name: "Social Metadata", desc: "Optimized Open Graph graphics, Twitter cards, and title formats for viral preview shares." }
-    ]
+    quote: "They don't use generic templates. They treated our brand like high art. Complete turn-key delivery in exactly 7 days. Highly recommended.",
+    author: "Jonathan Pierce",
+    role: "Head of Product",
+    company: "Veridical Labs",
+    project: "SaaS Marketing Suite",
+    metric: "7-Day Full Delivery"
   },
   {
-    id: "04",
-    icon: "🔒",
-    title: "Security & Comm",
-    shortDesc: "Hardened security layers paired with secure, rapid-response customer outreach loops.",
-    items: [
-      { name: "Enterprise-Grade Security", desc: "Protected with secure HTTP headers, spam defense, and sanitization structures." },
-      { name: "Custom SMTP Mailers", desc: "Reliable transactional email routing with custom auto-responses to build client trust." },
-      { name: "Invisible reCAPTCHA", desc: "Seamless human validation layers that block spam bots without interrupting user flows." },
-      { name: "Instant Chat Bridges", desc: "Direct touch points such as Click-to-Call, instant WhatsApp, and social profiles." },
-      { name: "Pre-Launch Audits", desc: "Exhaustive cross-browser, responsive layout, and link integrity verification." }
-    ]
+    quote: "The attention to responsive layouts and micro-interactions is flawless. They provided robust custom SMTP integrations and a gorgeous booking experience that works seamlessly.",
+    author: "Siddharth Mehta",
+    role: "Director",
+    company: "Aura Wellness",
+    project: "Premium Spa Registry",
+    metric: "Zero-Latency Booking"
   }
 ];
 
 export default function Home() {
   const [activeNav, setActiveNav] = useState("Home");
-  const [activePillarIdx, setActivePillarIdx] = useState(0);
   const shouldReduceMotion = useReducedMotion();
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
 
   // Navigation Items defined dynamically
   const navItems = [
     { label: "Home", href: "#home" },
-    { label: "Aim & Services", href: "#atelier" },
+    { label: "Our Motto", href: "#atelier" },
     { label: "Portfolio", href: "#portfolio" },
     { label: "Why Us", href: "#process" },
     { label: "Contact Us", href: "#contact" }
@@ -254,11 +236,11 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [gopaljiImgSrc, setGopaljiImgSrc] = useState("/gopaljinew.jpg");
   const [friendsImgSrc, setFriendsImgSrc] = useState("/friends.png");
-  const [rallyImgSrc, setRallyImgSrc] = useState("/rallypizzerialive.netlify.app_.jpg");
+  const [shrikalyanImgSrc, setShrikalyanImgSrc] = useState("https://res.cloudinary.com/dtrvyelcg/image/upload/v1784136246/screencapture-shree-kalyan-new-vercel-app-2026-07-15-20_45_51_p8h7cg.jpg");
   const [agroshoreImgSrc, setAgroshoreImgSrc] = useState("/agroshoreorganics.com_ (1).png");
   const [gopaljiMobImgSrc, setGopaljiMobImgSrc] = useState("/mob gopalji.jpeg");
   const [friendsMobImgSrc, setFriendsMobImgSrc] = useState("/mob friends.jpeg");
-  const [rallyMobImgSrc, setRallyMobImgSrc] = useState("/rallypizzerialive.netlify.app_.jpg");
+  const [shrikalyanMobImgSrc, setShrikalyanMobImgSrc] = useState("https://res.cloudinary.com/dtrvyelcg/image/upload/v1784136080/shrikalyan_full_u9mll7.jpg");
   const [agroshoreMobImgSrc, setAgroshoreMobImgSrc] = useState("/mob agrosure .jpeg");
 
   // Creative Atelier Engine Custom Coprocessor State
@@ -284,18 +266,18 @@ export default function Home() {
       highlights: ["B2B Bulk Inquiry Tunnel", "High-Contrast Editorial Typography", "Strict SEO & Multi-device Compatibility"]
     },
     friends: {
-      url: "friends-tours-and-travels.vercel.app",
+      url: "friendstoursandtravel.com",
       height: "2500px",
       mobHeight: "4500px",
       description: "A luxurious, highly responsive travel agency and tour portal built for Friends Tours & Travels. Designed with immersive destination showcases, curated premium itineraries, fluid sticky navigation, and optimized SEO and speed to drive bookings for high-end international travel experiences.",
       highlights: ["Curated Premium Tour Packages", "Transparent Sticky Navigation", "Fluid Destination Galleries"]
     },
-    rallypizza: {
-      url: "rallypizzerialive.netlify.app",
-      height: "1800px",
-      mobHeight: "1800px",
-      description: "An artisanal, high-fidelity culinary showcase designed for Rally Pizza. Features premium food photography layouts, interactive digital menus, seamless online ordering call-to-actions, and an elegant off-white design that evokes the warmth of custom brick-oven pizzerias.",
-      highlights: ["Interactive Menu Display", "Direct Online Order Channels", "Warm Culinary Aesthetic Pairings"]
+    shrikalyan: {
+      url: "shree-kalyan-new.vercel.app",
+      height: "3600px",
+      mobHeight: "6500px",
+      description: "A comprehensive digital transformation and frontend redesign for Shree Kalyan, featuring high-fidelity asset tables, interactive trust indices, responsive calculators, and a custom vintage-meets-modern interface tailored for premium investor presentation.",
+      highlights: ["Interactive Financial Instruments Showcase", "Highly Fluid Mobile-Responsive Tables", "Premium Trust-Grade Aesthetic Layouts"]
     },
     agroshore: {
       url: "agroshoreorganics.com",
@@ -313,8 +295,8 @@ export default function Home() {
         url: meta.url,
         height: meta.height,
         mobHeight: meta.mobHeight,
-        imgSrc: proj.id === "gopalji" ? gopaljiImgSrc : proj.id === "friends" ? friendsImgSrc : proj.id === "rallypizza" ? rallyImgSrc : proj.id === "agroshore" ? agroshoreImgSrc : proj.img,
-        mobImgSrc: proj.id === "gopalji" ? gopaljiMobImgSrc : proj.id === "friends" ? friendsMobImgSrc : proj.id === "rallypizza" ? rallyMobImgSrc : proj.id === "agroshore" ? agroshoreMobImgSrc : proj.img,
+        imgSrc: proj.id === "gopalji" ? gopaljiImgSrc : proj.id === "friends" ? friendsImgSrc : proj.id === "shrikalyan" ? shrikalyanImgSrc : proj.id === "agroshore" ? agroshoreImgSrc : proj.img,
+        mobImgSrc: proj.id === "gopalji" ? gopaljiMobImgSrc : proj.id === "friends" ? friendsMobImgSrc : proj.id === "shrikalyan" ? shrikalyanMobImgSrc : proj.id === "agroshore" ? agroshoreMobImgSrc : proj.img,
         description: meta.description,
         highlights: meta.highlights
       };
@@ -340,7 +322,7 @@ export default function Home() {
   const [contactEmail, setContactEmail] = useState("");
   const [contactPhone, setContactPhone] = useState("");
   const [contactService, setContactService] = useState("Custom Website Design");
-  const [contactBudget, setContactBudget] = useState("$1,000 - $3,000");
+  const [contactBudget, setContactBudget] = useState("Not Specified");
   const [contactVision, setContactVision] = useState("");
   const [contactHoneypot, setContactHoneypot] = useState(""); // Honeypot field for spam prevention
   const [contactFormSubmitted, setContactFormSubmitted] = useState(false);
@@ -376,17 +358,17 @@ export default function Home() {
       errors.email = "Please enter a valid email address.";
     }
 
-    // Validate phone: standard international numbers, digits, spaces, plus, minus, parenthesis
+    // Validate phone: standard international numbers, digits, spaces, plus, minus, parenthesis (Now Required)
     const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-s./0-9]*$/;
-    if (contactPhone.trim() && !phoneRegex.test(contactPhone)) {
+    if (!contactPhone.trim()) {
+      errors.phone = "Please enter your phone number.";
+    } else if (!phoneRegex.test(contactPhone)) {
       errors.phone = "Please enter a valid phone number format.";
     }
 
-    // Validate vision outline
-    if (!contactVision.trim()) {
-      errors.vision = "Please share a brief outline of your digital vision.";
-    } else if (contactVision.trim().length < 10) {
-      errors.vision = "Vision outline must be at least 10 characters long.";
+    // Validate vision outline (Now Optional)
+    if (contactVision.trim() && contactVision.trim().length < 10) {
+      errors.vision = "If provided, vision outline must be at least 10 characters long.";
     }
 
     if (Object.keys(errors).length > 0) {
@@ -445,6 +427,13 @@ export default function Home() {
       setMounted(true);
     }, 0);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveTestimonial((prev) => (prev + 1) % TESTIMONIALS.length);
+    }, 6000);
+    return () => clearInterval(interval);
   }, []);
 
   // Handle Preset Quick Clicks
@@ -564,6 +553,7 @@ export default function Home() {
   const whatWeProvideDetails = [
     {
       title: "Custom Website Design",
+      slug: "custom-website-design",
       desc: "Crafted websites tailored to your business and brand identity.",
       icon: <Monitor className="w-5 h-5 text-brand-gold group-hover:rotate-[4deg] transition-transform duration-300" />,
       hint: "browser window blueprint",
@@ -582,6 +572,7 @@ export default function Home() {
     },
     {
       title: "Web Development",
+      slug: "web-development",
       desc: "Fast, scalable and modern websites built with the latest technologies.",
       icon: <Code className="w-5 h-5 text-brand-gold group-hover:rotate-[-4deg] transition-transform duration-300" />,
       hint: "code brackets",
@@ -593,6 +584,7 @@ export default function Home() {
     },
     {
       title: "Landing Pages",
+      slug: "landing-pages",
       desc: "High-converting landing pages designed to generate more enquiries and sales.",
       icon: <Sparkles className="w-5 h-5 text-brand-gold group-hover:rotate-[4deg] transition-transform duration-300" />,
       hint: "conversion graph",
@@ -608,6 +600,7 @@ export default function Home() {
     },
     {
       title: "E-commerce Solutions",
+      slug: "e-commerce-solutions",
       desc: "Beautiful online stores optimized for performance and conversions.",
       icon: <ShoppingCart className="w-5 h-5 text-brand-gold group-hover:rotate-[-3deg] transition-transform duration-300" />,
       hint: "shopping cart",
@@ -621,6 +614,7 @@ export default function Home() {
     },
     {
       title: "SEO & Performance Optimization",
+      slug: "seo-performance",
       desc: "Technical SEO, Core Web Vitals optimization and search engine visibility from day one.",
       icon: <TrendingUp className="w-5 h-5 text-brand-gold group-hover:rotate-[5deg] transition-transform duration-300" />,
       hint: "upward trend graph",
@@ -637,6 +631,7 @@ export default function Home() {
     },
     {
       title: "UI/UX Design",
+      slug: "ui-ux-design",
       desc: "Thoughtful user experiences that improve usability and engagement.",
       icon: <Layers className="w-5 h-5 text-brand-gold group-hover:rotate-[-4deg] transition-transform duration-300" />,
       hint: "wireframe",
@@ -651,6 +646,7 @@ export default function Home() {
     },
     {
       title: "Website Maintenance & Support",
+      slug: "website-maintenance-support",
       desc: "Reliable updates, monitoring and ongoing improvements after launch.",
       icon: <Wrench className="w-5 h-5 text-brand-gold group-hover:rotate-[4deg] transition-transform duration-300" />,
       hint: "tools",
@@ -663,6 +659,7 @@ export default function Home() {
     },
     {
       title: "Analytics & Growth",
+      slug: "analytics-growth",
       desc: "Google Analytics, Search Console, tracking and insights to help your business grow.",
       icon: <BarChart3 className="w-5 h-5 text-brand-gold group-hover:rotate-[-4deg] transition-transform duration-300" />,
       hint: "dashboard",
@@ -853,8 +850,14 @@ export default function Home() {
         {/* TOP NAVIGATION BAR */}
         <header className="fixed top-0 left-0 right-0 z-50 bg-brand-red border-b border-brand-gold/15 h-[80px] px-4 md:px-12 flex items-center justify-between shadow-lg">
           <a href="#" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-brand-cream text-brand-red font-display font-black text-xl flex items-center justify-center rounded-none shadow-[2px_2px_0px_0px_rgba(201,162,39,1)] transition-all group-hover:rotate-12">
-              EW
+            <div className="w-10 h-10 bg-brand-cream relative rounded-none shadow-[2px_2px_0px_0px_rgba(201,162,39,1)] transition-all group-hover:rotate-12 overflow-hidden flex items-center justify-center">
+              <Image
+                src="https://res.cloudinary.com/dtrvyelcg/image/upload/v1784138035/ChatGPT_Image_Jul_15_2026_11_13_18_PM_kajaoz.jpg"
+                alt="Express Webcraft Logo"
+                fill
+                className="object-cover"
+                referrerPolicy="no-referrer"
+              />
             </div>
             <div className="flex flex-col">
               <span className="font-display text-sm font-black tracking-widest uppercase text-brand-cream">
@@ -1070,7 +1073,7 @@ export default function Home() {
                 </a>
                 <a
                   href="#atelier"
-                  onClick={() => setActiveNav("Our Aim")}
+                  onClick={() => setActiveNav("Our Motto")}
                   className="px-6 py-4 border-2 border-brand-charcoal hover:border-brand-red text-brand-charcoal hover:text-brand-red text-xs font-bold uppercase tracking-widest transition-all hover:bg-brand-red/5"
                 >
                   Our Services ↗
@@ -1228,6 +1231,10 @@ export default function Home() {
 
       </div>
 
+      {/* Thin beige border between page end */}
+      <div className="w-full h-px bg-[#E6DFD3] relative z-30" />
+
+
 
       {/* =======================================
           OUR AIM SECTION
@@ -1261,7 +1268,7 @@ export default function Home() {
             
             <div className="flex flex-col items-start space-y-2">
               <span className="font-sans text-[11px] font-black tracking-[0.3em] text-brand-clay uppercase block drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
-                OUR AIM
+                OUR MOTTO
               </span>
               <div className="h-[2px] bg-brand-gold w-12" />
             </div>
@@ -1297,152 +1304,10 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Thin beige border between page end */}
+      <div className="w-full h-px bg-[#E6DFD3] relative z-30" />
 
-      {/* =======================================
-          COMPLETE DIGITAL LAUNCH PACKAGE SECTION
-          ======================================= */}
-      <section id="launch-package" className="w-full bg-brand-red text-brand-cream py-20 border-t-2 border-b-2 border-brand-charcoal relative overflow-hidden z-20" suppressHydrationWarning={true}>
-        {/* Subtle grid pattern overlay */}
-        <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: 'radial-gradient(var(--color-brand-cream) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
-
-        <div className="max-w-7xl mx-auto px-4 md:px-12 relative z-20">
-          
-          {/* Header Block */}
-          <div className="max-w-3xl mb-14 space-y-4">
-            <div className="flex items-center gap-3">
-              <span className="font-sans text-[11px] font-black tracking-[0.3em] text-brand-gold uppercase block">
-                🚀 COMPLETE LAUNCH BLUEPRINT
-              </span>
-              <div className="h-[1px] w-12 bg-brand-gold/30" />
-            </div>
-            
-            <h2 className="font-display text-3xl md:text-5xl font-black text-brand-cream leading-none uppercase">
-              The Turnkey <span className="text-brand-gold">Launch</span> Package
-            </h2>
-            
-            <p className="font-sans text-sm md:text-base text-brand-cream/85 leading-relaxed font-light max-w-2xl">
-              Every detail engineered to perform. Our comprehensive blueprints solve for visual elegance, speed metrics, compliance, and user acquisition—all-in-one.
-            </p>
-          </div>
-
-          {/* Interactive Layout: Side-by-Side tabs and details */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            
-            {/* Left Panel: Vertical Navigation of Pillars (col-span-5) */}
-            <div className="lg:col-span-5 flex flex-col gap-3 justify-center">
-              {launchPillars.map((pillar, idx) => {
-                const isActive = activePillarIdx === idx;
-                return (
-                  <button
-                    key={pillar.id}
-                    onClick={() => setActivePillarIdx(idx)}
-                    className={`w-full text-left p-4 rounded-none border transition-all duration-300 relative flex items-start gap-4 cursor-pointer select-none ${
-                      isActive 
-                        ? "bg-brand-cream text-brand-charcoal border-brand-gold shadow-[4px_4px_0px_0px_rgba(201,162,39,1)] scale-[1.01]" 
-                        : "bg-brand-charcoal/40 text-brand-cream border-brand-cream/10 hover:border-brand-gold/40 hover:bg-brand-charcoal/60"
-                    }`}
-                  >
-                    {/* ID Badge */}
-                    <span className={`font-mono text-[10px] font-bold px-2 py-1 border rounded-none ${
-                      isActive ? "bg-brand-red text-brand-cream border-brand-red" : "bg-brand-cream/10 text-brand-gold border-brand-gold/20"
-                    }`}>
-                      {pillar.id}
-                    </span>
-                    
-                    <div className="space-y-1 pr-4">
-                      <div className="flex items-center gap-2">
-                        <span className="text-base font-black uppercase tracking-wider font-display">
-                          {pillar.title}
-                        </span>
-                        {isActive && <span className="text-brand-gold text-xs">✦</span>}
-                      </div>
-                      <p className={`font-sans text-[11px] leading-relaxed font-light ${
-                        isActive ? "text-brand-charcoal/80" : "text-brand-cream/60"
-                      }`}>
-                        {pillar.shortDesc}
-                      </p>
-                    </div>
-
-                    {/* Tiny visual arrow */}
-                    <div className={`absolute right-4 top-1/2 -translate-y-1/2 transition-transform duration-300 ${
-                      isActive ? "translate-x-1 text-brand-red" : "opacity-0 text-brand-cream/40"
-                    }`}>
-                      <ChevronRight className="w-4 h-4" />
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Right Panel: Active Pillar Detailed Specifications Checklist (col-span-7) */}
-            <div className="lg:col-span-7 bg-brand-charcoal/30 border border-brand-cream/10 p-5 md:p-8 relative flex flex-col justify-between">
-              
-              {/* Decorative corner brackets for blueprint look */}
-              <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-brand-gold/30" />
-              <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-brand-gold/30" />
-              <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-brand-gold/30" />
-              <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-brand-gold/30" />
-
-              <div className="space-y-6">
-                <div className="flex items-center justify-between border-b border-brand-cream/10 pb-4">
-                  <span className="font-mono text-xs text-brand-gold uppercase tracking-wider">
-                    ✦ PILLAR {launchPillars[activePillarIdx].id} — SPECIFICATIONS
-                  </span>
-                  <span className="font-sans text-[11px] px-2 py-0.5 bg-brand-cream/10 text-brand-cream/80 border border-brand-cream/15 rounded-none">
-                    ACTIVE BLUEPRINT
-                  </span>
-                </div>
-
-                {/* Checklist items list */}
-                <div className="space-y-4">
-                  {launchPillars[activePillarIdx].items.map((item, itemIdx) => (
-                    <motion.div
-                      key={item.name}
-                      initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -5 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: shouldReduceMotion ? 0.05 : 0.3, delay: shouldReduceMotion ? 0 : itemIdx * 0.05 }}
-                      className="flex items-start gap-3.5 group"
-                    >
-                      <div className="mt-1 w-4 h-4 rounded-none bg-brand-gold/10 border border-brand-gold/40 flex items-center justify-center text-brand-gold shrink-0 group-hover:bg-brand-gold group-hover:text-brand-charcoal transition-all duration-300">
-                        <Check className="w-3 h-3" />
-                      </div>
-                      <div className="space-y-0.5">
-                        <h4 className="font-display text-sm font-bold text-brand-cream group-hover:text-brand-gold transition-colors duration-200">
-                          {item.name}
-                        </h4>
-                        <p className="font-sans text-xs text-brand-cream/70 font-light leading-relaxed">
-                          {item.desc}
-                        </p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Package bottom summary */}
-              <div className="mt-8 pt-6 border-t border-brand-cream/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="space-y-1 text-center sm:text-left">
-                  <span className="font-sans text-[10px] text-brand-gold tracking-widest uppercase block">
-                    🌟 UNIFIED DEPLOYMENT
-                  </span>
-                  <span className="font-sans text-xs text-brand-cream font-bold leading-none">
-                    Most affordable rate with zero-compromise elite standards
-                  </span>
-                </div>
-                <a
-                  href="#contact"
-                  className="px-5 py-2.5 bg-brand-gold text-brand-charcoal hover:bg-brand-cream hover:text-brand-charcoal text-[10px] font-bold uppercase tracking-widest transition-all hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] cursor-pointer"
-                >
-                  Request Proposal ↗
-                </a>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-      </section>
+      {/* Services Section starts below */}
 
 
       {/* =======================================
@@ -1452,7 +1317,7 @@ export default function Home() {
         id="services" 
         className="w-full py-24 border-t border-b border-brand-charcoal/10 relative overflow-hidden z-20 scroll-mt-[80px]" 
         style={{ 
-          backgroundImage: "url('https://res.cloudinary.com/dtrvyelcg/image/upload/v1784052746/__uyjhtf.jpg')", 
+          backgroundImage: "url('https://res.cloudinary.com/dtrvyelcg/image/upload/v1784055343/Download_free_image_of_White_and_yellow_plaster_rough_paint__by_Jigsaw_about_wallpaper_iphone_wallpaper_mobile_wallpaper_aesthetic_and_phone_wallpaper_13126260_ndskmy.jpg')", 
           backgroundSize: "cover", 
           backgroundPosition: "center" 
         }}
@@ -1543,12 +1408,15 @@ export default function Home() {
 
                 {/* Learn More interaction */}
                 <div className="pt-8 relative z-10 mt-auto">
-                  <div className="inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-white/90 font-bold group/btn cursor-pointer">
+                  <Link
+                    href={`/services/${service.slug}`}
+                    className="inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-white/90 font-bold group/btn cursor-pointer"
+                  >
                     <span className="relative py-0.5 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-brand-gold group-hover:after:w-full after:transition-all after:duration-300 group-hover:text-brand-gold transition-colors duration-300">
                       Learn More
                     </span>
                     <ArrowRight className="w-3.5 h-3.5 text-brand-gold group-hover:translate-x-1 transition-transform duration-300" />
-                  </div>
+                  </Link>
                 </div>
               </motion.div>
             ))}
@@ -1557,13 +1425,25 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Thin beige border between page end */}
+      <div className="w-full h-px bg-[#E6DFD3] relative z-30" />
 
       {/* =======================================
           PORTFOLIO SECTION ("OUR WORK")
           ======================================= */}
-      <section id="portfolio" className="max-w-7xl mx-auto px-4 md:px-12 py-20 relative z-10 scroll-mt-[80px]" suppressHydrationWarning={true}>
-        
-        {/* Header row from reference image */}
+      <section 
+        id="portfolio" 
+        className="w-full py-20 relative z-10 scroll-mt-[80px]" 
+        style={{ 
+          backgroundImage: "url('https://res.cloudinary.com/dtrvyelcg/image/upload/v1784128276/%D0%9E%D0%B1%D0%BE%D0%B8_dxm3wn.jpg')", 
+          backgroundSize: "cover", 
+          backgroundPosition: "center" 
+        }} 
+        suppressHydrationWarning={true}
+      >
+        <div className="max-w-7xl mx-auto px-4 md:px-12 relative z-20">
+          
+          {/* Header row from reference image */}
         <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-brand-charcoal/15 pb-6 mb-12">
           <div className="space-y-1">
             <span className="font-sans text-[11px] font-black tracking-widest text-brand-clay uppercase block">
@@ -1623,8 +1503,8 @@ export default function Home() {
                               setGopaljiImgSrc("https://picsum.photos/seed/coconut/600/450");
                             } else if (proj.id === "friends") {
                               setFriendsImgSrc("https://picsum.photos/seed/travel/600/450");
-                            } else if (proj.id === "rallypizza") {
-                              setRallyImgSrc("https://picsum.photos/seed/pizza/600/450");
+                            } else if (proj.id === "shrikalyan") {
+                              setShrikalyanImgSrc("https://picsum.photos/seed/kalyan/600/450");
                             } else if (proj.id === "agroshore") {
                               setAgroshoreImgSrc("https://picsum.photos/seed/organic/600/450");
                             }
@@ -1648,8 +1528,8 @@ export default function Home() {
                               setGopaljiMobImgSrc("https://picsum.photos/seed/coconut/600/450");
                             } else if (proj.id === "friends") {
                               setFriendsMobImgSrc("https://picsum.photos/seed/travel/600/450");
-                            } else if (proj.id === "rallypizza") {
-                              setRallyMobImgSrc("https://picsum.photos/seed/pizza/600/450");
+                            } else if (proj.id === "shrikalyan") {
+                              setShrikalyanMobImgSrc("https://picsum.photos/seed/kalyan/600/450");
                             } else if (proj.id === "agroshore") {
                               setAgroshoreMobImgSrc("https://picsum.photos/seed/organic/600/450");
                             }
@@ -1658,7 +1538,7 @@ export default function Home() {
                       </div>
 
                       {/* Vertical Scroll Helper Overlay */}
-                      {["gopalji", "friends", "rallypizza", "agroshore"].includes(proj.id) && (
+                      {["gopalji", "friends", "shrikalyan", "agroshore"].includes(proj.id) && (
                         <div className="absolute bottom-4 right-4 bg-brand-charcoal/90 text-brand-cream font-mono text-[9px] tracking-wider px-3 py-1.5 rounded shadow-lg z-10 animate-bounce pointer-events-none flex items-center space-x-1.5">
                           <span>↓</span>
                           <span className="font-sans font-bold">SCROLL TO EXPLORE PAGE</span>
@@ -1683,6 +1563,9 @@ export default function Home() {
 
                 {/* RIGHT SIDE: Summary of the project */}
                 <div className="lg:col-span-5 flex flex-col justify-between bg-brand-paper border border-brand-charcoal/15 p-6 md:p-8 shadow-sm relative">
+                  
+                  {/* Premium Dark Blue Border Frame to separate the card from the background */}
+                  <div className="absolute inset-0 border-[10px] md:border-[12px] border-[#000052] pointer-events-none z-35" />
                   
                   {/* Elegant framing ornaments */}
                   <div className="absolute top-3 left-3 w-3 h-3 border-t border-l border-brand-charcoal/30" />
@@ -1762,8 +1645,111 @@ export default function Home() {
           })}
         </div>
 
+        {/* Compact Auto-playing Testimonial Slider */}
+        <div className="mt-20 pt-16 border-t border-brand-charcoal/15">
+          <div className="max-w-3xl mx-auto text-center space-y-3 mb-10">
+            <span className="font-sans text-[11px] font-black tracking-[0.25em] text-brand-clay uppercase block">
+              ✦ CLIENT SUCCESS RECORDS ✦
+            </span>
+            <h3 className="font-display text-2xl sm:text-3xl font-black uppercase text-brand-charcoal tracking-tight">
+              WHAT OUTSTANDING BRANDS SAY
+            </h3>
+          </div>
+
+          <div className="max-w-3xl mx-auto relative bg-brand-cream/40 backdrop-blur-sm border-2 border-brand-charcoal p-8 md:p-12 shadow-[6px_6px_0px_0px_rgba(11,27,58,1)]">
+            {/* Decorative vintage frame elements */}
+            <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-brand-charcoal/40" />
+            <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-brand-charcoal/40" />
+            <div className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-brand-charcoal/40" />
+            <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-brand-charcoal/40" />
+
+            {/* Double quote badge decoration */}
+            <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-brand-charcoal text-brand-gold w-10 h-10 rounded-full flex items-center justify-center border-2 border-brand-cream">
+              <Quote className="w-4 h-4 fill-brand-gold" />
+            </div>
+
+            {/* Testimonial slider body with Framer Motion for smooth exit/entry */}
+            <div className="relative min-h-[160px] flex flex-col justify-between">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTestimonial}
+                  initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: -15 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="space-y-6 text-center"
+                >
+                  {/* Main quote */}
+                  <p className="font-sans text-sm sm:text-base md:text-lg text-brand-charcoal/90 leading-relaxed font-light italic px-4">
+                    &ldquo;{TESTIMONIALS[activeTestimonial].quote}&rdquo;
+                  </p>
+
+                  {/* Author metadata details */}
+                  <div className="space-y-1">
+                    <h4 className="font-display text-xs sm:text-sm font-black text-brand-charcoal uppercase tracking-wider">
+                      {TESTIMONIALS[activeTestimonial].author}
+                    </h4>
+                    <p className="font-mono text-[9px] uppercase tracking-widest text-brand-clay">
+                      {TESTIMONIALS[activeTestimonial].role} &mdash; {TESTIMONIALS[activeTestimonial].company}
+                    </p>
+                  </div>
+
+                  {/* Context Tag details */}
+                  <div className="inline-flex flex-wrap items-center justify-center gap-2 md:gap-3 bg-brand-charcoal/5 border border-brand-charcoal/10 px-3 py-1.5 font-mono text-[9px] text-brand-charcoal/70">
+                    <span>PROJECT: {TESTIMONIALS[activeTestimonial].project}</span>
+                    <span className="hidden md:inline w-1.5 h-1.5 bg-brand-gold rounded-full" />
+                    <span className="text-brand-gold font-bold">{TESTIMONIALS[activeTestimonial].metric}</span>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Navigation Controls: Dots and arrows */}
+              <div className="flex items-center justify-between mt-8 pt-6 border-t border-brand-charcoal/10">
+                {/* Left Arrow Button */}
+                <button
+                  onClick={() => {
+                    setActiveTestimonial((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+                  }}
+                  className="p-1.5 border border-brand-charcoal/20 hover:border-brand-charcoal hover:bg-brand-charcoal hover:text-brand-cream transition-colors text-brand-charcoal/60 cursor-pointer"
+                  aria-label="Previous Testimonial"
+                >
+                  <ChevronRight className="w-4 h-4 rotate-180" />
+                </button>
+
+                {/* Progress indicator dots */}
+                <div className="flex gap-2">
+                  {TESTIMONIALS.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setActiveTestimonial(idx)}
+                      className={`w-2 h-2 rounded-none border border-brand-charcoal transition-all cursor-pointer ${
+                        activeTestimonial === idx ? "bg-brand-gold w-4" : "bg-transparent hover:bg-brand-charcoal/20"
+                      }`}
+                      aria-label={`Go to testimonial ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+
+                {/* Right Arrow Button */}
+                <button
+                  onClick={() => {
+                    setActiveTestimonial((prev) => (prev + 1) % TESTIMONIALS.length);
+                  }}
+                  className="p-1.5 border border-brand-charcoal/20 hover:border-brand-charcoal hover:bg-brand-charcoal hover:text-brand-cream transition-colors text-brand-charcoal/60 cursor-pointer"
+                  aria-label="Next Testimonial"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        </div>
       </section>
 
+      {/* Thin beige border between page end */}
+      <div className="w-full h-px bg-[#E6DFD3] relative z-30" />
 
       {/* =======================================
           WHY US SECTION ("The difference is everything")
@@ -1846,7 +1832,7 @@ export default function Home() {
             {/* Stats board */}
             <div className="bg-brand-charcoal text-brand-cream p-6 space-y-6 shadow-xl border-2 border-brand-charcoal">
               {[
-                { count: "1 Year", label: "Experience" },
+                { count: "5+ Years", label: "Experience" },
                 { count: "10+", label: "Projects Delivered" },
                 { count: "100%", label: "Customer Satisfaction" },
                 { count: "7 Days", label: "Average Delivery" }
@@ -2027,6 +2013,8 @@ export default function Home() {
       </div>
     </section>
 
+    {/* Thin beige border between page end */}
+    <div className="w-full h-px bg-[#E6DFD3] relative z-30" />
 
       {/* =======================================
           FOOTER HERO CALL-TO-ACTION ("Let's build something...")
@@ -2054,6 +2042,7 @@ export default function Home() {
                   className="space-y-4 text-left bg-white/5 border border-white/10 p-6 shadow-2xl"
                   suppressHydrationWarning={true}
                   noValidate
+                  autoComplete="off"
                 >
                   {/* Honeypot field for spam control */}
                   <div className="hidden" aria-hidden="true">
@@ -2071,16 +2060,17 @@ export default function Home() {
                     {/* Name & Company */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="flex flex-col space-y-1">
-                        <label htmlFor="contactName" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
+                        <label htmlFor="c_n_no_autofill" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
                           Your Name <span className="text-brand-gold">*</span>
                         </label>
                         <input
-                          id="contactName"
+                          id="c_n_no_autofill"
                           type="text"
                           required
                           value={contactName}
                           onChange={(e) => setContactName(e.target.value)}
-                          placeholder="Naufal Rafifansa"
+                          placeholder=""
+                          autoComplete="new-password"
                           className={`bg-white/5 border px-3 py-2 text-xs text-brand-cream focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold ${
                             contactFormErrors.name ? "border-[#FF5A5A]" : "border-white/20"
                           }`}
@@ -2092,15 +2082,16 @@ export default function Home() {
                       </div>
 
                       <div className="flex flex-col space-y-1">
-                        <label htmlFor="contactCompany" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
+                        <label htmlFor="c_c_no_autofill" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
                           Company Name <span className="text-brand-cream/35">(Optional)</span>
                         </label>
                         <input
-                          id="contactCompany"
+                          id="c_c_no_autofill"
                           type="text"
                           value={contactCompany}
                           onChange={(e) => setContactCompany(e.target.value)}
-                          placeholder="Acme Corp"
+                          placeholder=""
+                          autoComplete="new-password"
                           className="bg-white/5 border border-white/20 px-3 py-2 text-xs text-brand-cream focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold"
                           suppressHydrationWarning={true}
                         />
@@ -2110,16 +2101,17 @@ export default function Home() {
                     {/* Email & Phone */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="flex flex-col space-y-1">
-                        <label htmlFor="contactEmail" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
+                        <label htmlFor="c_e_no_autofill" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
                           Email Address <span className="text-brand-gold">*</span>
                         </label>
                         <input
-                          id="contactEmail"
+                          id="c_e_no_autofill"
                           type="email"
                           required
                           value={contactEmail}
                           onChange={(e) => setContactEmail(e.target.value)}
-                          placeholder="naufal@example.com"
+                          placeholder=""
+                          autoComplete="new-password"
                           className={`bg-white/5 border px-3 py-2 text-xs text-brand-cream focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold ${
                             contactFormErrors.email ? "border-[#FF5A5A]" : "border-white/20"
                           }`}
@@ -2131,15 +2123,17 @@ export default function Home() {
                       </div>
 
                       <div className="flex flex-col space-y-1">
-                        <label htmlFor="contactPhone" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
-                          Phone Number <span className="text-brand-cream/35">(Optional)</span>
+                        <label htmlFor="c_p_no_autofill" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
+                          Phone Number <span className="text-brand-gold">*</span>
                         </label>
                         <input
-                          id="contactPhone"
+                          id="c_p_no_autofill"
                           type="tel"
+                          required
                           value={contactPhone}
                           onChange={(e) => setContactPhone(e.target.value)}
-                          placeholder="+62 812-3456-7890"
+                          placeholder=""
+                          autoComplete="new-password"
                           className={`bg-white/5 border px-3 py-2 text-xs text-brand-cream focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold ${
                             contactFormErrors.phone ? "border-[#FF5A5A]" : "border-white/20"
                           }`}
@@ -2151,50 +2145,28 @@ export default function Home() {
                       </div>
                     </div>
 
-                    {/* Service & Budget dropdowns */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="flex flex-col space-y-1">
-                        <label htmlFor="contactService" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
-                          Selected Service <span className="text-brand-gold">*</span>
-                        </label>
-                        <select
-                          id="contactService"
-                          required
-                          value={contactService}
-                          onChange={(e) => setContactService(e.target.value)}
-                          className="bg-[#1c1d24] border border-white/20 px-3 py-2.5 text-xs text-brand-cream focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold cursor-pointer"
-                          suppressHydrationWarning={true}
-                        >
-                          <option value="Custom Website Design">Custom Website Design</option>
-                          <option value="Web Development">Web Development</option>
-                          <option value="Landing Pages">Landing Pages</option>
-                          <option value="E-commerce Solutions">E-commerce Solutions</option>
-                          <option value="SEO & Performance Optimization">SEO & Performance Optimization</option>
-                          <option value="UI/UX Design">UI/UX Design</option>
-                          <option value="Website Maintenance & Support">Website Maintenance & Support</option>
-                          <option value="Analytics & Growth">Analytics & Growth</option>
-                        </select>
-                      </div>
-
-                      <div className="flex flex-col space-y-1">
-                        <label htmlFor="contactBudget" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
-                          Budget Range <span className="text-brand-gold">*</span>
-                        </label>
-                        <select
-                          id="contactBudget"
-                          required
-                          value={contactBudget}
-                          onChange={(e) => setContactBudget(e.target.value)}
-                          className="bg-[#1c1d24] border border-white/20 px-3 py-2.5 text-xs text-brand-cream focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold cursor-pointer"
-                          suppressHydrationWarning={true}
-                        >
-                          <option value="Under $1,000">Under $1,000</option>
-                          <option value="$1,000 - $3,000">$1,000 - $3,000</option>
-                          <option value="$3,000 - $5,000">$3,000 - $5,000</option>
-                          <option value="$5,000 - $10,000">$5,000 - $10,000</option>
-                          <option value="$10,000+">$10,000+</option>
-                        </select>
-                      </div>
+                    {/* Selected Service (Budget removed) */}
+                    <div className="flex flex-col space-y-1">
+                      <label htmlFor="contactService" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
+                        Selected Service <span className="text-brand-gold">*</span>
+                      </label>
+                      <select
+                        id="contactService"
+                        required
+                        value={contactService}
+                        onChange={(e) => setContactService(e.target.value)}
+                        className="bg-[#1c1d24] border border-white/20 px-3 py-2.5 text-xs text-brand-cream focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold cursor-pointer w-full"
+                        suppressHydrationWarning={true}
+                      >
+                        <option value="Custom Website Design">Custom Website Design</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Landing Pages">Landing Pages</option>
+                        <option value="E-commerce Solutions">E-commerce Solutions</option>
+                        <option value="SEO & Performance Optimization">SEO & Performance Optimization</option>
+                        <option value="UI/UX Design">UI/UX Design</option>
+                        <option value="Website Maintenance & Support">Website Maintenance & Support</option>
+                        <option value="Analytics & Growth">Analytics & Growth</option>
+                      </select>
                     </div>
                   </div>
 
@@ -2205,16 +2177,16 @@ export default function Home() {
                   )}
 
                   <div className="flex flex-col space-y-1">
-                    <label htmlFor="contactVision" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
-                      Vision Outline <span className="text-brand-gold">*</span>
+                    <label htmlFor="c_v_no_autofill" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
+                      Vision Outline <span className="text-brand-cream/35">(Optional)</span>
                     </label>
                     <textarea
-                      id="contactVision"
-                      required
+                      id="c_v_no_autofill"
                       rows={3}
                       value={contactVision}
                       onChange={(e) => setContactVision(e.target.value)}
-                      placeholder="Tell us about your premium digital commission..."
+                      placeholder=""
+                      autoComplete="new-password"
                       className={`bg-white/5 border px-3 py-2 text-xs text-brand-cream focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold resize-none ${
                         contactFormErrors.vision ? "border-[#FF5A5A]" : "border-white/20"
                       }`}
@@ -2332,15 +2304,233 @@ export default function Home() {
           </div>
 
           {/* Sublinks copyright */}
-          <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-[10px] font-mono text-brand-cream/50 gap-4">
-            <div className="flex items-center gap-3">
-              <span className="font-display font-bold text-brand-cream">EW</span>
-              <span>© 2026 EXPRESS WEBCRAFT. ALL RIGHTS RESERVED.</span>
+          <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-[10px] font-mono text-brand-cream/50 gap-6">
+            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-center sm:text-left">
+              <div className="flex items-center gap-2 justify-center sm:justify-start">
+                <span className="font-display font-bold text-brand-cream text-xs">EW</span>
+                <span>© 2026 EXPRESS WEBCRAFT. ALL RIGHTS RESERVED.</span>
+              </div>
+              <div className="hidden sm:inline-block w-[1px] h-3 bg-white/15" />
+              <div className="flex items-center gap-4 justify-center">
+                <button 
+                  onClick={() => setIsPrivacyOpen(true)}
+                  className="hover:text-brand-gold transition-colors uppercase cursor-pointer"
+                >
+                  Privacy Policy
+                </button>
+                <button 
+                  onClick={() => setIsTermsOpen(true)}
+                  className="hover:text-brand-gold transition-colors uppercase cursor-pointer"
+                >
+                  Terms of Service
+                </button>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-brand-cream/40">
+              <span className="text-[9px] text-brand-gold/60 uppercase">Useful Links:</span>
+              <a href="#home" className="hover:text-brand-cream transition-colors uppercase">Home</a>
+              <a href="#atelier" className="hover:text-brand-cream transition-colors uppercase">Our Motto</a>
+              <a href="#portfolio" className="hover:text-brand-cream transition-colors uppercase">Portfolio</a>
+              <a href="#process" className="hover:text-brand-cream transition-colors uppercase">Why Us</a>
+              <a href="#contact" className="hover:text-brand-cream transition-colors uppercase">Contact Us</a>
             </div>
           </div>
 
         </div>
       </section>
+
+      {/* Privacy Policy Modal */}
+      <AnimatePresence>
+        {isPrivacyOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-brand-charcoal/90 backdrop-blur-md flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 15 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 15 }}
+              className="bg-[#1c1d24] border-2 border-brand-gold max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 md:p-8 relative text-brand-cream space-y-6 shadow-2xl"
+            >
+              {/* Corner brackets */}
+              <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-brand-gold/30" />
+              <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-brand-gold/30" />
+              <div className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-brand-gold/30" />
+              <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-brand-gold/30" />
+
+              <button
+                onClick={() => setIsPrivacyOpen(false)}
+                className="absolute top-4 right-4 text-brand-cream/60 hover:text-brand-gold transition-colors p-1"
+                aria-label="Close modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="space-y-2 border-b border-white/10 pb-4">
+                <span className="font-mono text-[9px] text-brand-gold tracking-widest uppercase block">
+                  ✦ LEGAL CODEX // PROTOCOL
+                </span>
+                <h3 className="font-display text-2xl font-black uppercase text-brand-cream">
+                  Privacy Policy
+                </h3>
+                <p className="font-mono text-[9px] text-brand-cream/50 uppercase">
+                  Last Updated: July 2026
+                </p>
+              </div>
+
+              <div className="space-y-4 font-sans text-xs md:text-sm text-brand-cream/80 leading-relaxed font-light">
+                <p>
+                  At <strong className="text-brand-gold">Express Webcraft</strong>, we operate with complete transparency, absolute discretion, and uncompromising digital safety. This document details how we handle information submitted to our elite design consultancy.
+                </p>
+                
+                <div className="space-y-2">
+                  <h4 className="font-display text-xs font-black uppercase text-brand-cream tracking-wide">
+                    1. Information Collection
+                  </h4>
+                  <p>
+                    We collect only standard, explicitly provided business contact information via our voluntary commission inquiry form: including names, company designations, active email addresses, phone coordinates, and high-level architectural project visions.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <h4 className="font-display text-xs font-black uppercase text-brand-cream tracking-wide">
+                    2. Strategic Data Utilization
+                  </h4>
+                  <p>
+                    Your details are processed strictly to prepare design briefs, compute precise performance target estimates, verify waitlist quotas, and schedule face-to-face brief calls on our private ledger.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <h4 className="font-display text-xs font-black uppercase text-brand-cream tracking-wide">
+                    3. No Third-Party Tracking
+                  </h4>
+                  <p>
+                    We hold a strict stance against automated user brokerage. We do not rent, lease, trade, or distribute your email addresses or company profiles to advertising syndicates. Any client data is retained privately under high-grade secure server sandboxes.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <h4 className="font-display text-xs font-black uppercase text-brand-cream tracking-wide">
+                    4. Analytical Telemetry
+                  </h4>
+                  <p>
+                    We employ simple, anonymized telemetry tracking to gauge application load latency and click-through optimization. No personal cookies are logged during these visual audits.
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-white/10 text-center">
+                <button
+                  onClick={() => setIsPrivacyOpen(false)}
+                  className="px-6 py-2 bg-brand-gold text-brand-charcoal text-[10px] font-bold uppercase tracking-widest hover:bg-brand-cream hover:text-brand-charcoal transition-all cursor-pointer"
+                >
+                  Acknowledge Protocol
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Terms of Service Modal */}
+      <AnimatePresence>
+        {isTermsOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-brand-charcoal/90 backdrop-blur-md flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 15 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 15 }}
+              className="bg-[#1c1d24] border-2 border-brand-gold max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 md:p-8 relative text-brand-cream space-y-6 shadow-2xl"
+            >
+              {/* Corner brackets */}
+              <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-brand-gold/30" />
+              <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-brand-gold/30" />
+              <div className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-brand-gold/30" />
+              <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-brand-gold/30" />
+
+              <button
+                onClick={() => setIsTermsOpen(false)}
+                className="absolute top-4 right-4 text-brand-cream/60 hover:text-brand-gold transition-colors p-1"
+                aria-label="Close modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="space-y-2 border-b border-white/10 pb-4">
+                <span className="font-mono text-[9px] text-brand-gold tracking-widest uppercase block">
+                  ✦ TERMS OF ENGAGEMENT // PROTOCOL
+                </span>
+                <h3 className="font-display text-2xl font-black uppercase text-brand-cream">
+                  Terms of Service
+                </h3>
+                <p className="font-mono text-[9px] text-brand-cream/50 uppercase">
+                  Last Updated: July 2026
+                </p>
+              </div>
+
+              <div className="space-y-4 font-sans text-xs md:text-sm text-brand-cream/80 leading-relaxed font-light">
+                <p>
+                  Accessing our services or initiating a website commission proposal establishes consent to these Terms of Engagement. Please review these parameters thoroughly.
+                </p>
+
+                <div className="space-y-2">
+                  <h4 className="font-display text-xs font-black uppercase text-brand-cream tracking-wide">
+                    1. Scope of Commissions
+                  </h4>
+                  <p>
+                    All project builds are custom-tailored on top of standard Next.js, React, and Tailwind CSS architectures. Specifications, specific typography setups, and asset provisions are fully defined and agreed upon inside a dedicated Statement of Work (SOW).
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <h4 className="font-display text-xs font-black uppercase text-brand-cream tracking-wide">
+                    2. Timelines & Performance Guarantees
+                  </h4>
+                  <p>
+                    Our general delivery standard is a turnkey launch blueprint completed in approximately 7 business days from formal contract signoff. All design parameters target an outstanding mobile visual score and strict SEO validation checkpoints.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <h4 className="font-display text-xs font-black uppercase text-brand-cream tracking-wide">
+                    3. Revision Entitlement
+                  </h4>
+                  <p>
+                    To secure absolute client satisfaction, we offer exhaustive visual refinement passes within the scope of the original blueprint, ensuring your exact aesthetic alignment is captured flawlessly.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <h4 className="font-display text-xs font-black uppercase text-brand-cream tracking-wide">
+                    4. Intellectual Curation Ownership
+                  </h4>
+                  <p>
+                    Upon complete reconciliation of outstanding commission fees, all custom layout files, responsive assets, domain maps, and high-performance codes transition entirely and exclusively to client ownership.
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-white/10 text-center">
+                <button
+                  onClick={() => setIsTermsOpen(false)}
+                  className="px-6 py-2 bg-brand-gold text-brand-charcoal text-[10px] font-bold uppercase tracking-widest hover:bg-brand-cream hover:text-brand-charcoal transition-all cursor-pointer"
+                >
+                  Accept Conditions
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* =======================================
           FLOATING CONVERSION OPTIMIZATION ELEMENTS

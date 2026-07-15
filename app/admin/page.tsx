@@ -336,7 +336,7 @@ export default function AdminPage() {
             </p>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-5" noValidate>
+          <form onSubmit={handleLogin} className="space-y-5" noValidate autoComplete="off">
             {loginError && (
               <div className="bg-red-500/10 border border-red-500/30 p-3 text-red-400 text-xs text-center font-mono">
                 {loginError}
@@ -344,29 +344,33 @@ export default function AdminPage() {
             )}
 
             <div className="space-y-1.5">
-              <label className="font-mono text-[9px] uppercase tracking-widest text-brand-cream/50 block">
+              <label htmlFor="adm-e-no-autofill" className="font-mono text-[9px] uppercase tracking-widest text-brand-cream/50 block">
                 ADMINISTRATOR EMAIL
               </label>
               <input
-                type="email"
+                id="adm-e-no-autofill"
+                type="text"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="sayedozair25@gmail.com"
+                placeholder=""
+                autoComplete="new-password"
                 className="w-full bg-white/5 border border-white/10 focus:border-[#c9a227] focus:ring-1 focus:ring-[#c9a227] px-3.5 py-2.5 text-xs text-brand-cream outline-none font-mono"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="font-mono text-[9px] uppercase tracking-widest text-brand-cream/50 block">
+              <label htmlFor="adm-p-no-autofill" className="font-mono text-[9px] uppercase tracking-widest text-brand-cream/50 block">
                 ACCESS KEYCODE (PASSWORD)
               </label>
               <input
+                id="adm-p-no-autofill"
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••••••"
+                placeholder=""
+                autoComplete="new-password"
                 className="w-full bg-white/5 border border-white/10 focus:border-[#c9a227] focus:ring-1 focus:ring-[#c9a227] px-3.5 py-2.5 text-xs text-brand-cream outline-none font-mono"
               />
             </div>

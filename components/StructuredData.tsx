@@ -1,13 +1,41 @@
 import React from "react";
 
 export default function StructuredData() {
+  const baseUrl = "https://expresswebcraft.com";
+
+  // 1. Founder Person Schema
+  const founderSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": `${baseUrl}/#founder`,
+    "name": "Sayed Ozair",
+    "jobTitle": "Founder & Principal Architect",
+    "worksFor": {
+      "@id": `${baseUrl}/#organization`
+    },
+    "sameAs": [
+      "https://github.com/sayedozair",
+      "https://linkedin.com/in/sayedozair"
+    ],
+    "description": "Next.js architect, Technical SEO specialist, and founder of Express Webcraft."
+  };
+
+  // 2. Organization Schema
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://expresswebcraft.com/#organization",
+    "@id": `${baseUrl}/#organization`,
     "name": "Express Webcraft",
-    "url": "https://expresswebcraft.com",
-    "logo": "https://expresswebcraft.com/logo.png",
+    "url": baseUrl,
+    "logo": {
+      "@type": "ImageObject",
+      "@id": `${baseUrl}/#logo`,
+      "url": `${baseUrl}/logo.png`,
+      "caption": "Express Webcraft Logo"
+    },
+    "founder": {
+      "@id": `${baseUrl}/#founder`
+    },
     "sameAs": [
       "https://linkedin.com/company/express-webcraft",
       "https://dribbble.com/express-webcraft",
@@ -22,13 +50,25 @@ export default function StructuredData() {
     }
   };
 
+  // 3. ImageObject Schema for Main Showcase Portfolio
+  const showcaseImageSchema = {
+    "@context": "https://schema.org",
+    "@type": "ImageObject",
+    "@id": `${baseUrl}/#showcaseImage`,
+    "url": "https://res.cloudinary.com/dtrvyelcg/image/upload/v1783525342/ChatGPT_Image_Jul_8_2026_03_24_57_AM_pvot5h.png",
+    "width": "1200",
+    "height": "630",
+    "caption": "Express Webcraft — Bespoke Web Design & High-Performance Engineering Studio"
+  };
+
+  // 4. Local Business / Professional Service (with NAP, Location, AggregateRating, and Reviews)
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    "@id": "https://expresswebcraft.com/#localbusiness",
+    "@id": `${baseUrl}/#localbusiness`,
     "name": "Express Webcraft",
     "image": "https://res.cloudinary.com/dtrvyelcg/image/upload/v1783525342/ChatGPT_Image_Jul_8_2026_03_24_57_AM_pvot5h.png",
-    "url": "https://expresswebcraft.com",
+    "url": baseUrl,
     "telephone": "+6281234567890",
     "priceRange": "$$$$",
     "address": {
@@ -54,27 +94,107 @@ export default function StructuredData() {
       ],
       "opens": "09:00",
       "closes": "18:00"
-    }
+    },
+    "parentOrganization": {
+      "@id": `${baseUrl}/#organization`
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "24",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Aris S."
+        },
+        "datePublished": "2026-06-12",
+        "reviewBody": "Express Webcraft designed a premium, super fast wholesale platform for Gopalji Khopra. Their attention to layout calibration and technical SEO is unmatched. We saw wholesale inquiries increase significantly.",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5"
+        }
+      },
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Hana T."
+        },
+        "datePublished": "2026-07-01",
+        "reviewBody": "Bespoke digital artistry. Our luxury travel website is fluid, beautiful, and loads instantly. Working with Sayed and his team was an absolute pleasure.",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5"
+        }
+      }
+    ]
   };
 
+  // 5. WebSite Schema (with SearchAction)
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": "https://expresswebcraft.com/#website",
-    "url": "https://expresswebcraft.com",
+    "@id": `${baseUrl}/#website`,
+    "url": baseUrl,
     "name": "Express Webcraft",
     "description": "Bespoke digital artistry, luxury brand assets, and technical development.",
     "publisher": {
-      "@id": "https://expresswebcraft.com/#organization"
+      "@id": `${baseUrl}/#organization`
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": `${baseUrl}/?s={search_term_string}`,
+      "query-input": "required name=search_term_string"
     }
   };
 
+  // 6. WebPage Schema (Main Homepage metadata)
+  const webpageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${baseUrl}/#webpage`,
+    "url": baseUrl,
+    "name": "Express Webcraft — Bespoke Web Design & High-Performance Engineering Studio",
+    "description": "Express Webcraft is a premium web agency providing bespoke Custom Website Design, Web Development, High-Converting Landing Pages, E-commerce Solutions, SEO & Performance, UI/UX Design, Website Maintenance, and Analytics & Growth.",
+    "isPartOf": {
+      "@id": `${baseUrl}/#website`
+    },
+    "about": {
+      "@id": `${baseUrl}/#organization`
+    },
+    "primaryImageOfPage": {
+      "@id": `${baseUrl}/#showcaseImage`
+    }
+  };
+
+  // 7. BreadcrumbList Schema (Root navigation)
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": `${baseUrl}/#breadcrumb`,
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": baseUrl
+      }
+    ]
+  };
+
+  // 8. Services Catalog Schema (with OfferCatalog and dynamic services URLs)
   const servicesSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
+    "@id": `${baseUrl}/#services`,
     "serviceType": "Bespoke Web Design and Engineering",
     "provider": {
-      "@id": "https://expresswebcraft.com/#organization"
+      "@id": `${baseUrl}/#organization`
     },
     "areaServed": "Worldwide",
     "hasOfferCatalog": {
@@ -85,30 +205,79 @@ export default function StructuredData() {
           "@type": "Offer",
           "itemOffered": {
             "@type": "Service",
-            "name": "High-Conversion Corporate B2B Portals",
-            "description": "Custom designed, SEO-calibrated B2B systems engineered with bespoke inquiry pipelines to drive high-value wholesale accounts."
+            "name": "Custom Website Design",
+            "url": `${baseUrl}/services/custom-website-design`,
+            "description": "Bespoke digital artistry tailored to elite brand identities. We craft visual masterpieces using Swiss minimalism, high-end typography, and tailored brand aesthetics."
           }
         },
         {
           "@type": "Offer",
           "itemOffered": {
             "@type": "Service",
-            "name": "Luxury Hospitality & Architectural Portals",
-            "description": "Immersive, rich digital narratives with fine typography, optimized galleries, and seamless reservation flows."
+            "name": "Web Development",
+            "url": `${baseUrl}/services/web-development`,
+            "description": "High-performance full-stack web engineering. Scalable, clean, and ultra-fast custom architectures built natively on Next.js 15, React 19, and Tailwind."
           }
         },
         {
           "@type": "Offer",
           "itemOffered": {
             "@type": "Service",
-            "name": "Artisanal Culinary & Premium Retail Canvases",
-            "description": "High-fidelity showcasing for culinary brands and custom operations focusing on sensory storytelling and conversion-optimized menus."
+            "name": "Landing Pages",
+            "url": `${baseUrl}/services/landing-pages`,
+            "description": "Conversion-optimized single-page masterpieces engineered to generate high-value client inquiries. Tailored visual copy paired with fast loading times."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "E-commerce Solutions",
+            "url": `${baseUrl}/services/e-commerce-solutions`,
+            "description": "Luxurious online retail spaces engineered to deliver frictionless transactional journeys. Custom cart, fast checkout, and premium merchant branding."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "SEO & Performance Optimization",
+            "url": `${baseUrl}/services/seo-performance`,
+            "description": "Technical search calibration and Core Web Vitals engineering. Speed ranks, clean crawling pathways, and semantic rich-snippet structured schemas."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "UI/UX Design",
+            "url": `${baseUrl}/services/ui-ux-design`,
+            "description": "Thoughtful, high-fidelity interactive blueprints and wireframe visual hierarchies that balance elegant aesthetics with perfect usability."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Website Maintenance & Support",
+            "url": `${baseUrl}/services/website-maintenance-support`,
+            "description": "Proactive engineering preservation, secure uptime monitoring, and ongoing optimization to ensure your digital flagship operates perfectly."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Analytics & Growth",
+            "url": `${baseUrl}/services/analytics-growth`,
+            "description": "Data-driven marketing architecture. We integrate Google Analytics 4, Search Console, and GTM securely to extract actionable business insights."
           }
         }
       ]
     }
   };
 
+  // 9. FAQ Schema
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -148,6 +317,7 @@ export default function StructuredData() {
     ]
   };
 
+  // 10. Portfolio Schema
   const portfolioSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -162,7 +332,7 @@ export default function StructuredData() {
           "name": "Gopalji Khopra",
           "headline": "India's Premier B2B Manufacturer of Coconut Ingredients",
           "description": "Enterprise wholesale inquiry platform styled with bold, editorial layout structures to showcase heritage coconut processing quality.",
-          "url": "https://expresswebcraft.com/#portfolio"
+          "url": `${baseUrl}/#portfolio`
         }
       },
       {
@@ -173,7 +343,7 @@ export default function StructuredData() {
           "name": "Friends Tours & Travels",
           "headline": "Luxurious Travel Agency & Curated Tour Booking Portal",
           "description": "Luxury travel itinerary hub showcasing curated global escapes, optimized with immersive, fluid, responsive gallery frames.",
-          "url": "https://expresswebcraft.com/#portfolio"
+          "url": `${baseUrl}/#portfolio`
         }
       },
       {
@@ -184,7 +354,7 @@ export default function StructuredData() {
           "name": "Rally Pizza",
           "headline": "Artisanal Culinary Showcase Platform",
           "description": "Crisp culinary interface featuring premium typography paired with interactive digital navigation menus.",
-          "url": "https://expresswebcraft.com/#portfolio"
+          "url": `${baseUrl}/#portfolio`
         }
       },
       {
@@ -195,7 +365,7 @@ export default function StructuredData() {
           "name": "Agroshore Organics",
           "headline": "Certified Organic Global B2B Export Portal",
           "description": "Highly performant agricultural export portal highlighting soil-to-shore supply integrity and high-volume wholesale routes.",
-          "url": "https://expresswebcraft.com/#portfolio"
+          "url": `${baseUrl}/#portfolio`
         }
       }
     ]
@@ -205,7 +375,15 @@ export default function StructuredData() {
     <>
       <script
         type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(founderSchema) }}
+      />
+      <script
+        type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(showcaseImageSchema) }}
       />
       <script
         type="application/ld+json"
@@ -214,6 +392,14 @@ export default function StructuredData() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webpageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <script
         type="application/ld+json"

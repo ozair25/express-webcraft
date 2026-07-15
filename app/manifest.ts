@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Express Webcraft — Premium Digital Artistry & Web Development",
     short_name: "Express Webcraft",
-    description: "Crafting fast, modern, and conversion-focused websites that help businesses stand out and grow online..",
+    description: "Crafting fast, modern, and conversion-focused websites that help businesses stand out and grow online.",
     start_url: "/",
     display: "standalone",
     background_color: "#E8EAED",

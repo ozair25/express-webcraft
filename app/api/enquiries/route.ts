@@ -46,18 +46,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "A valid email address is required." }, { status: 400 });
     }
 
-    if (!message || typeof message !== "string" || message.trim().length < 10) {
-      return NextResponse.json({ error: "Message must be at least 10 characters long." }, { status: 400 });
+    if (!phone || typeof phone !== "string" || phone.trim().length < 5) {
+      return NextResponse.json({ error: "A valid phone number is required." }, { status: 400 });
+    }
+
+    if (message && (typeof message !== "string" || message.trim().length < 10)) {
+      return NextResponse.json({ error: "If provided, message must be at least 10 characters long." }, { status: 400 });
     }
 
     // 4. Sanitization
     const cleanName = sanitizeString(name);
     const cleanCompany = company ? sanitizeString(company) : "";
     const cleanEmail = email.trim().toLowerCase();
-    const cleanPhone = phone ? sanitizeString(phone) : "";
+    const cleanPhone = sanitizeString(phone);
     const cleanService = service ? sanitizeString(service) : "Custom Website Design";
     const cleanBudget = budget ? sanitizeString(budget) : "Not Specified";
-    const cleanMessage = sanitizeString(message);
+    const cleanMessage = message ? sanitizeString(message) : "";
     const userAgent = req.headers.get("user-agent") || "Unknown";
 
     // 5. Structure Enquiry Data
