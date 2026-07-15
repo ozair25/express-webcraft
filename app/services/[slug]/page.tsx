@@ -571,11 +571,11 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
               <h3 className="font-sans font-bold text-[11px] text-brand-charcoal uppercase tracking-wider">STUDIO LOCATION</h3>
               <p className="leading-relaxed">
                 EXPRESS WEBCRAFT CO.<br />
-                JAKARTA, DKI JAKARTA, 12190<br />
-                INDONESIA (GLOBAL COMMISSIONS)
+                MP, 452001<br />
+                INDIA (GLOBAL COMMISSIONS)
               </p>
-              <p>TEL: +62 812 3456 7890</p>
-              <p>HOURS: MON - FRI, 09:00 - 18:00 (GMT+7)</p>
+              <p>TEL: +91 7470857424</p>
+              <p>HOURS: MON - FRI, 09:00 - 18:00</p>
             </div>
 
           </div>
