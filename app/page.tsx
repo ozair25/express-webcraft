@@ -318,8 +318,110 @@ export default function Home() {
     };
   };
 
-  // Form submission states removed for multi-page refactoring
+  // Form submission and validation states
+  const [contactName, setContactName] = useState("");
+  const [contactCompany, setContactCompany] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
+  const [contactService, setContactService] = useState("Custom Website Design");
+  const [contactBudget, setContactBudget] = useState("Not Specified");
+  const [contactVision, setContactVision] = useState("");
+  const [contactHoneypot, setContactHoneypot] = useState(""); // Honeypot field for spam prevention
+  const [contactFormSubmitted, setContactFormSubmitted] = useState(false);
+  const [contactFormLoading, setContactFormLoading] = useState(false);
+  const [contactFormErrors, setContactFormErrors] = useState<Record<string, string>>({});
+  const [submissionId, setSubmissionId] = useState<number | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Prevent submissions from automated spam bots
+    if (contactHoneypot) {
+      console.warn("Spam submission blocked via Honeypot.");
+      setSubmissionId(Math.floor(100000 + Math.random() * 900000));
+      setContactFormSubmitted(true); // Faux success to trick bots
+      Analytics.trackFormSubmit("contact", "spam");
+      return;
+    }
+
+    const errors: Record<string, string> = {};
+
+    // Validate name
+    if (!contactName.trim()) {
+      errors.name = "Please enter your name.";
+    }
+
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!contactEmail.trim()) {
+      errors.email = "Please enter your email address.";
+    } else if (!emailRegex.test(contactEmail)) {
+      errors.email = "Please enter a valid email address.";
+    }
+
+    // Validate phone: standard international numbers, digits, spaces, plus, minus, parenthesis (Now Required)
+    const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-s./0-9]*$/;
+    if (!contactPhone.trim()) {
+      errors.phone = "Please enter your phone number.";
+    } else if (!phoneRegex.test(contactPhone)) {
+      errors.phone = "Please enter a valid phone number format.";
+    }
+
+    // Validate vision outline (Now Required)
+    if (!contactVision.trim()) {
+      errors.vision = "Please enter your vision outline.";
+    } else if (contactVision.trim().length < 10) {
+      errors.vision = "Vision outline must be at least 10 characters long.";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setContactFormErrors(errors);
+      Analytics.trackFormSubmit("contact", "error");
+      return;
+    }
+
+    // Clear previous errors
+    setContactFormErrors({});
+    setContactFormLoading(true);
+
+    const startTime = Date.now();
+
+    try {
+      const response = await fetch("/api/enquiries", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: contactName,
+          company: contactCompany,
+          email: contactEmail,
+          phone: contactPhone,
+          service: contactService,
+          budget: contactBudget,
+          message: contactVision,
+          honeypot: contactHoneypot,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to submit enquiry.");
+      }
+
+      setSubmissionId(Math.floor(100000 + Math.random() * 900000));
+      setContactFormSubmitted(true);
+      Analytics.trackFormSubmit("contact", "success", Date.now() - startTime);
+    } catch (err: any) {
+      console.error("Submission failed:", err);
+      setContactFormErrors({ form: err.message || "Something went wrong. Please try again later." });
+      Analytics.trackFormSubmit("contact", "error");
+    } finally {
+      setContactFormLoading(false);
+    }
+  };
 
 
 
@@ -1179,7 +1281,7 @@ export default function Home() {
               }
             }}
           >
-            {whatWeProvideDetails.slice(0, 4).map((service, index) => (
+            {whatWeProvideDetails.map((service, index) => (
               <motion.div
                 key={index}
                 variants={{
@@ -1276,7 +1378,7 @@ export default function Home() {
 
         {/* Continuous Sequential Showcase of all projects */}
         <div className="space-y-24">
-          {currentBrandData.projects.slice(0, 2).map((proj: any, idx: number) => {
+          {currentBrandData.projects.slice(0, 4).map((proj: any, idx: number) => {
             const meta = getProjectMetadata(proj, idx);
             return (
               <div key={proj.id} className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch border-b border-brand-charcoal/10 pb-16 last:border-b-0 last:pb-0">
@@ -1445,13 +1547,13 @@ export default function Home() {
                     <span className="font-mono text-[9px] text-brand-clay uppercase font-bold">
                       REF_ID: // 0{idx + 1}
                     </span>
-                    <Link
-                      href="/contact"
+                    <a
+                      href="#contact"
                       className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-charcoal hover:bg-brand-gold text-brand-cream hover:text-brand-charcoal text-[9px] font-bold uppercase tracking-widest transition-colors"
                     >
                       <span>Inquire About Build</span>
                       <ArrowUpRight className="w-3 h-3" />
-                    </Link>
+                    </a>
                   </div>
 
                 </div>
@@ -1732,20 +1834,140 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Additional Guide & Pricing specs links */}
-          <div className="col-span-1 lg:col-span-12 mt-16 pt-12 border-t border-brand-charcoal/10 text-center flex flex-col sm:flex-row items-center justify-center gap-4 relative z-20">
-            <Link
-              href="/faq"
-              className="inline-flex px-5 py-3 bg-brand-charcoal hover:bg-brand-red text-brand-cream text-[10px] font-mono tracking-widest uppercase font-black transition-all shadow-[2px_2px_0px_0px_rgba(201,162,39,1)]"
-            >
-              View Complete FAQs Handbook ↗
-            </Link>
-            <Link
-              href="/pricing"
-              className="inline-flex px-5 py-3 border border-brand-charcoal hover:border-brand-red text-brand-charcoal hover:text-brand-red text-[10px] font-mono tracking-widest uppercase font-black transition-all bg-white/20"
-            >
-              Check Development Pricing & Packages ↗
-            </Link>
+          {/* Interactive FAQ Accordion with SEO Schema */}
+          <div className="col-span-1 lg:col-span-12 mt-16 pt-16 border-t border-brand-charcoal/10">
+            <div className="max-w-3xl mx-auto space-y-8">
+              <div className="text-center space-y-2">
+                <span className="font-sans text-[10px] font-black tracking-widest text-brand-clay uppercase block">
+                  ATELIER INQUIRY GUIDE
+                </span>
+                <h3 className="font-display text-2xl md:text-3xl font-black text-brand-charcoal uppercase">
+                  Frequently Asked Questions
+                </h3>
+                <div className="w-12 h-0.5 bg-brand-gold mx-auto mt-3" />
+              </div>
+
+              {/* FAQ Accordion list */}
+              <div className="space-y-4">
+                {[
+                  {
+                    q: "What services does Express Webcraft offer?",
+                    a: "Express Webcraft specializes in bespoke high-performance web development, premium UX/UI design, speed optimization, and custom full-stack web applications tailored to high-conversion brand experiences."
+                  },
+                  {
+                    q: "How fast can you deliver a premium website?",
+                    a: "While traditional design agencies take months, our high-velocity development engine is engineered to deliver pixel-perfect, conversion-optimized platforms in days, not months—frequently within 7 to 14 days without compromising on quality."
+                  },
+                  {
+                    q: "Will my website be search engine optimized (SEO) and mobile-responsive?",
+                    a: "Absolutely. Every platform we build is engineered with mobile-first responsiveness, clean semantic HTML structure, proper schema markup, optimized media assets, and swift load speeds to ensure maximum search engine visibility and flawless multi-device compatibility."
+                  },
+                  {
+                    q: "How do you ensure the security of our custom website?",
+                    a: "Enterprise-grade protection is baked in from day one. We implement secure SSL encryption, configure clean secure HTTP headers, integrate automated backup cycles, and provision robust DDoS protection protocols to shield your brand assets."
+                  }
+                ].map((faq, index) => {
+                  const isOpen = openFaq === index;
+                  return (
+                    <div
+                      key={index}
+                      className="bg-brand-paper border border-brand-charcoal/15 transition-all duration-300"
+                    >
+                      <button
+                        onClick={() => setOpenFaq(isOpen ? null : index)}
+                        className="w-full text-left p-5 flex justify-between items-center gap-4 group cursor-pointer"
+                      >
+                        <span className="font-display text-sm font-black uppercase text-brand-charcoal group-hover:text-brand-red transition-colors duration-300">
+                          {faq.q}
+                        </span>
+                        <span className={`text-brand-gold transition-transform duration-300 transform ${isOpen ? "rotate-180" : "rotate-0"}`}>
+                          <svg className="w-4 h-4 stroke-current fill-none" viewBox="0 0 24 24" strokeWidth="2">
+                            <polyline points="6 9 12 15 18 9" />
+                          </svg>
+                        </span>
+                      </button>
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            className="overflow-hidden"
+                          >
+                            <div className="p-5 pt-0 border-t border-brand-charcoal/5 font-sans text-xs text-brand-charcoal/70 leading-relaxed font-light">
+                              {faq.a}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* FAQ Schema JSON-LD */}
+              <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                  __html: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "FAQPage",
+                    "mainEntity": [
+                      {
+                        "@type": "Question",
+                        "name": "What services does Express Webcraft offer?",
+                        "acceptedAnswer": {
+                          "@type": "Answer",
+                          "text": "Express Webcraft specializes in bespoke high-performance web development, premium UX/UI design, speed optimization, and custom full-stack web applications tailored to high-conversion brand experiences."
+                        }
+                      },
+                      {
+                        "@type": "Question",
+                        "name": "How fast can you deliver a premium website?",
+                        "acceptedAnswer": {
+                          "@type": "Answer",
+                          "text": "While traditional design agencies take months, our high-velocity development engine is engineered to deliver pixel-perfect, conversion-optimized platforms in days, not months—frequently within 7 to 14 days without compromising on quality."
+                        }
+                      },
+                      {
+                        "@type": "Question",
+                        "name": "Will my website be search engine optimized (SEO) and mobile-responsive?",
+                        "acceptedAnswer": {
+                          "@type": "Answer",
+                          "text": "Absolutely. Every platform we build is engineered with mobile-first responsiveness, clean semantic HTML structure, proper schema markup, optimized media assets, and swift load speeds to ensure maximum search engine visibility and flawless multi-device compatibility."
+                        }
+                      },
+                      {
+                        "@type": "Question",
+                        "name": "How do you ensure the security of our custom website?",
+                        "acceptedAnswer": {
+                          "@type": "Answer",
+                          "text": "Enterprise-grade protection is baked in from day one. We implement secure SSL encryption, configure clean secure HTTP headers, integrate automated backup cycles, and provision robust DDoS protection protocols to shield your brand assets."
+                        }
+                      }
+                    ]
+                  })
+                }}
+              />
+
+              {/* Additional Guide / Pricing links for premium funnel conversion */}
+              <div className="pt-8 text-center flex flex-col sm:flex-row items-center justify-center gap-4 relative z-20">
+                <Link
+                  href="/faq"
+                  className="inline-flex px-5 py-3 bg-brand-charcoal hover:bg-brand-red text-brand-cream text-[10px] font-mono tracking-widest uppercase font-black transition-all shadow-[2px_2px_0px_0px_rgba(201,162,39,1)]"
+                >
+                  View Complete FAQs Handbook ↗
+                </Link>
+                <Link
+                  href="/pricing"
+                  className="inline-flex px-5 py-3 border border-brand-charcoal hover:border-brand-red text-brand-charcoal hover:text-brand-red text-[10px] font-mono tracking-widest uppercase font-black transition-all bg-white/20"
+                >
+                  Check Development Pricing & Packages ↗
+                </Link>
+              </div>
+
+            </div>
           </div>
 
         </div>
@@ -1770,53 +1992,266 @@ export default function Home() {
             extraordinary together.
           </h2>
 
-          <div className="pt-6 max-w-xl mx-auto bg-white/5 border border-white/10 p-8 sm:p-10 shadow-2xl relative space-y-6">
-            {/* Visual golden corner brackets */}
-            <div className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-brand-gold/60" />
-            <div className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-brand-gold/60" />
-            <div className="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 border-brand-gold/60" />
-            <div className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-brand-gold/60" />
+          <div className="pt-4 max-w-md mx-auto">
+            <AnimatePresence mode="wait">
+              {!contactFormSubmitted ? (
+                <motion.form
+                  key="talk-form"
+                  initial={{ opacity: 1 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  onSubmit={handleContactSubmit}
+                  className="space-y-4 text-left bg-white/5 border border-white/10 p-6 shadow-2xl"
+                  suppressHydrationWarning={true}
+                  noValidate
+                  autoComplete="off"
+                >
+                  {/* Honeypot field for spam control */}
+                  <div className="hidden" aria-hidden="true">
+                    <input
+                      type="text"
+                      name="brief_website_key_hash"
+                      value={contactHoneypot}
+                      onChange={(e) => setContactHoneypot(e.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
 
-            <p className="font-sans text-xs text-brand-cream/80 leading-relaxed font-light">
-              We design and build bespoke web flagships that help elite brands rank first and load in milliseconds. Submit your specifications to start your commission or chat with us instantly.
-            </p>
+                  <div className="grid grid-cols-1 gap-4">
+                    {/* Name & Company */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="flex flex-col space-y-1">
+                        <label htmlFor="c_n_no_autofill" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
+                          Your Name <span className="text-brand-gold">*</span>
+                        </label>
+                        <input
+                          id="c_n_no_autofill"
+                          type="text"
+                          required
+                          value={contactName}
+                          onChange={(e) => setContactName(e.target.value)}
+                          placeholder=""
+                          autoComplete="new-password"
+                          className={`bg-white/5 border px-3 py-2 text-xs text-brand-cream focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold ${
+                            contactFormErrors.name ? "border-[#FF5A5A]" : "border-white/20"
+                          }`}
+                          suppressHydrationWarning={true}
+                        />
+                        {contactFormErrors.name && (
+                          <p className="font-mono text-[9px] text-[#FF5A5A] mt-0.5">{contactFormErrors.name}</p>
+                        )}
+                      </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
-              <Link
-                href="/contact"
-                onClick={() => Analytics.trackCtaClick("Homepage Contact CTA", "homepage_preview")}
-                className="px-6 py-3 bg-brand-clay hover:bg-brand-gold text-brand-cream hover:text-brand-charcoal text-xs font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2"
-              >
-                <Send className="w-4 h-4" />
-                <span>Start Your Commission ↗</span>
-              </Link>
-              
-              <a
-                href="https://wa.me/917470857424?text=Hi%20Express%20Webcraft!%20I'm%20interested%20in%20a%20premium%20website%20commission."
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => Analytics.trackWhatsAppClick()}
-                className="px-6 py-3 border-2 border-[#25D366]/40 hover:border-[#25D366] text-[#25D366] text-xs font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2 hover:bg-[#25D366]/5"
-              >
-                <MessageCircle className="w-4 h-4 fill-[#25D366]/10" />
-                <span>Chat via WhatsApp ↗</span>
-              </a>
-            </div>
+                      <div className="flex flex-col space-y-1">
+                        <label htmlFor="c_c_no_autofill" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
+                          Company Name <span className="text-brand-cream/35">(Optional)</span>
+                        </label>
+                        <input
+                          id="c_c_no_autofill"
+                          type="text"
+                          value={contactCompany}
+                          onChange={(e) => setContactCompany(e.target.value)}
+                          placeholder=""
+                          autoComplete="new-password"
+                          className="bg-white/5 border border-white/20 px-3 py-2 text-xs text-brand-cream focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold"
+                          suppressHydrationWarning={true}
+                        />
+                      </div>
+                    </div>
 
-            <div className="border-t border-white/10 pt-4 text-center">
-              <span className="font-mono text-[9px] text-brand-gold uppercase tracking-wider block mb-2">
-                ✦ BYPASSING WAITLISTS
-              </span>
-              <button
-                onClick={() => {
-                  Analytics.trackCalendlyPlaceholderClick();
-                  window.open("https://calendly.com", "_blank");
-                }}
-                className="inline-flex items-center gap-1.5 text-[9px] font-mono uppercase tracking-widest text-brand-cream/70 hover:text-brand-gold transition-colors"
-              >
-                Schedule 15-Min Briefing on Calendly ↗
-              </button>
-            </div>
+                    {/* Email & Phone */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="flex flex-col space-y-1">
+                        <label htmlFor="c_e_no_autofill" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
+                          Email Address <span className="text-brand-gold">*</span>
+                        </label>
+                        <input
+                          id="c_e_no_autofill"
+                          type="email"
+                          required
+                          value={contactEmail}
+                          onChange={(e) => setContactEmail(e.target.value)}
+                          placeholder=""
+                          autoComplete="new-password"
+                          className={`bg-white/5 border px-3 py-2 text-xs text-brand-cream focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold ${
+                            contactFormErrors.email ? "border-[#FF5A5A]" : "border-white/20"
+                          }`}
+                          suppressHydrationWarning={true}
+                        />
+                        {contactFormErrors.email && (
+                          <p className="font-mono text-[9px] text-[#FF5A5A] mt-0.5">{contactFormErrors.email}</p>
+                        )}
+                      </div>
+
+                      <div className="flex flex-col space-y-1">
+                        <label htmlFor="c_p_no_autofill" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
+                          Phone Number <span className="text-brand-gold">*</span>
+                        </label>
+                        <input
+                          id="c_p_no_autofill"
+                          type="tel"
+                          required
+                          value={contactPhone}
+                          onChange={(e) => setContactPhone(e.target.value)}
+                          placeholder=""
+                          autoComplete="new-password"
+                          className={`bg-white/5 border px-3 py-2 text-xs text-brand-cream focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold ${
+                            contactFormErrors.phone ? "border-[#FF5A5A]" : "border-white/20"
+                          }`}
+                          suppressHydrationWarning={true}
+                        />
+                        {contactFormErrors.phone && (
+                          <p className="font-mono text-[9px] text-[#FF5A5A] mt-0.5">{contactFormErrors.phone}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Selected Service (Budget removed) */}
+                    <div className="flex flex-col space-y-1">
+                      <label htmlFor="contactService" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
+                        Selected Service <span className="text-brand-gold">*</span>
+                      </label>
+                      <select
+                        id="contactService"
+                        required
+                        value={contactService}
+                        onChange={(e) => setContactService(e.target.value)}
+                        className="bg-[#1c1d24] border border-white/20 px-3 py-2.5 text-xs text-brand-cream focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold cursor-pointer w-full"
+                        suppressHydrationWarning={true}
+                      >
+                        <option value="Custom Website Design">Custom Website Design</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Landing Pages">Landing Pages</option>
+                        <option value="E-commerce Solutions">E-commerce Solutions</option>
+                        <option value="SEO & Performance Optimization">SEO & Performance Optimization</option>
+                        <option value="UI/UX Design">UI/UX Design</option>
+                        <option value="Website Maintenance & Support">Website Maintenance & Support</option>
+                        <option value="Analytics & Growth">Analytics & Growth</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {contactFormErrors.form && (
+                    <div className="bg-[#FF5A5A]/10 border border-[#FF5A5A]/30 p-3 text-[#FF5A5A] text-xs font-mono text-center">
+                      {contactFormErrors.form}
+                    </div>
+                  )}
+
+                  <div className="flex flex-col space-y-1">
+                    <label htmlFor="c_v_no_autofill" className="font-mono text-[9px] uppercase tracking-wider text-brand-cream/60">
+                      Vision Outline <span className="text-brand-gold">*</span>
+                    </label>
+                    <textarea
+                      id="c_v_no_autofill"
+                      rows={3}
+                      required
+                      value={contactVision}
+                      onChange={(e) => setContactVision(e.target.value)}
+                      placeholder=""
+                      autoComplete="new-password"
+                      className={`bg-white/5 border px-3 py-2 text-xs text-brand-cream focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold resize-none ${
+                        contactFormErrors.vision ? "border-[#FF5A5A]" : "border-white/20"
+                      }`}
+                      suppressHydrationWarning={true}
+
+                    />
+                    {contactFormErrors.vision && (
+                      <p className="font-mono text-[9px] text-[#FF5A5A] mt-0.5">{contactFormErrors.vision}</p>
+                    )}
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={contactFormLoading}
+                    className="w-full py-3 bg-brand-clay hover:bg-brand-gold text-brand-cream text-xs font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    suppressHydrationWarning={true}
+                  >
+                    {contactFormLoading ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        PROCESSING ARCHITECTURE...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-3.5 h-3.5" />
+                        Let&apos;s Talk ↗
+                      </>
+                    )}
+                  </button>
+
+                  <div className="relative flex py-2 items-center select-none">
+                    <div className="flex-grow border-t border-white/10"></div>
+                    <span className="flex-shrink mx-4 text-[9px] font-mono text-brand-cream/40 uppercase tracking-widest">or connect instantly</span>
+                    <div className="flex-grow border-t border-white/10"></div>
+                  </div>
+
+                  <a
+                    href="https://wa.me/917470857424?text=Hi%20Express%20Webcraft!%20I'm%20interested%20in%20a%20premium%20website%20commission."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => Analytics.trackWhatsAppClick()}
+                    className="w-full py-3 border-2 border-[#25D366]/40 hover:border-[#25D366] text-[#25D366] text-xs font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2 hover:bg-[#25D366]/5"
+                  >
+                    <MessageCircle className="w-4 h-4 fill-[#25D366]/10" />
+                    Chat on WhatsApp ↗
+                  </a>
+                </motion.form>
+              ) : (
+                <motion.div
+                  key="talk-success"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="bg-white/5 border border-brand-gold/30 p-6 text-center space-y-5"
+                >
+                  <div className="w-12 h-12 rounded-full border border-brand-gold flex items-center justify-center mx-auto text-brand-gold">
+                    <Leaf className="w-5 h-5" />
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="font-display text-base font-bold uppercase text-brand-gold">
+                      Commission Request Logged
+                    </h4>
+                    <p className="font-mono text-[8px] uppercase tracking-widest text-brand-cream/50">
+                      ID // EW-COMMISSION-{submissionId || 382914}
+                    </p>
+                  </div>
+                  <p className="font-sans text-xs text-brand-cream/80 leading-relaxed font-light">
+                    Thank you. Our master visual architect is reviewing your vision layout proposal and will follow up with a bespoke blueprint within 24 hours.
+                  </p>
+
+                  <div className="border-t border-white/10 pt-4 space-y-3">
+                    <p className="font-mono text-[9px] text-brand-gold uppercase tracking-wider">
+                      ✦ Bypassing waitlists
+                    </p>
+                    <p className="font-sans text-[11px] text-brand-cream/70 font-light leading-relaxed">
+                      To lock in an immediate 15-minute concept review, secure a direct slot on our digital ledger.
+                    </p>
+                    <button
+                      onClick={() => {
+                        Analytics.trackCalendlyPlaceholderClick();
+                        window.open("https://calendly.com", "_blank");
+                      }}
+                      className="w-full py-2.5 bg-brand-gold hover:bg-brand-cream hover:text-brand-charcoal text-brand-charcoal text-[9px] font-bold uppercase tracking-widest transition-all shadow-md flex items-center justify-center gap-2"
+                    >
+                      Schedule Briefing on Calendly ↗
+                    </button>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      setContactFormSubmitted(false);
+                      setContactName("");
+                      setContactEmail("");
+                      setContactPhone("");
+                      setContactVision("");
+                    }}
+                    className="px-4 py-1.5 border border-white/25 text-[9px] font-mono uppercase tracking-widest hover:bg-white/5 transition-colors text-brand-cream block mx-auto"
+                    suppressHydrationWarning={true}
+                  >
+                    Submit Another Inquiry
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
         </div>
