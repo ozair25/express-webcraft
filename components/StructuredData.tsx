@@ -13,7 +13,7 @@ export default function StructuredData() {
       "https://dribbble.com/express-webcraft",
       "https://instagram.com/express-webcraft"
     ],
-    "description": "Express Webcraft is an ultra-luxury web development and digital artistry studio that crafts bespoke high-performance web solutions, brand architectures, and editorial copy structures.",
+    "description": "Express Webcraft is a web development and digital artistry studio that crafts customised high-performance web solutions, brand architectures, and editorial copy structures.",
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "Sales and Project Commissions",
