@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Analytics } from "@/lib/analytics";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import {
   Sparkles,
   ArrowUpRight,
@@ -849,102 +851,7 @@ export default function Home() {
 
 
 
-        {/* TOP NAVIGATION BAR */}
-        <header className="fixed top-0 left-0 right-0 z-50 bg-brand-red border-b border-brand-gold/15 h-[80px] px-4 md:px-12 flex items-center justify-between shadow-lg">
-          <a href="#" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-brand-cream relative rounded-none shadow-[2px_2px_0px_0px_rgba(201,162,39,1)] transition-all group-hover:rotate-12 overflow-hidden flex items-center justify-center">
-              <Image
-                src="https://res.cloudinary.com/dtrvyelcg/image/upload/v1784138035/ChatGPT_Image_Jul_15_2026_11_13_18_PM_kajaoz.jpg"
-                alt="Express Webcraft Logo"
-                fill
-                className="object-cover"
-                referrerPolicy="no-referrer"
-              />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-display text-sm font-black tracking-widest uppercase text-brand-cream">
-                EXPRESS WEBCRAFT
-              </span>
-              <span className="text-[8px] font-mono tracking-widest uppercase text-brand-gold font-bold leading-none">
-                WEB SOLUTIONS THAT INSPIRE
-              </span>
-            </div>
-          </a>
-
-          {/* Desktop Links */}
-          <nav className="hidden lg:flex items-center gap-5 xl:gap-8 text-[10px] xl:text-[11px] font-bold uppercase tracking-wider text-brand-cream/80">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={() => setActiveNav(item.label)}
-                className={`hover:text-brand-gold transition-all relative py-1 whitespace-nowrap ${
-                  activeNav === item.label ? "text-brand-gold font-black after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-4 after:h-[2px] after:bg-brand-gold" : ""
-                }`}
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* Mobile menu trigger */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden w-10 h-10 flex items-center justify-center border border-brand-cream/10 rounded-full"
-            aria-label="Toggle Menu"
-            suppressHydrationWarning={true}
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5 text-brand-cream" /> : <Menu className="w-5 h-5 text-brand-cream" />}
-          </button>
-
-          {/* Right CTA */}
-          <a
-            href="#contact"
-            onClick={() => {
-              Analytics.trackCtaClick("Header Let's Talk", "header");
-              setActiveNav("Contact Us");
-            }}
-            className="hidden lg:inline-flex px-6 py-2.5 bg-brand-gold hover:bg-brand-gold/90 text-brand-charcoal text-[10px] font-bold uppercase tracking-widest transition-all hover:-translate-y-0.5"
-          >
-            Let&apos;s Talk ↗
-          </a>
-        </header>
-
-        {/* Mobile drawer */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="lg:hidden fixed top-20 left-4 right-4 bg-brand-paper border-2 border-brand-charcoal p-6 z-45 shadow-xl max-h-[80vh] overflow-y-auto"
-              suppressHydrationWarning={true}
-            >
-              <nav className="flex flex-col gap-4 text-center text-xs font-bold uppercase tracking-wider text-brand-charcoal/80">
-                {navItems.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => {
-                      setActiveNav(item.label);
-                      setMobileMenuOpen(false);
-                    }}
-                    className="hover:text-brand-clay py-2 border-b border-brand-charcoal/5 last:border-b-0"
-                  >
-                    {item.label}
-                  </a>
-                ))}
-                <a
-                  href="#contact"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full py-3 bg-brand-charcoal text-brand-cream text-center text-xs font-bold uppercase tracking-widest mt-2"
-                >
-                  Let&apos;s Talk ↗
-                </a>
-              </nav>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <Header />
 
         {/* HERO CONTENT AREA */}
         <section id="home" className="flex-1 flex items-center w-full max-w-7xl mx-auto px-4 md:px-12 xl:pl-28 pb-12 max-md:pb-0 pt-28 lg:pt-36 relative lg:static z-10" suppressHydrationWarning={true}>
@@ -1067,19 +974,18 @@ export default function Home() {
 
               {/* Creative Tactile Action Buttons */}
               <div className="flex flex-wrap items-center gap-4 pt-2">
-                <a
-                  href="#portfolio"
+                <Link
+                  href="/portfolio"
                   className="px-6 py-4 bg-brand-charcoal text-brand-cream text-xs font-bold uppercase tracking-widest transition-all hover:bg-brand-red hover:shadow-[4px_4px_0px_0px_rgba(18,20,26,1)] hover:-translate-x-1 hover:-translate-y-1 active:translate-x-0 active:translate-y-0"
                 >
                   View Our Work ↗
-                </a>
-                <a
-                  href="#atelier"
-                  onClick={() => setActiveNav("Our Services")}
+                </Link>
+                <Link
+                  href="/services"
                   className="px-6 py-4 border-2 border-brand-charcoal hover:border-brand-red text-brand-charcoal hover:text-brand-red text-xs font-bold uppercase tracking-widest transition-all hover:bg-brand-red/5"
                 >
                   Our Services ↗
-                </a>
+                </Link>
               </div>
 
               {/* Trust Indicator Stack */}
@@ -1424,6 +1330,16 @@ export default function Home() {
             ))}
           </motion.div>
 
+          {/* Section concluding CTA to dedicated Services index */}
+          <div className="mt-12 text-center relative z-20">
+            <Link
+              href="/services"
+              className="inline-flex px-8 py-4 bg-brand-gold hover:bg-white text-brand-charcoal text-[11px] font-mono tracking-widest uppercase font-black transition-all shadow-[4px_4px_0px_0px_rgba(11,27,58,1)] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px]"
+            >
+              Explore All Creative Departments & Specs ↗
+            </Link>
+          </div>
+
         </div>
       </section>
 
@@ -1645,6 +1561,16 @@ export default function Home() {
               </div>
             );
           })}
+        </div>
+
+        {/* Section concluding CTA to dedicated Portfolio index */}
+        <div className="mt-16 text-center">
+          <Link
+            href="/portfolio"
+            className="inline-flex px-8 py-4 bg-brand-red hover:bg-brand-charcoal text-brand-cream text-[11px] font-mono tracking-widest uppercase font-black transition-all shadow-[4px_4px_0px_0px_rgba(201,162,39,1)] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px]"
+          >
+            Explore All Landmark Commissions & Case Studies ↗
+          </Link>
         </div>
 
         {/* Compact Auto-playing Testimonial Slider */}
@@ -1892,6 +1818,22 @@ export default function Home() {
 
           </div>
 
+          {/* Section concluding CTA to dedicated Why Us and Process index */}
+          <div className="col-span-1 lg:col-span-12 mt-12 text-center flex flex-col sm:flex-row items-center justify-center gap-4 relative z-20">
+            <Link
+              href="/why-us"
+              className="inline-flex px-6 py-3.5 bg-brand-charcoal hover:bg-brand-red text-brand-cream text-[10px] font-mono tracking-widest uppercase font-black transition-all shadow-[3px_3px_0px_0px_rgba(201,162,39,1)]"
+            >
+              Why Outstanding Brands Choose Us ↗
+            </Link>
+            <Link
+              href="/process"
+              className="inline-flex px-6 py-3.5 border-2 border-brand-charcoal hover:border-brand-red text-brand-charcoal hover:text-brand-red text-[10px] font-mono tracking-widest uppercase font-black transition-all bg-white/20"
+            >
+              Our Complete 4-Stage Creative Process ↗
+            </Link>
+          </div>
+
           {/* Interactive FAQ Accordion with SEO Schema */}
           <div className="col-span-1 lg:col-span-12 mt-16 pt-16 border-t border-brand-charcoal/10">
             <div className="max-w-3xl mx-auto space-y-8">
@@ -2008,6 +1950,23 @@ export default function Home() {
                   })
                 }}
               />
+
+              {/* Additional Guide / Pricing links for premium funnel conversion */}
+              <div className="pt-8 text-center flex flex-col sm:flex-row items-center justify-center gap-4 relative z-20">
+                <Link
+                  href="/faq"
+                  className="inline-flex px-5 py-3 bg-brand-charcoal hover:bg-brand-red text-brand-cream text-[10px] font-mono tracking-widest uppercase font-black transition-all shadow-[2px_2px_0px_0px_rgba(201,162,39,1)]"
+                >
+                  View Complete FAQs Handbook ↗
+                </Link>
+                <Link
+                  href="/pricing"
+                  className="inline-flex px-5 py-3 border border-brand-charcoal hover:border-brand-red text-brand-charcoal hover:text-brand-red text-[10px] font-mono tracking-widest uppercase font-black transition-all bg-white/20"
+                >
+                  Check Development Pricing & Packages ↗
+                </Link>
+              </div>
+
             </div>
           </div>
 
@@ -2295,53 +2254,10 @@ export default function Home() {
             </AnimatePresence>
           </div>
 
-          {/* Under-footer vintage objects decoration layout */}
-          <div className="relative w-full h-[150px] opacity-25 mt-8 pointer-events-none">
-            <Image
-              src="https://images.unsplash.com/photo-1495707902641-75cac588d2e9?auto=format&fit=crop&w=600&h=200&q=80"
-              alt="Vintage Analog Equipment"
-              fill
-              className="object-contain filter grayscale brightness-75"
-              referrerPolicy="no-referrer"
-            />
-          </div>
-
-          {/* Sublinks copyright */}
-          <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-[10px] font-mono text-brand-cream/50 gap-6">
-            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-center sm:text-left">
-              <div className="flex items-center gap-2 justify-center sm:justify-start">
-                <span className="font-display font-bold text-brand-cream text-xs">EW</span>
-                <span>© 2026 EXPRESS WEBCRAFT. ALL RIGHTS RESERVED.</span>
-              </div>
-              <div className="hidden sm:inline-block w-[1px] h-3 bg-white/15" />
-              <div className="flex items-center gap-4 justify-center">
-                <button 
-                  onClick={() => setIsPrivacyOpen(true)}
-                  className="hover:text-brand-gold transition-colors uppercase cursor-pointer"
-                >
-                  Privacy Policy
-                </button>
-                <button 
-                  onClick={() => setIsTermsOpen(true)}
-                  className="hover:text-brand-gold transition-colors uppercase cursor-pointer"
-                >
-                  Terms of Service
-                </button>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-brand-cream/40">
-              <span className="text-[9px] text-brand-gold/60 uppercase">Useful Links:</span>
-              <a href="#home" className="hover:text-brand-cream transition-colors uppercase">Home</a>
-              <a href="#atelier" className="hover:text-brand-cream transition-colors uppercase">Our Services</a>
-              <a href="#portfolio" className="hover:text-brand-cream transition-colors uppercase">Portfolio</a>
-              <a href="#process" className="hover:text-brand-cream transition-colors uppercase">Why Us</a>
-              <a href="#contact" className="hover:text-brand-cream transition-colors uppercase">Contact Us</a>
-            </div>
-          </div>
-
         </div>
       </section>
+
+      <Footer />
 
       {/* Privacy Policy Modal */}
       <AnimatePresence>

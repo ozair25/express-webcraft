@@ -3,6 +3,20 @@ import type { MetadataRoute } from "next";
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.expresswebcraft.com";
   
+  const staticPages = [
+    "",
+    "/about",
+    "/services",
+    "/portfolio",
+    "/why-us",
+    "/process",
+    "/pricing",
+    "/faq",
+    "/contact",
+    "/privacy-policy",
+    "/terms-and-conditions",
+  ];
+
   const services = [
     "custom-website-design",
     "web-development",
@@ -14,6 +28,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "analytics-growth"
   ];
 
+  const staticUrls = staticPages.map(page => ({
+    url: `${baseUrl}${page}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: page === "" ? 1.0 : 0.9,
+  }));
+
   const serviceUrls = services.map(slug => ({
     url: `${baseUrl}/services/${slug}`,
     lastModified: new Date(),
@@ -22,12 +43,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 1.0,
-    },
+    ...staticUrls,
     ...serviceUrls
   ];
 }

@@ -42,14 +42,14 @@ export const metadata: Metadata = {
     'express webcraft services',
     'luxury creative agency'
   ],
-  metadataBase: new URL('https://www.expresswebcraft.com'),
+  metadataBase: new URL('https://expresswebcraft.com'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: 'Express Webcraft — Bespoke Web Design & High-Performance Engineering Studio',
     description: 'Explore our elite digital services: bespoke Website Design, scalable Web Development, conversion-optimized Landing Pages, E-commerce, Technical SEO, UI/UX design, Maintenance, and Analytics.',
-    url: 'https://www.expresswebcraft.com',
+    url: 'https://expresswebcraft.com',
     siteName: 'Express Webcraft',
     locale: 'en_US',
     type: 'website',
