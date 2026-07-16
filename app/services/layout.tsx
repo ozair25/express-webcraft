@@ -1,19 +1,34 @@
-import { createMetadata, DEFAULT_IMAGE_PATH } from "@/lib/metadata";
+import type { Metadata } from 'next';
 
-export const metadata = createMetadata({
-  title: "Premium Web Services — Express Webcraft Digital Solutions",
-  description: "Explore expressive, high-performance web design, development, landing pages, e-commerce, SEO, UI/UX, maintenance, and analytics services.",
-  path: "/services",
-  image: DEFAULT_IMAGE_PATH,
-  imageAlt: "Express Webcraft Premium Web Services",
-  keywords: [
-    "premium web services",
-    "custom website design services",
-    "web development services",
-    "landing page agency",
-    "seo performance services",
-  ],
-});
+export const metadata: Metadata = {
+  title: 'Our Premium Services — Express Webcraft',
+  description: 'Explore our bespoke digital services: custom website design, scalable full-stack development, landing pages, e-commerce, technical SEO, UI/UX design, website maintenance, and analytics.',
+  alternates: {
+    canonical: 'https://www.expresswebcraft.com/services',
+  },
+  openGraph: {
+    title: 'Our Premium Services — Express Webcraft',
+    description: 'Explore our bespoke digital services: custom website design, scalable full-stack development, landing pages, e-commerce, technical SEO, UI/UX design, website maintenance, and analytics.',
+    url: 'https://www.expresswebcraft.com/services',
+    type: 'website',
+    siteName: 'Express Webcraft',
+    locale: 'en_US',
+    images: [
+      {
+        url: 'https://www.expresswebcraft.com/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Express Webcraft Premium Web Services Overview',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Our Premium Services — Express Webcraft',
+    description: 'Explore our bespoke digital services: custom website design, scalable full-stack development, landing pages, e-commerce, technical SEO, UI/UX design, website maintenance, and analytics.',
+    images: ['https://www.expresswebcraft.com/og-image.png'],
+  },
+};
 
 export default function ServicesLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

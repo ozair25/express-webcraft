@@ -228,6 +228,7 @@ export default function Home() {
     { label: "Our Services", href: "/services" },
     { label: "Portfolio", href: "/portfolio" },
     { label: "Why Us", href: "/why-us" },
+    { label: "FAQ", href: "/#inquiry-guide" },
     { label: "Contact Us", href: "/contact" }
   ];
   const [mounted, setMounted] = useState(false);
@@ -367,8 +368,6 @@ export default function Home() {
     // Validate vision outline (Now Required)
     if (!contactVision.trim()) {
       errors.vision = "Please enter your vision outline.";
-    } else if (contactVision.trim().length < 10) {
-      errors.vision = "Vision outline must be at least 10 characters long.";
     }
 
     if (Object.keys(errors).length > 0) {
@@ -1346,8 +1345,8 @@ export default function Home() {
               WHAT WE <span className="text-brand-red">PROVIDE</span>
             </h2>
             
-            <p className="font-sans text-sm md:text-base text-brand-charcoal/80 leading-relaxed font-light max-w-2xl">
-              Everything your business needs to build, launch and grow a powerful online presence.
+            <p className="font-sans text-base md:text-lg lg:text-xl text-brand-charcoal font-medium leading-relaxed max-w-2xl border-l-2 border-brand-red pl-4">
+              Everything your business needs to <span className="text-brand-red font-bold">build, launch, and grow</span> a powerful, high-conversion online presence.
             </p>
 
             {/* Accent gold ornament divider */}
@@ -1358,9 +1357,9 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Services Grid (2x4 on desktop/tablet, 1 column on mobile) */}
+          {/* Services Grid (2x4 on desktop/tablet, 2 columns on mobile for less spacing and shorter pages) */}
           <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10"
+            className="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-8 lg:gap-10"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
@@ -1380,7 +1379,7 @@ export default function Home() {
                   hidden: { opacity: 0, y: 24 },
                   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
                 }}
-                className="group relative bg-[#0B1B3A] border border-white/10 p-8 flex flex-col justify-between h-full hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(18,20,26,1)] hover:border-brand-gold/40 transition-all duration-300"
+                className="group relative bg-[#0B1B3A] border border-white/10 p-4 sm:p-8 flex flex-col justify-between h-full hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(18,20,26,1)] hover:border-brand-gold/40 transition-all duration-300"
               >
                 {/* Visual hint related to the service - Absolutely positioned custom inline SVG */}
                 {service.bgSvg}
@@ -1388,35 +1387,22 @@ export default function Home() {
                 {/* Top border gold accent line only on card hover */}
                 <div className="absolute top-0 left-0 h-[2px] bg-brand-gold w-0 group-hover:w-full transition-all duration-500 ease-out" />
 
-                <div className="space-y-6 relative z-10">
+                <div className="space-y-4 sm:space-y-6 relative z-10">
                   {/* Icon Slot */}
-                  <div className="w-10 h-10 rounded-none bg-white/5 border border-white/10 flex items-center justify-center shadow-sm group-hover:border-brand-gold group-hover:bg-white/10 transition-all duration-300">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-none bg-white/5 border border-white/10 flex items-center justify-center shadow-sm group-hover:border-brand-gold group-hover:bg-white/10 transition-all duration-300">
                     <div className="transition-transform duration-300 group-hover:scale-105">
                       {service.icon}
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <h3 className="font-display text-lg font-black uppercase tracking-wider text-white group-hover:text-brand-gold transition-colors duration-300">
+                  <div className="space-y-1 sm:space-y-2">
+                    <h3 className="font-display text-xs sm:text-base md:text-lg font-black uppercase tracking-wider text-white group-hover:text-brand-gold transition-colors duration-300">
                       {service.title}
                     </h3>
-                    <p className="font-sans text-xs md:text-[13px] text-white/70 group-hover:text-brand-gold/80 leading-relaxed font-light pr-8 transition-colors duration-300">
+                    <p className="font-sans text-[10px] sm:text-xs md:text-[13px] text-white/70 group-hover:text-brand-gold/80 leading-relaxed font-light pr-0 sm:pr-8 transition-colors duration-300">
                       {service.desc}
                     </p>
                   </div>
-                </div>
-
-                {/* Learn More interaction */}
-                <div className="pt-8 relative z-10 mt-auto">
-                  <Link
-                    href={`/services/${service.slug}`}
-                    className="inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-white/90 font-bold group/btn cursor-pointer"
-                  >
-                    <span className="relative py-0.5 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-brand-gold group-hover:after:w-full after:transition-all after:duration-300 group-hover:text-brand-gold transition-colors duration-300">
-                      Learn More
-                    </span>
-                    <ArrowRight className="w-3.5 h-3.5 text-brand-gold group-hover:translate-x-1 transition-transform duration-300" />
-                  </Link>
                 </div>
               </motion.div>
             ))}
@@ -1435,7 +1421,7 @@ export default function Home() {
         id="portfolio" 
         className="w-full py-20 relative z-10 scroll-mt-[80px]" 
         style={{ 
-          backgroundImage: "url('https://res.cloudinary.com/dtrvyelcg/image/upload/v1784128276/%D0%9E%D0%B1%D0%BE%D0%B8_dxm3wn.jpg')", 
+          backgroundImage: "url('https://res.cloudinary.com/dtrvyelcg/image/upload/v1784235606/download_17_qem6vc.jpg')", 
           backgroundSize: "cover", 
           backgroundPosition: "center" 
         }} 
@@ -1459,29 +1445,29 @@ export default function Home() {
         </div>
 
         {/* Continuous Sequential Showcase of all projects */}
-        <div className="space-y-24">
+        <div className="space-y-12 sm:space-y-24">
           {currentBrandData.projects.slice(0, 4).map((proj: any, idx: number) => {
             const meta = getProjectMetadata(proj, idx);
             return (
-              <div key={proj.id} className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch border-b border-brand-charcoal/10 pb-16 last:border-b-0 last:pb-0">
+              <div key={proj.id} className="grid grid-cols-2 lg:grid-cols-12 gap-3 sm:gap-6 lg:gap-10 items-stretch border-b border-brand-charcoal/10 pb-8 lg:pb-16 last:border-b-0 last:pb-0">
                 
                 {/* LEFT SIDE: One BIG creative framed placeholder */}
-                <div className="lg:col-span-7 flex flex-col justify-between">
-                  <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] lg:aspect-[4/3] bg-brand-cream border-2 border-brand-charcoal overflow-hidden shadow-[6px_6px_0px_0px_rgba(11,27,58,1)] flex flex-col group">
+                <div className="col-span-1 lg:col-span-7 flex flex-col h-[280px] sm:h-[380px] lg:h-[480px]">
+                  <div className="relative w-full flex-1 h-full bg-brand-cream border-2 border-brand-charcoal overflow-hidden shadow-[6px_6px_0px_0px_rgba(11,27,58,1)] flex flex-col group">
                     
                     {/* Browser Header Bar */}
-                    <div className="flex items-center justify-between px-3 py-2 border-b-2 border-brand-charcoal bg-brand-cream/90 select-none z-20">
-                      <div className="flex space-x-1.5 items-center">
-                        <div className="w-2.5 h-2.5 rounded-full bg-brand-clay" />
-                        <div className="w-2.5 h-2.5 rounded-full bg-brand-gold" />
-                        <div className="w-2.5 h-2.5 rounded-full bg-brand-olive" />
+                    <div className="flex items-center justify-between px-1.5 py-1 sm:px-3 sm:py-2 border-b-2 border-brand-charcoal bg-brand-cream/90 select-none z-20">
+                      <div className="flex space-x-1 sm:space-x-1.5 items-center">
+                        <div className="w-1.5 h-1.5 sm:w-2.5 sm:h-2.5 rounded-full bg-brand-clay" />
+                        <div className="w-1.5 h-1.5 sm:w-2.5 sm:h-2.5 rounded-full bg-brand-gold" />
+                        <div className="w-1.5 h-1.5 sm:w-2.5 sm:h-2.5 rounded-full bg-brand-olive" />
                       </div>
-                      <div className="flex-1 max-w-xs md:max-w-md mx-4 bg-brand-charcoal/5 rounded-md py-0.5 px-3 flex items-center justify-center text-[9px] md:text-[10px] text-brand-charcoal/60 font-mono tracking-tight">
-                        <span className="text-brand-gold mr-1.5">🔒</span>
+                      <div className="flex-1 max-w-[100px] xs:max-w-xs md:max-w-md mx-1 sm:mx-4 bg-brand-charcoal/5 rounded-md py-0.5 px-1.5 sm:px-3 flex items-center justify-center text-[7px] sm:text-[9px] md:text-[10px] text-brand-charcoal/60 font-mono tracking-tight truncate">
+                        <span className="text-brand-gold mr-1 sm:mr-1.5 text-[8px]">🔒</span>
                         {meta.url}
                       </div>
-                      <div className="flex space-x-1">
-                        <span className="text-[10px] text-brand-charcoal/40 font-mono">100%</span>
+                      <div className="flex space-x-0.5 sm:space-x-1">
+                        <span className="text-[7px] sm:text-[10px] text-brand-charcoal/40 font-mono">100%</span>
                       </div>
                     </div>
 
@@ -1539,83 +1525,83 @@ export default function Home() {
 
                       {/* Vertical Scroll Helper Overlay */}
                       {["gopalji", "friends", "shrikalyan", "agroshore"].includes(proj.id) && (
-                        <div className="absolute bottom-4 right-4 bg-brand-charcoal/90 text-brand-cream font-mono text-[9px] tracking-wider px-3 py-1.5 rounded shadow-lg z-10 animate-bounce pointer-events-none flex items-center space-x-1.5">
+                        <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 bg-brand-charcoal/90 text-brand-cream font-mono text-[6px] sm:text-[9px] tracking-wider px-1.5 py-1 sm:px-3 sm:py-1.5 rounded shadow-lg z-10 animate-bounce pointer-events-none flex items-center space-x-1 sm:space-x-1.5">
                           <span>↓</span>
-                          <span className="font-sans font-bold">SCROLL TO EXPLORE PAGE</span>
+                          <span className="font-sans font-bold">SCROLL</span>
                         </div>
                       )}
                     </div>
 
                     {/* Viewfinder focus box graphics (Creative HUD overlay) */}
-                    <div className="absolute inset-x-4 top-12 bottom-4 border border-brand-cream/10 pointer-events-none z-10" />
-                    <div className="absolute inset-x-6 top-14 bottom-6 border border-dashed border-brand-cream/5 pointer-events-none z-10" />
+                    <div className="absolute inset-x-2 top-8 bottom-2 sm:inset-x-4 sm:top-12 sm:bottom-4 border border-brand-cream/10 pointer-events-none z-10" />
+                    <div className="absolute inset-x-3 top-9 bottom-3 sm:inset-x-6 sm:top-14 sm:bottom-6 border border-dashed border-brand-cream/5 pointer-events-none z-10" />
                     
-                    <div className="absolute top-11 left-3 w-4 h-4 border-t-2 border-l-2 border-brand-gold z-10 pointer-events-none" />
-                    <div className="absolute top-11 right-3 w-4 h-4 border-t-2 border-r-2 border-brand-gold z-10 pointer-events-none" />
-                    <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-brand-gold z-10 pointer-events-none" />
-                    <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-brand-gold z-10 pointer-events-none" />
+                    <div className="absolute top-7 left-1.5 w-2 h-2 sm:top-11 sm:left-3 sm:w-4 sm:h-4 border-t-2 border-l-2 border-brand-gold z-10 pointer-events-none" />
+                    <div className="absolute top-7 right-1.5 w-2 h-2 sm:top-11 sm:right-3 sm:w-4 sm:h-4 border-t-2 border-r-2 border-brand-gold z-10 pointer-events-none" />
+                    <div className="absolute bottom-1.5 left-1.5 w-2 h-2 sm:bottom-3 sm:left-3 sm:w-4 sm:h-4 border-b-2 border-l-2 border-brand-gold z-10 pointer-events-none" />
+                    <div className="absolute bottom-1.5 right-1.5 w-2 h-2 sm:bottom-3 sm:right-3 sm:w-4 sm:h-4 border-b-2 border-r-2 border-brand-gold z-10 pointer-events-none" />
 
-                    <div className="absolute bottom-4 left-4 bg-brand-charcoal/80 backdrop-blur-md text-brand-cream font-mono text-[8px] tracking-widest px-2 py-0.5 z-10 uppercase">
-                      COMMISSION SNAPSHOT // {proj.id?.toUpperCase() || "ARCHIVE"}
+                    <div className="absolute bottom-2 left-2 sm:bottom-4 sm:left-4 bg-brand-charcoal/80 backdrop-blur-md text-brand-cream font-mono text-[6px] sm:text-[8px] tracking-widest px-1 py-0.5 z-10 uppercase">
+                      SNAPSHOT // {proj.id?.toUpperCase() || "ARCHIVE"}
                     </div>
                   </div>
                 </div>
 
                 {/* RIGHT SIDE: Summary of the project */}
-                <div className="lg:col-span-5 flex flex-col justify-between bg-brand-paper border border-brand-charcoal/15 p-6 md:p-8 shadow-sm relative">
+                <div className="col-span-1 lg:col-span-5 flex flex-col justify-between bg-brand-paper border border-brand-charcoal/15 p-3 sm:p-6 md:p-8 shadow-sm relative">
                   
                   {/* Premium Dark Blue Border Frame to separate the card from the background */}
-                  <div className="absolute inset-0 border-[10px] md:border-[12px] border-[#000052] pointer-events-none z-35" />
+                  <div className="absolute inset-0 border-[4px] sm:border-[10px] md:border-[12px] border-[#000052] pointer-events-none z-35" />
                   
                   {/* Elegant framing ornaments */}
-                  <div className="absolute top-3 left-3 w-3 h-3 border-t border-l border-brand-charcoal/30" />
-                  <div className="absolute top-3 right-3 w-3 h-3 border-t border-r border-brand-charcoal/30" />
-                  <div className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-brand-charcoal/30" />
-                  <div className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-brand-charcoal/30" />
+                  <div className="absolute top-1.5 left-1.5 sm:top-3 sm:left-3 w-1.5 h-1.5 sm:w-3 sm:h-3 border-t border-l border-brand-charcoal/30" />
+                  <div className="absolute top-1.5 right-1.5 sm:top-3 sm:right-3 w-1.5 h-1.5 sm:w-3 sm:h-3 border-t border-r border-brand-charcoal/30" />
+                  <div className="absolute bottom-1.5 left-1.5 sm:bottom-3 sm:left-3 w-1.5 h-1.5 sm:w-3 sm:h-3 border-b border-l border-brand-charcoal/30" />
+                  <div className="absolute bottom-1.5 right-1.5 sm:bottom-3 sm:right-3 w-1.5 h-1.5 sm:w-3 sm:h-3 border-b border-r border-brand-charcoal/30" />
 
-                  <div className="space-y-6">
+                  <div className="space-y-3 sm:space-y-6">
                     
-                    <div className="border-b border-brand-charcoal/10 pb-4">
-                      <span className="font-sans text-[10px] font-black tracking-widest text-brand-clay uppercase block mb-1">
+                    <div className="border-b border-brand-charcoal/10 pb-2 sm:pb-4">
+                      <span className="font-sans text-[7px] sm:text-[10px] font-black tracking-widest text-brand-clay uppercase block mb-0.5 sm:mb-1">
                         {proj.category || "Digital Curation"}
                       </span>
-                      <h3 className="font-display text-xl sm:text-2xl font-black uppercase tracking-tight text-brand-charcoal">
+                      <h3 className="font-display text-[11px] xs:text-sm sm:text-xl md:text-2xl font-black uppercase tracking-tight text-brand-charcoal leading-tight">
                         {proj.title || "Premium Commission"}
                       </h3>
                     </div>
 
                     {/* Dynamic Project Summary copywriting */}
-                    <div className="space-y-4">
-                      <p className="font-sans text-xs md:text-sm text-brand-charcoal/85 leading-relaxed">
+                    <div className="space-y-2 sm:space-y-4">
+                      <p className="font-sans text-[9px] sm:text-xs md:text-sm text-brand-charcoal/85 leading-relaxed font-light">
                         {meta.description}
                       </p>
 
                       {/* Technical stats panel */}
-                      <div className="bg-brand-cream/30 border border-brand-charcoal/10 p-4 space-y-2">
-                        <div className="flex justify-between text-[9px] font-mono">
-                          <span className="text-brand-charcoal/50">PLATFORM // RUNTIME</span>
-                          <span className="text-brand-charcoal/90 font-bold">NEXT.JS 15 + REACT</span>
+                      <div className="bg-brand-cream/30 border border-brand-charcoal/10 p-2 sm:p-4 space-y-1 sm:space-y-2">
+                        <div className="flex justify-between text-[7px] sm:text-[9px] font-mono">
+                          <span className="text-brand-charcoal/50">PLATFORM</span>
+                          <span className="text-brand-charcoal/90 font-bold">NEXT.JS 15</span>
                         </div>
-                        <div className="flex justify-between text-[9px] font-mono">
-                          <span className="text-brand-charcoal/50">STYLING // ENGINE</span>
-                          <span className="text-brand-charcoal/90 font-bold">TAILWIND CSS</span>
+                        <div className="flex justify-between text-[7px] sm:text-[9px] font-mono">
+                          <span className="text-brand-charcoal/50">STYLING</span>
+                          <span className="text-brand-charcoal/90 font-bold">TAILWIND</span>
                         </div>
-                        <div className="flex justify-between text-[9px] font-mono">
-                          <span className="text-brand-charcoal/50">EST. DEPLOY TIME</span>
-                          <span className="text-brand-gold font-bold">3 DAYS FROM BLUEPRINT</span>
+                        <div className="flex justify-between text-[7px] sm:text-[9px] font-mono">
+                          <span className="text-brand-charcoal/50">DEPLOY TIME</span>
+                          <span className="text-brand-gold font-bold">3 DAYS</span>
                         </div>
                       </div>
 
                       {/* Key Achievements Bullet points */}
-                      <div className="space-y-1.5 pt-2">
-                        <span className="font-sans text-[9px] font-black tracking-wider text-brand-clay uppercase block">
+                      <div className="space-y-1 pt-1 sm:pt-2">
+                        <span className="font-sans text-[7px] sm:text-[9px] font-black tracking-wider text-brand-clay uppercase block">
                           KEY HIGHLIGHTS
                         </span>
-                        <ul className="space-y-1 text-[11px] text-brand-charcoal/70">
+                        <ul className="space-y-0.5 sm:space-y-1 text-[8px] sm:text-[11px] text-brand-charcoal/70">
                           {meta.highlights.map((highlight, hIdx) => (
-                            <li key={hIdx} className="flex items-center gap-1.5">
-                              <span className="w-1.5 h-1.5 bg-brand-gold rounded-full" />
-                              {highlight}
+                            <li key={hIdx} className="flex items-center gap-1">
+                              <span className="w-1 h-1 bg-brand-gold rounded-full shrink-0" />
+                              <span className="truncate sm:whitespace-normal">{highlight}</span>
                             </li>
                           ))}
                         </ul>
@@ -1625,16 +1611,16 @@ export default function Home() {
 
                   </div>
 
-                  <div className="pt-6 border-t border-brand-charcoal/10 mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <span className="font-mono text-[9px] text-brand-clay uppercase font-bold">
+                  <div className="pt-3 sm:pt-6 border-t border-brand-charcoal/10 mt-3 sm:mt-6 flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4">
+                    <span className="font-mono text-[8px] sm:text-[9px] text-brand-clay uppercase font-bold">
                       REF_ID: // 0{idx + 1}
                     </span>
                     <Link
                       href="/contact"
-                      className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-charcoal hover:bg-brand-gold text-brand-cream hover:text-brand-charcoal text-[9px] font-bold uppercase tracking-widest transition-colors"
+                      className="inline-flex items-center gap-1 px-2 py-1 sm:px-4 sm:py-2 bg-brand-charcoal hover:bg-brand-gold text-brand-cream hover:text-brand-charcoal text-[8px] sm:text-[9px] font-bold uppercase tracking-wider sm:tracking-widest transition-colors"
                     >
-                      <span>Inquire About Build</span>
-                      <ArrowUpRight className="w-3 h-3" />
+                      <span>Inquire Build</span>
+                      <ArrowUpRight className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                     </Link>
                   </div>
 
@@ -1833,7 +1819,6 @@ export default function Home() {
             <div className="bg-brand-charcoal text-brand-cream p-6 space-y-6 shadow-xl border-2 border-brand-charcoal">
               {[
                 { count: "5+ Years", label: "Experience" },
-                { count: "10+", label: "Projects Delivered" },
                 { count: "100%", label: "Customer Satisfaction" },
                 { count: "7 Days", label: "Average Delivery" }
               ].map((stat, i) => (
@@ -1891,7 +1876,7 @@ export default function Home() {
           </div>
 
           {/* Interactive FAQ Accordion with SEO Schema */}
-          <div className="col-span-1 lg:col-span-12 mt-16 pt-16 border-t border-brand-charcoal/10">
+          <div id="inquiry-guide" className="col-span-1 lg:col-span-12 mt-16 pt-16 border-t border-brand-charcoal/10 scroll-mt-[100px]">
             <div className="max-w-3xl mx-auto space-y-8">
               <div className="text-center space-y-2">
                 <span className="font-sans text-[10px] font-black tracking-widest text-brand-clay uppercase block">
@@ -2030,6 +2015,15 @@ export default function Home() {
             Let&apos;s build something <br />
             extraordinary together.
           </h2>
+
+          <div className="pt-2">
+            <Link
+              href="/#inquiry-guide"
+              className="inline-flex items-center gap-2 px-5 py-2 border border-brand-gold/30 hover:border-brand-gold bg-brand-gold/5 hover:bg-brand-gold/10 text-brand-gold hover:text-white text-[10px] font-mono uppercase tracking-widest transition-all duration-300"
+            >
+              <span>✦ Read Atelier Inquiry Guide & FAQ ✦</span>
+            </Link>
+          </div>
 
           <div className="pt-4 max-w-md mx-auto">
             <AnimatePresence mode="wait">
@@ -2225,7 +2219,7 @@ export default function Home() {
                   </div>
 
                   <a
-                    href="https://wa.me/917470857424?text=Hi%20Express%20WebCraft!%20I'm%20interested%20in%20a%20premium%20website%20for%20my%20business.%20I'd%20like%20to%20discuss%20my%20requirements%20and%20receive%20a%20custom%20quote"
+                    href="https://wa.me/917470857424?text=Hi%20Express%20Webcraft!%20I'm%20interested%20in%20a%20premium%20website%20commission."
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => Analytics.trackWhatsAppClick()}
@@ -2334,6 +2328,7 @@ export default function Home() {
               <Link href="/services" className="hover:text-brand-cream transition-colors uppercase">Our Services</Link>
               <Link href="/portfolio" className="hover:text-brand-cream transition-colors uppercase">Portfolio</Link>
               <Link href="/why-us" className="hover:text-brand-cream transition-colors uppercase">Why Us</Link>
+              <Link href="/#inquiry-guide" className="hover:text-brand-cream transition-colors uppercase">FAQ</Link>
               <Link href="/contact" className="hover:text-brand-cream transition-colors uppercase">Contact Us</Link>
             </div>
           </div>
@@ -2357,7 +2352,7 @@ export default function Home() {
           <button
             onClick={() => {
               Analytics.trackWhatsAppClick();
-              window.open("https://wa.me/917470857424?text=Hi%20Express%20WebCraft!%20I'm%20interested%20in%20a%20premium%20website%20for%20my%20business.%20I'd%20like%20to%20discuss%20my%20requirements%20and%20receive%20a%20custom%20quote", "_blank");
+              window.open("https://wa.me/917470857424?text=Hi%20Express%20Webcraft!%20I'm%20interested%20in%20a%20premium%20website%20commission.", "_blank");
             }}
             className="flex items-center gap-2 px-4 py-2.5 bg-brand-cream border-2 border-brand-charcoal text-brand-charcoal text-[10px] font-mono uppercase tracking-wider shadow-[4px_4px_0px_0px_rgba(11,27,58,1)] hover:shadow-[2px_2px_0px_0px_rgba(11,27,58,1)] hover:translate-x-0.5 hover:translate-y-0.5 transition-all group"
             aria-label="Contact via WhatsApp"

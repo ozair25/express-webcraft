@@ -19,6 +19,7 @@ export default function TermsAndConditionsPage() {
     { label: "Our Services", href: "/services" },
     { label: "Portfolio", href: "/portfolio" },
     { label: "Why Us", href: "/why-us" },
+    { label: "FAQ", href: "/#inquiry-guide" },
     { label: "Contact Us", href: "/contact" }
   ];
 
@@ -251,6 +252,7 @@ export default function TermsAndConditionsPage() {
               <Link href="/services" className="hover:text-brand-cream transition-colors uppercase">Our Services</Link>
               <Link href="/portfolio" className="hover:text-brand-cream transition-colors uppercase">Portfolio</Link>
               <Link href="/why-us" className="hover:text-brand-cream transition-colors uppercase">Why Us</Link>
+              <Link href="/#inquiry-guide" className="hover:text-brand-cream transition-colors uppercase">FAQ</Link>
               <Link href="/contact" className="hover:text-brand-cream transition-colors uppercase">Contact Us</Link>
             </div>
           </div>
@@ -269,7 +271,7 @@ export default function TermsAndConditionsPage() {
           <button
             onClick={() => {
               Analytics.trackWhatsAppClick();
-              window.open("https://wa.me/917470857424?text=Hi%20Express%20WebCraft!%20I'm%20interested%20in%20a%20premium%20website%20for%20my%20business.%20I'd%20like%20to%20discuss%20my%20requirements%20and%20receive%20a%20custom%20quote", "_blank");
+              window.open("https://wa.me/917470857424?text=Hi%20Express%20Webcraft!%20I'm%20interested%20in%20a%20premium%20website%20commission.", "_blank");
             }}
             className="flex items-center gap-2 px-4 py-2.5 bg-brand-cream border-2 border-brand-charcoal text-brand-charcoal text-[10px] font-mono uppercase tracking-wider shadow-[4px_4px_0px_0px_rgba(11,27,58,1)] hover:shadow-[2px_2px_0px_0px_rgba(11,27,58,1)] hover:translate-x-0.5 hover:translate-y-0.5 transition-all group"
             aria-label="Contact via WhatsApp"

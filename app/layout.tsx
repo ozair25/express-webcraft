@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from 'next';
 import { Playfair_Display, Inter, Alex_Brush } from 'next/font/google';
 import './globals.css'; // Global styles
 import StructuredData from '@/components/StructuredData';
-import { createMetadata, DEFAULT_DESCRIPTION, DEFAULT_IMAGE_PATH } from '@/lib/metadata';
 
 export const viewport: Viewport = {
   themeColor: '#0B1B3A',
@@ -28,26 +27,58 @@ const alex = Alex_Brush({
 });
 
 export const metadata: Metadata = {
-  ...createMetadata({
+  title: 'Express Webcraft — Bespoke Web Design & High-Performance Engineering Studio',
+  description: 'Express Webcraft is a premium web agency providing bespoke Custom Website Design, Web Development, High-Converting Landing Pages, E-commerce Solutions, SEO & Performance, UI/UX Design, Website Maintenance, and Analytics & Growth.',
+  keywords: [
+    'custom website design',
+    'premium web development',
+    'landing page design',
+    'e-commerce solutions',
+    'technical seo',
+    'core web vitals optimization',
+    'ui ux design',
+    'website maintenance',
+    'analytics and growth',
+    'express webcraft services',
+    'luxury creative agency'
+  ],
+  metadataBase: new URL('https://www.expresswebcraft.com'),
+  alternates: {
+    canonical: 'https://www.expresswebcraft.com/',
+  },
+  openGraph: {
     title: 'Express Webcraft — Bespoke Web Design & High-Performance Engineering Studio',
-    description: DEFAULT_DESCRIPTION,
-    path: '/',
-    image: DEFAULT_IMAGE_PATH,
-    imageAlt: 'Express Webcraft — Premium website design, development, and growth services',
-    keywords: [
-      'custom website design',
-      'premium web development',
-      'landing page design',
-      'e-commerce solutions',
-      'technical seo',
-      'core web vitals optimization',
-      'ui ux design',
-      'website maintenance',
-      'analytics and growth',
-      'express webcraft services',
-      'luxury creative agency',
+    description: 'Explore our elite digital services: bespoke Website Design, scalable Web Development, conversion-optimized Landing Pages, E-commerce, Technical SEO, UI/UX design, Maintenance, and Analytics.',
+    url: 'https://www.expresswebcraft.com/',
+    siteName: 'Express Webcraft',
+    locale: 'en_US',
+    type: 'website',
+    images: [
+      {
+        url: 'https://www.expresswebcraft.com/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Express Webcraft — What We Provide - Services Overview',
+      },
     ],
-  }),
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Express Webcraft — Bespoke Web Design & High-Performance Engineering Studio',
+    description: 'Explore our elite digital services: bespoke Website Design, scalable Web Development, conversion-optimized Landing Pages, E-commerce, Technical SEO, UI/UX design, Maintenance, and Analytics.',
+    images: ['https://www.expresswebcraft.com/og-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -60,28 +91,6 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable} ${alex.variable}`}>
       <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LVNGNGWWY0" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-LVNGNGWWY0');
-            `,
-          }}
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(c,l,a,r,i,t,y){
-                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-              })(window, document, "clarity", "script", "xna4kj796k");
-            `,
-          }}
-        />
         <link rel="preconnect" href="https://res.cloudinary.com" />
         <link rel="preconnect" href="https://images.unsplash.com" />
         <link rel="preconnect" href="https://picsum.photos" />

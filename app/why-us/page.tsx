@@ -20,6 +20,7 @@ export default function WhyUsPage() {
     { label: "Our Services", href: "/services" },
     { label: "Portfolio", href: "/portfolio" },
     { label: "Why Us", href: "/why-us" },
+    { label: "FAQ", href: "/#inquiry-guide" },
     { label: "Contact Us", href: "/contact" }
   ];
 
@@ -161,7 +162,7 @@ export default function WhyUsPage() {
                   </h1>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+                <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-6 pt-4">
                   {[
                     {
                       id: "01",
@@ -186,18 +187,18 @@ export default function WhyUsPage() {
                   ].map((step) => (
                     <div
                       key={step.id}
-                      className="bg-brand-paper border border-brand-charcoal/15 p-5 flex flex-col justify-between hover:shadow-md transition-all group relative"
+                      className="bg-brand-paper border border-brand-charcoal/15 p-3 sm:p-5 flex flex-col justify-between hover:shadow-md transition-all group relative"
                     >
                       <div className="absolute top-3 right-3 w-1.5 h-1.5 bg-brand-gold rounded-full opacity-60" />
 
-                      <div className="space-y-3">
-                        <span className="font-mono text-[10px] font-black text-brand-clay block">
+                      <div className="space-y-2 sm:space-y-3">
+                        <span className="font-mono text-[8px] sm:text-[10px] font-black text-brand-clay block">
                           ✦ PILLAR // {step.id}
                         </span>
-                        <h4 className="font-display text-base font-black uppercase text-brand-charcoal group-hover:text-brand-red transition-colors">
+                        <h4 className="font-display text-xs sm:text-base font-black uppercase text-brand-charcoal group-hover:text-brand-red transition-colors">
                           {step.title}
                         </h4>
-                        <p className="font-sans text-xs text-brand-charcoal/70 leading-relaxed font-light">
+                        <p className="font-sans text-[10px] sm:text-xs text-brand-charcoal/70 leading-relaxed font-light">
                           {step.desc}
                         </p>
                       </div>
@@ -213,7 +214,6 @@ export default function WhyUsPage() {
                 <div className="bg-brand-charcoal text-brand-cream p-6 space-y-6 shadow-xl border-2 border-brand-charcoal">
                   {[
                     { count: "5+ Years", label: "Experience" },
-                    { count: "10+", label: "Projects Delivered" },
                     { count: "100%", label: "Customer Satisfaction" },
                     { count: "7 Days", label: "Average Delivery" }
                   ].map((stat, i) => (
@@ -437,6 +437,7 @@ export default function WhyUsPage() {
               <Link href="/services" className="hover:text-brand-cream transition-colors uppercase">Our Services</Link>
               <Link href="/portfolio" className="hover:text-brand-cream transition-colors uppercase">Portfolio</Link>
               <Link href="/why-us" className="hover:text-brand-cream transition-colors uppercase">Why Us</Link>
+              <Link href="/#inquiry-guide" className="hover:text-brand-cream transition-colors uppercase">FAQ</Link>
               <Link href="/contact" className="hover:text-brand-cream transition-colors uppercase">Contact Us</Link>
             </div>
           </div>
@@ -455,7 +456,7 @@ export default function WhyUsPage() {
           <button
             onClick={() => {
               Analytics.trackWhatsAppClick();
-              window.open("https://wa.me/917470857424?text=Hi%20Express%20WebCraft!%20I'm%20interested%20in%20a%20premium%20website%20for%20my%20business.%20I'd%20like%20to%20discuss%20my%20requirements%20and%20receive%20a%20custom%20quote", "_blank");
+              window.open("https://wa.me/917470857424?text=Hi%20Express%20Webcraft!%20I'm%20interested%20in%20a%20premium%20website%20commission.", "_blank");
             }}
             className="flex items-center gap-2 px-4 py-2.5 bg-brand-cream border-2 border-brand-charcoal text-brand-charcoal text-[10px] font-mono uppercase tracking-wider shadow-[4px_4px_0px_0px_rgba(11,27,58,1)] hover:shadow-[2px_2px_0px_0px_rgba(11,27,58,1)] hover:translate-x-0.5 hover:translate-y-0.5 transition-all group"
             aria-label="Contact via WhatsApp"

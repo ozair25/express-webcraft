@@ -28,6 +28,7 @@ export default function ServicesPage() {
     { label: "Our Services", href: "/services" },
     { label: "Portfolio", href: "/portfolio" },
     { label: "Why Us", href: "/why-us" },
+    { label: "FAQ", href: "/#inquiry-guide" },
     { label: "Contact Us", href: "/contact" }
   ];
 
@@ -366,8 +367,8 @@ export default function ServicesPage() {
                 WHAT WE <span className="text-brand-red">PROVIDE</span>
               </h2>
               
-              <p className="font-sans text-sm md:text-base text-brand-charcoal/80 leading-relaxed font-light max-w-2xl">
-                Everything your business needs to build, launch and grow a powerful online presence.
+              <p className="font-sans text-base md:text-lg lg:text-xl text-brand-charcoal font-medium leading-relaxed max-w-2xl border-l-2 border-brand-red pl-4">
+                Everything your business needs to <span className="text-brand-red font-bold">build, launch, and grow</span> a powerful, high-conversion online presence.
               </p>
 
               {/* Accent gold ornament divider */}
@@ -378,9 +379,9 @@ export default function ServicesPage() {
               </div>
             </div>
 
-            {/* Services Grid */}
+            {/* Services Grid (2 columns on mobile with tighter spacing and padding) */}
             <motion.div 
-              className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10"
+              className="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-8 lg:gap-10"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
@@ -400,41 +401,28 @@ export default function ServicesPage() {
                     hidden: { opacity: 0, y: 24 },
                     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
                   }}
-                  className="group relative bg-[#0B1B3A] border border-white/10 p-8 flex flex-col justify-between h-full hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(18,20,26,1)] hover:border-brand-gold/40 transition-all duration-300"
+                  className="group relative bg-[#0B1B3A] border border-white/10 p-4 sm:p-8 flex flex-col justify-between h-full hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(18,20,26,1)] hover:border-brand-gold/40 transition-all duration-300"
                 >
                   {service.bgSvg}
 
                   <div className="absolute top-0 left-0 h-[2px] bg-brand-gold w-0 group-hover:w-full transition-all duration-500 ease-out" />
 
-                  <div className="space-y-6 relative z-10">
+                  <div className="space-y-4 sm:space-y-6 relative z-10">
                     {/* Icon Slot */}
-                    <div className="w-10 h-10 rounded-none bg-white/5 border border-white/10 flex items-center justify-center shadow-sm group-hover:border-brand-gold group-hover:bg-white/10 transition-all duration-300">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-none bg-white/5 border border-white/10 flex items-center justify-center shadow-sm group-hover:border-brand-gold group-hover:bg-white/10 transition-all duration-300">
                       <div className="transition-transform duration-300 group-hover:scale-105">
                         {service.icon}
                       </div>
                     </div>
 
-                    <div className="space-y-2">
-                      <h3 className="font-display text-lg font-black uppercase tracking-wider text-white group-hover:text-brand-gold transition-colors duration-300">
+                    <div className="space-y-1 sm:space-y-2">
+                      <h3 className="font-display text-xs sm:text-base md:text-lg font-black uppercase tracking-wider text-white group-hover:text-brand-gold transition-colors duration-300">
                         {service.title}
                       </h3>
-                      <p className="font-sans text-xs md:text-[13px] text-white/70 group-hover:text-brand-gold/80 leading-relaxed font-light pr-8 transition-colors duration-300">
+                      <p className="font-sans text-[10px] sm:text-xs md:text-[13px] text-white/70 group-hover:text-brand-gold/80 leading-relaxed font-light pr-0 sm:pr-8 transition-colors duration-300">
                         {service.desc}
                       </p>
                     </div>
-                  </div>
-
-                  {/* Learn More interaction */}
-                  <div className="pt-8 relative z-10 mt-auto">
-                    <Link
-                      href={`/services/${service.slug}`}
-                      className="inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-white/90 font-bold group/btn cursor-pointer"
-                    >
-                      <span className="relative py-0.5 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-brand-gold group-hover:after:w-full after:transition-all after:duration-300 group-hover:text-brand-gold transition-colors duration-300">
-                        Learn More
-                      </span>
-                      <ArrowRight className="w-3.5 h-3.5 text-brand-gold group-hover:translate-x-1 transition-transform duration-300" />
-                    </Link>
                   </div>
                 </motion.div>
               ))}
@@ -487,6 +475,7 @@ export default function ServicesPage() {
               <Link href="/services" className="hover:text-brand-cream transition-colors uppercase">Our Services</Link>
               <Link href="/portfolio" className="hover:text-brand-cream transition-colors uppercase">Portfolio</Link>
               <Link href="/why-us" className="hover:text-brand-cream transition-colors uppercase">Why Us</Link>
+              <Link href="/#inquiry-guide" className="hover:text-brand-cream transition-colors uppercase">FAQ</Link>
               <Link href="/contact" className="hover:text-brand-cream transition-colors uppercase">Contact Us</Link>
             </div>
           </div>
@@ -505,7 +494,7 @@ export default function ServicesPage() {
           <button
             onClick={() => {
               Analytics.trackWhatsAppClick();
-              window.open("https://wa.me/917470857424?text=Hi%20Express%20WebCraft!%20I'm%20interested%20in%20a%20premium%20website%20for%20my%20business.%20I'd%20like%20to%20discuss%20my%20requirements%20and%20receive%20a%20custom%20quote", "_blank");
+              window.open("https://wa.me/917470857424?text=Hi%20Express%20Webcraft!%20I'm%20interested%20in%20a%20premium%20website%20commission.", "_blank");
             }}
             className="flex items-center gap-2 px-4 py-2.5 bg-brand-cream border-2 border-brand-charcoal text-brand-charcoal text-[10px] font-mono uppercase tracking-wider shadow-[4px_4px_0px_0px_rgba(11,27,58,1)] hover:shadow-[2px_2px_0px_0px_rgba(11,27,58,1)] hover:translate-x-0.5 hover:translate-y-0.5 transition-all group"
             aria-label="Contact via WhatsApp"

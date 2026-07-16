@@ -93,6 +93,7 @@ export default function PortfolioPage() {
     { label: "Our Services", href: "/services" },
     { label: "Portfolio", href: "/portfolio" },
     { label: "Why Us", href: "/why-us" },
+    { label: "FAQ", href: "/#inquiry-guide" },
     { label: "Contact Us", href: "/contact" }
   ];
 
@@ -287,7 +288,7 @@ export default function PortfolioPage() {
           id="portfolio" 
           className="w-full py-12 relative z-10" 
           style={{ 
-            backgroundImage: "url('https://res.cloudinary.com/dtrvyelcg/image/upload/v1784128276/%D0%9E%D0%B1%D0%BE%D0%B8_dxm3wn.jpg')", 
+            backgroundImage: "url('https://res.cloudinary.com/dtrvyelcg/image/upload/v1784235606/download_17_qem6vc.jpg')", 
             backgroundSize: "cover", 
             backgroundPosition: "center" 
           }} 
@@ -311,29 +312,29 @@ export default function PortfolioPage() {
             </div>
 
             {/* Continuous Sequential Showcase of all projects */}
-            <div className="space-y-24">
+            <div className="space-y-12 sm:space-y-24">
               {PROJECTS_DATA.map((proj, idx) => {
                 const meta = getProjectMetadata(proj);
                 return (
-                  <div key={proj.id} className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch border-b border-brand-charcoal/10 pb-16 last:border-b-0 last:pb-0">
+                  <div key={proj.id} className="grid grid-cols-2 lg:grid-cols-12 gap-3 sm:gap-6 lg:gap-10 items-stretch border-b border-brand-charcoal/10 pb-8 lg:pb-16 last:border-b-0 last:pb-0">
                     
                     {/* LEFT SIDE: Browser mockup frame */}
-                    <div className="lg:col-span-7 flex flex-col justify-between">
-                      <div className="relative w-full aspect-[3/4] sm:aspect-[4/5] lg:aspect-[4/3] bg-brand-cream border-2 border-brand-charcoal overflow-hidden shadow-[6px_6px_0px_0px_rgba(11,27,58,1)] flex flex-col group">
+                    <div className="col-span-1 lg:col-span-7 flex flex-col h-[280px] sm:h-[380px] lg:h-[480px]">
+                      <div className="relative w-full flex-1 h-full bg-brand-cream border-2 border-brand-charcoal overflow-hidden shadow-[6px_6px_0px_0px_rgba(11,27,58,1)] flex flex-col group">
                         
                         {/* Browser Header Bar */}
-                        <div className="flex items-center justify-between px-3 py-2 border-b-2 border-brand-charcoal bg-brand-cream/90 select-none z-20">
-                          <div className="flex space-x-1.5 items-center">
-                            <div className="w-2.5 h-2.5 rounded-full bg-brand-clay" />
-                            <div className="w-2.5 h-2.5 rounded-full bg-brand-gold" />
-                            <div className="w-2.5 h-2.5 rounded-full bg-brand-olive" />
+                        <div className="flex items-center justify-between px-1.5 py-1 sm:px-3 sm:py-2 border-b-2 border-brand-charcoal bg-brand-cream/90 select-none z-20">
+                          <div className="flex space-x-1 sm:space-x-1.5 items-center">
+                            <div className="w-1.5 h-1.5 sm:w-2.5 sm:h-2.5 rounded-full bg-brand-clay" />
+                            <div className="w-1.5 h-1.5 sm:w-2.5 sm:h-2.5 rounded-full bg-brand-gold" />
+                            <div className="w-1.5 h-1.5 sm:w-2.5 sm:h-2.5 rounded-full bg-brand-olive" />
                           </div>
-                          <div className="flex-1 max-w-xs md:max-w-md mx-4 bg-brand-charcoal/5 rounded-md py-0.5 px-3 flex items-center justify-center text-[9px] md:text-[10px] text-brand-charcoal/60 font-mono tracking-tight">
-                            <span className="text-brand-gold mr-1.5">🔒</span>
+                          <div className="flex-1 max-w-[100px] xs:max-w-xs md:max-w-md mx-1 sm:mx-4 bg-brand-charcoal/5 rounded-md py-0.5 px-1.5 sm:px-3 flex items-center justify-center text-[7px] sm:text-[9px] md:text-[10px] text-brand-charcoal/60 font-mono tracking-tight truncate">
+                            <span className="text-brand-gold mr-1 sm:mr-1.5 text-[8px]">🔒</span>
                             {meta.url}
                           </div>
-                          <div className="flex space-x-1">
-                            <span className="text-[10px] text-brand-charcoal/40 font-mono">100%</span>
+                          <div className="flex space-x-0.5 sm:space-x-1">
+                            <span className="text-[7px] sm:text-[10px] text-brand-charcoal/40 font-mono">100%</span>
                           </div>
                         </div>
 
@@ -381,80 +382,80 @@ export default function PortfolioPage() {
 
                           {/* Vertical Scroll Helper Overlay */}
                           {["gopalji", "friends", "shrikalyan", "agroshore"].includes(proj.id) && (
-                            <div className="absolute bottom-4 right-4 bg-brand-charcoal/90 text-brand-cream font-mono text-[9px] tracking-wider px-3 py-1.5 rounded shadow-lg z-10 animate-bounce pointer-events-none flex items-center space-x-1.5">
+                            <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 bg-brand-charcoal/90 text-brand-cream font-mono text-[6px] sm:text-[9px] tracking-wider px-1.5 py-1 sm:px-3 sm:py-1.5 rounded shadow-lg z-10 animate-bounce pointer-events-none flex items-center space-x-1 sm:space-x-1.5">
                               <span>↓</span>
-                              <span className="font-sans font-bold">SCROLL TO EXPLORE PAGE</span>
+                              <span className="font-sans font-bold">SCROLL</span>
                             </div>
                           )}
                         </div>
 
                         {/* HUD overlays */}
-                        <div className="absolute inset-x-4 top-12 bottom-4 border border-brand-cream/10 pointer-events-none z-10" />
-                        <div className="absolute inset-x-6 top-14 bottom-6 border border-dashed border-brand-cream/5 pointer-events-none z-10" />
+                        <div className="absolute inset-x-2 top-8 bottom-2 sm:inset-x-4 sm:top-12 sm:bottom-4 border border-brand-cream/10 pointer-events-none z-10" />
+                        <div className="absolute inset-x-3 top-9 bottom-3 sm:inset-x-6 sm:top-14 sm:bottom-6 border border-dashed border-brand-cream/5 pointer-events-none z-10" />
                         
-                        <div className="absolute top-11 left-3 w-4 h-4 border-t-2 border-l-2 border-brand-gold z-10 pointer-events-none" />
-                        <div className="absolute top-11 right-3 w-4 h-4 border-t-2 border-r-2 border-brand-gold z-10 pointer-events-none" />
-                        <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-brand-gold z-10 pointer-events-none" />
-                        <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-brand-gold z-10 pointer-events-none" />
+                        <div className="absolute top-7 left-1.5 w-2 h-2 sm:top-11 sm:left-3 sm:w-4 sm:h-4 border-t-2 border-l-2 border-brand-gold z-10 pointer-events-none" />
+                        <div className="absolute top-7 right-1.5 w-2 h-2 sm:top-11 sm:right-3 sm:w-4 sm:h-4 border-t-2 border-r-2 border-brand-gold z-10 pointer-events-none" />
+                        <div className="absolute bottom-1.5 left-1.5 w-2 h-2 sm:bottom-3 sm:left-3 sm:w-4 sm:h-4 border-b-2 border-l-2 border-brand-gold z-10 pointer-events-none" />
+                        <div className="absolute bottom-1.5 right-1.5 w-2 h-2 sm:bottom-3 sm:right-3 sm:w-4 sm:h-4 border-b-2 border-r-2 border-brand-gold z-10 pointer-events-none" />
 
-                        <div className="absolute bottom-4 left-4 bg-brand-charcoal/80 backdrop-blur-md text-brand-cream font-mono text-[8px] tracking-widest px-2 py-0.5 z-10 uppercase">
-                          COMMISSION SNAPSHOT // {proj.id?.toUpperCase() || "ARCHIVE"}
+                        <div className="absolute bottom-2 left-2 sm:bottom-4 sm:left-4 bg-brand-charcoal/80 backdrop-blur-md text-brand-cream font-mono text-[6px] sm:text-[8px] tracking-widest px-1 py-0.5 z-10 uppercase">
+                          SNAPSHOT // {proj.id?.toUpperCase() || "ARCHIVE"}
                         </div>
                       </div>
                     </div>
 
                     {/* RIGHT SIDE: Summary card */}
-                    <div className="lg:col-span-5 flex flex-col justify-between bg-brand-paper border border-brand-charcoal/15 p-6 md:p-8 shadow-sm relative">
+                    <div className="col-span-1 lg:col-span-5 flex flex-col justify-between bg-brand-paper border border-brand-charcoal/15 p-3 sm:p-6 md:p-8 shadow-sm relative">
                       
-                      <div className="absolute inset-0 border-[10px] md:border-[12px] border-[#000052] pointer-events-none z-35" />
+                      <div className="absolute inset-0 border-[4px] sm:border-[10px] md:border-[12px] border-[#000052] pointer-events-none z-35" />
                       
-                      <div className="absolute top-3 left-3 w-3 h-3 border-t border-l border-brand-charcoal/30" />
-                      <div className="absolute top-3 right-3 w-3 h-3 border-t border-r border-brand-charcoal/30" />
-                      <div className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-brand-charcoal/30" />
-                      <div className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-brand-charcoal/30" />
+                      <div className="absolute top-1.5 left-1.5 sm:top-3 sm:left-3 w-1.5 h-1.5 sm:w-3 sm:h-3 border-t border-l border-brand-charcoal/30" />
+                      <div className="absolute top-1.5 right-1.5 sm:top-3 sm:right-3 w-1.5 h-1.5 sm:w-3 sm:h-3 border-t border-r border-brand-charcoal/30" />
+                      <div className="absolute bottom-1.5 left-1.5 sm:bottom-3 sm:left-3 w-1.5 h-1.5 sm:w-3 sm:h-3 border-b border-l border-brand-charcoal/30" />
+                      <div className="absolute bottom-1.5 right-1.5 sm:bottom-3 sm:right-3 w-1.5 h-1.5 sm:w-3 sm:h-3 border-b border-r border-brand-charcoal/30" />
 
-                      <div className="space-y-6">
+                      <div className="space-y-3 sm:space-y-6">
                         
-                        <div className="border-b border-brand-charcoal/10 pb-4">
-                          <span className="font-sans text-[10px] font-black tracking-widest text-brand-clay uppercase block mb-1">
+                        <div className="border-b border-brand-charcoal/10 pb-2 sm:pb-4">
+                          <span className="font-sans text-[7px] sm:text-[10px] font-black tracking-widest text-brand-clay uppercase block mb-0.5 sm:mb-1">
                             {proj.category || "Digital Curation"}
                           </span>
-                          <h3 className="font-display text-xl sm:text-2xl font-black uppercase tracking-tight text-brand-charcoal">
+                          <h3 className="font-display text-[11px] xs:text-sm sm:text-xl md:text-2xl font-black uppercase tracking-tight text-brand-charcoal leading-tight">
                             {proj.title || "Premium Commission"}
                           </h3>
                         </div>
 
-                        <div className="space-y-4">
-                          <p className="font-sans text-xs md:text-sm text-brand-charcoal/85 leading-relaxed">
+                        <div className="space-y-2 sm:space-y-4">
+                          <p className="font-sans text-[9px] sm:text-xs md:text-sm text-brand-charcoal/85 leading-relaxed font-light">
                             {meta.description}
                           </p>
 
                           {/* Stats panel */}
-                          <div className="bg-brand-cream/30 border border-brand-charcoal/10 p-4 space-y-2">
-                            <div className="flex justify-between text-[9px] font-mono">
-                              <span className="text-brand-charcoal/50">PLATFORM // RUNTIME</span>
-                              <span className="text-brand-charcoal/90 font-bold">NEXT.JS 15 + REACT</span>
+                          <div className="bg-brand-cream/30 border border-brand-charcoal/10 p-2 sm:p-4 space-y-1 sm:space-y-2">
+                            <div className="flex justify-between text-[7px] sm:text-[9px] font-mono">
+                              <span className="text-brand-charcoal/50">PLATFORM</span>
+                              <span className="text-brand-charcoal/90 font-bold">NEXT.JS 15</span>
                             </div>
-                            <div className="flex justify-between text-[9px] font-mono">
-                              <span className="text-brand-charcoal/50">STYLING // ENGINE</span>
-                              <span className="text-brand-charcoal/90 font-bold">TAILWIND CSS</span>
+                            <div className="flex justify-between text-[7px] sm:text-[9px] font-mono">
+                              <span className="text-brand-charcoal/50">STYLING</span>
+                              <span className="text-brand-charcoal/90 font-bold">TAILWIND</span>
                             </div>
-                            <div className="flex justify-between text-[9px] font-mono">
-                              <span className="text-brand-charcoal/50">EST. DEPLOY TIME</span>
-                              <span className="text-brand-gold font-bold">3 DAYS FROM BLUEPRINT</span>
+                            <div className="flex justify-between text-[7px] sm:text-[9px] font-mono">
+                              <span className="text-brand-charcoal/50">DEPLOY TIME</span>
+                              <span className="text-brand-gold font-bold">3 DAYS</span>
                             </div>
                           </div>
 
                           {/* Highlights */}
-                          <div className="space-y-1.5 pt-2">
-                            <span className="font-sans text-[9px] font-black tracking-wider text-brand-clay uppercase block">
+                          <div className="space-y-1 pt-1 sm:pt-2">
+                            <span className="font-sans text-[7px] sm:text-[9px] font-black tracking-wider text-brand-clay uppercase block">
                               KEY HIGHLIGHTS
                             </span>
-                            <ul className="space-y-1 text-[11px] text-brand-charcoal/70">
+                            <ul className="space-y-0.5 sm:space-y-1 text-[8px] sm:text-[11px] text-brand-charcoal/70">
                               {meta.highlights.map((highlight, hIdx) => (
-                                <li key={hIdx} className="flex items-center gap-1.5">
-                                  <span className="w-1.5 h-1.5 bg-brand-gold rounded-full" />
-                                  {highlight}
+                                <li key={hIdx} className="flex items-center gap-1">
+                                  <span className="w-1 h-1 bg-brand-gold rounded-full shrink-0" />
+                                  <span className="truncate sm:whitespace-normal">{highlight}</span>
                                 </li>
                               ))}
                             </ul>
@@ -463,16 +464,16 @@ export default function PortfolioPage() {
 
                       </div>
 
-                      <div className="pt-6 border-t border-brand-charcoal/10 mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <span className="font-mono text-[9px] text-brand-clay uppercase font-bold">
+                      <div className="pt-3 sm:pt-6 border-t border-brand-charcoal/10 mt-3 sm:mt-6 flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4">
+                        <span className="font-mono text-[8px] sm:text-[9px] text-brand-clay uppercase font-bold">
                           REF_ID: // 0{idx + 1}
                         </span>
                         <Link
                           href="/contact"
-                          className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-charcoal hover:bg-brand-gold text-brand-cream hover:text-brand-charcoal text-[9px] font-bold uppercase tracking-widest transition-colors"
+                          className="inline-flex items-center gap-1 px-2 py-1 sm:px-4 sm:py-2 bg-brand-charcoal hover:bg-brand-gold text-brand-cream hover:text-brand-charcoal text-[8px] sm:text-[9px] font-bold uppercase tracking-wider sm:tracking-widest transition-colors"
                         >
-                          <span>Inquire About Build</span>
-                          <ArrowUpRight className="w-3 h-3" />
+                          <span>Inquire Build</span>
+                          <ArrowUpRight className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                         </Link>
                       </div>
 
@@ -588,6 +589,7 @@ export default function PortfolioPage() {
               <Link href="/services" className="hover:text-brand-cream transition-colors uppercase">Our Services</Link>
               <Link href="/portfolio" className="hover:text-brand-cream transition-colors uppercase">Portfolio</Link>
               <Link href="/why-us" className="hover:text-brand-cream transition-colors uppercase">Why Us</Link>
+              <Link href="/#inquiry-guide" className="hover:text-brand-cream transition-colors uppercase">FAQ</Link>
               <Link href="/contact" className="hover:text-brand-cream transition-colors uppercase">Contact Us</Link>
             </div>
           </div>
@@ -606,7 +608,7 @@ export default function PortfolioPage() {
           <button
             onClick={() => {
               Analytics.trackWhatsAppClick();
-              window.open("https://wa.me/917470857424?text=Hi%20Express%20WebCraft!%20I'm%20interested%20in%20a%20premium%20website%20for%20my%20business.%20I'd%20like%20to%20discuss%20my%20requirements%20and%20receive%20a%20custom%20quote", "_blank");
+              window.open("https://wa.me/917470857424?text=Hi%20Express%20Webcraft!%20I'm%20interested%20in%20a%20premium%20website%20commission.", "_blank");
             }}
             className="flex items-center gap-2 px-4 py-2.5 bg-brand-cream border-2 border-brand-charcoal text-brand-charcoal text-[10px] font-mono uppercase tracking-wider shadow-[4px_4px_0px_0px_rgba(11,27,58,1)] hover:shadow-[2px_2px_0px_0px_rgba(11,27,58,1)] hover:translate-x-0.5 hover:translate-y-0.5 transition-all group"
             aria-label="Contact via WhatsApp"

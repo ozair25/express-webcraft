@@ -33,6 +33,7 @@ export default function ContactPage() {
     { label: "Our Services", href: "/services" },
     { label: "Portfolio", href: "/portfolio" },
     { label: "Why Us", href: "/why-us" },
+    { label: "FAQ", href: "/#inquiry-guide" },
     { label: "Contact Us", href: "/contact" }
   ];
 
@@ -74,8 +75,6 @@ export default function ContactPage() {
     // Validate vision outline
     if (!contactVision.trim()) {
       errors.vision = "Please enter your vision outline.";
-    } else if (contactVision.trim().length < 10) {
-      errors.vision = "Vision outline must be at least 10 characters long.";
     }
 
     if (Object.keys(errors).length > 0) {
@@ -250,6 +249,15 @@ export default function ContactPage() {
               Let&apos;s build something <br />
               extraordinary together.
             </h1>
+
+            <div className="pt-2">
+              <Link
+                href="/#inquiry-guide"
+                className="inline-flex items-center gap-2 px-5 py-2 border border-brand-gold/30 hover:border-brand-gold bg-brand-gold/5 hover:bg-brand-gold/10 text-brand-gold hover:text-white text-[10px] font-mono uppercase tracking-widest transition-all duration-300"
+              >
+                <span>✦ Read Atelier Inquiry Guide & FAQ ✦</span>
+              </Link>
+            </div>
 
             <div className="pt-4 max-w-md mx-auto">
               <AnimatePresence mode="wait">
@@ -444,7 +452,7 @@ export default function ContactPage() {
                     </div>
 
                     <a
-                      href="https://wa.me/917470857424?text=Hi%20Express%20WebCraft!%20I'm%20interested%20in%20a%20premium%20website%20for%20my%20business.%20I'd%20like%20to%20discuss%20my%20requirements%20and%20receive%20a%20custom%20quote"
+                      href="https://wa.me/917470857424?text=Hi%20Express%20Webcraft!%20I'm%20interested%20in%20a%20premium%20website%20commission."
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => Analytics.trackWhatsAppClick()}
@@ -559,6 +567,7 @@ export default function ContactPage() {
               <Link href="/services" className="hover:text-brand-cream transition-colors uppercase">Our Services</Link>
               <Link href="/portfolio" className="hover:text-brand-cream transition-colors uppercase">Portfolio</Link>
               <Link href="/why-us" className="hover:text-brand-cream transition-colors uppercase">Why Us</Link>
+              <Link href="/#inquiry-guide" className="hover:text-brand-cream transition-colors uppercase">FAQ</Link>
               <Link href="/contact" className="hover:text-brand-cream transition-colors uppercase">Contact Us</Link>
             </div>
           </div>
@@ -577,7 +586,7 @@ export default function ContactPage() {
           <button
             onClick={() => {
               Analytics.trackWhatsAppClick();
-              window.open("https://wa.me/917470857424?text=Hi%20Express%20WebCraft!%20I'm%20interested%20in%20a%20premium%20website%20for%20my%20business.%20I'd%20like%20to%20discuss%20my%20requirements%20and%20receive%20a%20custom%20quote", "_blank");
+              window.open("https://wa.me/917470857424?text=Hi%20Express%20Webcraft!%20I'm%20interested%20in%20a%20premium%20website%20commission.", "_blank");
             }}
             className="flex items-center gap-2 px-4 py-2.5 bg-brand-cream border-2 border-brand-charcoal text-brand-charcoal text-[10px] font-mono uppercase tracking-wider shadow-[4px_4px_0px_0px_rgba(11,27,58,1)] hover:shadow-[2px_2px_0px_0px_rgba(11,27,58,1)] hover:translate-x-0.5 hover:translate-y-0.5 transition-all group"
             aria-label="Contact via WhatsApp"
