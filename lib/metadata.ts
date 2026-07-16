@@ -4,7 +4,7 @@ export const SITE_URL = "https://www.expresswebcraft.com";
 export const SITE_NAME = "Express Webcraft";
 export const DEFAULT_DESCRIPTION =
   "Express Webcraft is a premium web design and development studio creating bespoke, high-converting websites for businesses that want luxury-grade digital experiences.";
-export const DEFAULT_IMAGE_PATH = "/og-express-webcraft.jpg";
+export const DEFAULT_IMAGE_PATH = "/og-express-webcraft.png";
 export const DEFAULT_IMAGE_ALT = "Express Webcraft — Premium website design, development, and growth services";
 
 export const DEFAULT_KEYWORDS = [
@@ -47,7 +47,7 @@ export function createMetadata({
     description,
     keywords,
     alternates: {
-      canonical: canonicalPath,
+      canonical: url,
     },
     openGraph: {
       title,
@@ -70,6 +70,9 @@ export function createMetadata({
       title,
       description,
       images: [imageUrl],
+    },
+    other: {
+      "og:logo": toAbsoluteUrl("/logo.png"),
     },
     robots: {
       index: true,
