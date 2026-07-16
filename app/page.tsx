@@ -5,8 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Analytics } from "@/lib/analytics";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import {
   Sparkles,
   ArrowUpRight,
@@ -223,16 +221,14 @@ export default function Home() {
   const [activeNav, setActiveNav] = useState("Home");
   const shouldReduceMotion = useReducedMotion();
   const [activeTestimonial, setActiveTestimonial] = useState(0);
-  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
-  const [isTermsOpen, setIsTermsOpen] = useState(false);
 
   // Navigation Items defined dynamically
   const navItems = [
-    { label: "Home", href: "#home" },
-    { label: "Our Services", href: "#atelier" },
-    { label: "Portfolio", href: "#portfolio" },
-    { label: "Why Us", href: "#process" },
-    { label: "Contact Us", href: "#contact" }
+    { label: "Home", href: "/" },
+    { label: "Our Services", href: "/services" },
+    { label: "Portfolio", href: "/portfolio" },
+    { label: "Why Us", href: "/why-us" },
+    { label: "Contact Us", href: "/contact" }
   ];
   const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -851,7 +847,102 @@ export default function Home() {
 
 
 
-        <Header />
+        {/* TOP NAVIGATION BAR */}
+        <header className="fixed top-0 left-0 right-0 z-50 bg-brand-red border-b border-brand-gold/15 h-[80px] px-4 md:px-12 flex items-center justify-between shadow-lg">
+          <a href="#" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 bg-brand-cream relative rounded-none shadow-[2px_2px_0px_0px_rgba(201,162,39,1)] transition-all group-hover:rotate-12 overflow-hidden flex items-center justify-center">
+              <Image
+                src="https://res.cloudinary.com/dtrvyelcg/image/upload/v1784138035/ChatGPT_Image_Jul_15_2026_11_13_18_PM_kajaoz.jpg"
+                alt="Express Webcraft Logo"
+                fill
+                className="object-cover"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-display text-sm font-black tracking-widest uppercase text-brand-cream">
+                EXPRESS WEBCRAFT
+              </span>
+              <span className="text-[8px] font-mono tracking-widest uppercase text-brand-gold font-bold leading-none">
+                WEB SOLUTIONS THAT INSPIRE
+              </span>
+            </div>
+          </a>
+
+          {/* Desktop Links */}
+          <nav className="hidden lg:flex items-center gap-5 xl:gap-8 text-[10px] xl:text-[11px] font-bold uppercase tracking-wider text-brand-cream/80">
+            {navItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={() => setActiveNav(item.label)}
+                className={`hover:text-brand-gold transition-all relative py-1 whitespace-nowrap ${
+                  activeNav === item.label ? "text-brand-gold font-black after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-4 after:h-[2px] after:bg-brand-gold" : ""
+                }`}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+
+          {/* Mobile menu trigger */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden w-10 h-10 flex items-center justify-center border border-brand-cream/10 rounded-full"
+            aria-label="Toggle Menu"
+            suppressHydrationWarning={true}
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5 text-brand-cream" /> : <Menu className="w-5 h-5 text-brand-cream" />}
+          </button>
+
+          {/* Right CTA */}
+          <Link
+            href="/contact"
+            onClick={() => {
+              Analytics.trackCtaClick("Header Let's Talk", "header");
+              setActiveNav("Contact Us");
+            }}
+            className="hidden lg:inline-flex px-6 py-2.5 bg-brand-gold hover:bg-brand-gold/90 text-brand-charcoal text-[10px] font-bold uppercase tracking-widest transition-all hover:-translate-y-0.5"
+          >
+            Let&apos;s Talk ↗
+          </Link>
+        </header>
+
+        {/* Mobile drawer */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="lg:hidden fixed top-20 left-4 right-4 bg-brand-paper border-2 border-brand-charcoal p-6 z-45 shadow-xl max-h-[80vh] overflow-y-auto"
+              suppressHydrationWarning={true}
+            >
+              <nav className="flex flex-col gap-4 text-center text-xs font-bold uppercase tracking-wider text-brand-charcoal/80">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => {
+                      setActiveNav(item.label);
+                      setMobileMenuOpen(false);
+                    }}
+                    className="hover:text-brand-clay py-2 border-b border-brand-charcoal/5 last:border-b-0"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+                <Link
+                  href="/contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full py-3 bg-brand-charcoal text-brand-cream text-center text-xs font-bold uppercase tracking-widest mt-2"
+                >
+                  Let&apos;s Talk ↗
+                </Link>
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* HERO CONTENT AREA */}
         <section id="home" className="flex-1 flex items-center w-full max-w-7xl mx-auto px-4 md:px-12 xl:pl-28 pb-12 max-md:pb-0 pt-28 lg:pt-36 relative lg:static z-10" suppressHydrationWarning={true}>
@@ -982,6 +1073,7 @@ export default function Home() {
                 </Link>
                 <Link
                   href="/services"
+                  onClick={() => setActiveNav("Our Services")}
                   className="px-6 py-4 border-2 border-brand-charcoal hover:border-brand-red text-brand-charcoal hover:text-brand-red text-xs font-bold uppercase tracking-widest transition-all hover:bg-brand-red/5"
                 >
                   Our Services ↗
@@ -1330,16 +1422,6 @@ export default function Home() {
             ))}
           </motion.div>
 
-          {/* Section concluding CTA to dedicated Services index */}
-          <div className="mt-12 text-center relative z-20">
-            <Link
-              href="/services"
-              className="inline-flex px-8 py-4 bg-brand-gold hover:bg-white text-brand-charcoal text-[11px] font-mono tracking-widest uppercase font-black transition-all shadow-[4px_4px_0px_0px_rgba(11,27,58,1)] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px]"
-            >
-              Explore All Creative Departments & Specs ↗
-            </Link>
-          </div>
-
         </div>
       </section>
 
@@ -1547,13 +1629,13 @@ export default function Home() {
                     <span className="font-mono text-[9px] text-brand-clay uppercase font-bold">
                       REF_ID: // 0{idx + 1}
                     </span>
-                    <a
-                      href="#contact"
+                    <Link
+                      href="/contact"
                       className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-charcoal hover:bg-brand-gold text-brand-cream hover:text-brand-charcoal text-[9px] font-bold uppercase tracking-widest transition-colors"
                     >
                       <span>Inquire About Build</span>
                       <ArrowUpRight className="w-3 h-3" />
-                    </a>
+                    </Link>
                   </div>
 
                 </div>
@@ -1561,16 +1643,6 @@ export default function Home() {
               </div>
             );
           })}
-        </div>
-
-        {/* Section concluding CTA to dedicated Portfolio index */}
-        <div className="mt-16 text-center">
-          <Link
-            href="/portfolio"
-            className="inline-flex px-8 py-4 bg-brand-red hover:bg-brand-charcoal text-brand-cream text-[11px] font-mono tracking-widest uppercase font-black transition-all shadow-[4px_4px_0px_0px_rgba(201,162,39,1)] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px]"
-          >
-            Explore All Landmark Commissions & Case Studies ↗
-          </Link>
         </div>
 
         {/* Compact Auto-playing Testimonial Slider */}
@@ -1818,22 +1890,6 @@ export default function Home() {
 
           </div>
 
-          {/* Section concluding CTA to dedicated Why Us and Process index */}
-          <div className="col-span-1 lg:col-span-12 mt-12 text-center flex flex-col sm:flex-row items-center justify-center gap-4 relative z-20">
-            <Link
-              href="/why-us"
-              className="inline-flex px-6 py-3.5 bg-brand-charcoal hover:bg-brand-red text-brand-cream text-[10px] font-mono tracking-widest uppercase font-black transition-all shadow-[3px_3px_0px_0px_rgba(201,162,39,1)]"
-            >
-              Why Outstanding Brands Choose Us ↗
-            </Link>
-            <Link
-              href="/process"
-              className="inline-flex px-6 py-3.5 border-2 border-brand-charcoal hover:border-brand-red text-brand-charcoal hover:text-brand-red text-[10px] font-mono tracking-widest uppercase font-black transition-all bg-white/20"
-            >
-              Our Complete 4-Stage Creative Process ↗
-            </Link>
-          </div>
-
           {/* Interactive FAQ Accordion with SEO Schema */}
           <div className="col-span-1 lg:col-span-12 mt-16 pt-16 border-t border-brand-charcoal/10">
             <div className="max-w-3xl mx-auto space-y-8">
@@ -1950,23 +2006,6 @@ export default function Home() {
                   })
                 }}
               />
-
-              {/* Additional Guide / Pricing links for premium funnel conversion */}
-              <div className="pt-8 text-center flex flex-col sm:flex-row items-center justify-center gap-4 relative z-20">
-                <Link
-                  href="/faq"
-                  className="inline-flex px-5 py-3 bg-brand-charcoal hover:bg-brand-red text-brand-cream text-[10px] font-mono tracking-widest uppercase font-black transition-all shadow-[2px_2px_0px_0px_rgba(201,162,39,1)]"
-                >
-                  View Complete FAQs Handbook ↗
-                </Link>
-                <Link
-                  href="/pricing"
-                  className="inline-flex px-5 py-3 border border-brand-charcoal hover:border-brand-red text-brand-charcoal hover:text-brand-red text-[10px] font-mono tracking-widest uppercase font-black transition-all bg-white/20"
-                >
-                  Check Development Pricing & Packages ↗
-                </Link>
-              </div>
-
             </div>
           </div>
 
@@ -2254,202 +2293,55 @@ export default function Home() {
             </AnimatePresence>
           </div>
 
+          {/* Under-footer vintage objects decoration layout */}
+          <div className="relative w-full h-[150px] opacity-25 mt-8 pointer-events-none">
+            <Image
+              src="https://images.unsplash.com/photo-1495707902641-75cac588d2e9?auto=format&fit=crop&w=600&h=200&q=80"
+              alt="Vintage Analog Equipment"
+              fill
+              className="object-contain filter grayscale brightness-75"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+
+          {/* Sublinks copyright */}
+          <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-[10px] font-mono text-brand-cream/50 gap-6">
+            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-center sm:text-left">
+              <div className="flex items-center gap-2 justify-center sm:justify-start">
+                <span className="font-display font-bold text-brand-cream text-xs">EW</span>
+                <span>© 2026 EXPRESS WEBCRAFT. ALL RIGHTS RESERVED.</span>
+              </div>
+              <div className="hidden sm:inline-block w-[1px] h-3 bg-white/15" />
+              <div className="flex items-center gap-4 justify-center">
+                <Link 
+                  href="/privacy-policy"
+                  className="hover:text-brand-gold transition-colors uppercase cursor-pointer"
+                >
+                  Privacy Policy
+                </Link>
+                <Link 
+                  href="/terms-and-conditions"
+                  className="hover:text-brand-gold transition-colors uppercase cursor-pointer"
+                >
+                  Terms of Service
+                </Link>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-brand-cream/40">
+              <span className="text-[9px] text-brand-gold/60 uppercase">Useful Links:</span>
+              <Link href="/" className="hover:text-brand-cream transition-colors uppercase">Home</Link>
+              <Link href="/services" className="hover:text-brand-cream transition-colors uppercase">Our Services</Link>
+              <Link href="/portfolio" className="hover:text-brand-cream transition-colors uppercase">Portfolio</Link>
+              <Link href="/why-us" className="hover:text-brand-cream transition-colors uppercase">Why Us</Link>
+              <Link href="/contact" className="hover:text-brand-cream transition-colors uppercase">Contact Us</Link>
+            </div>
+          </div>
+
         </div>
       </section>
 
-      <Footer />
 
-      {/* Privacy Policy Modal */}
-      <AnimatePresence>
-        {isPrivacyOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-brand-charcoal/90 backdrop-blur-md flex items-center justify-center p-4"
-          >
-            <motion.div
-              initial={{ scale: 0.95, y: 15 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 15 }}
-              className="bg-[#1c1d24] border-2 border-brand-gold max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 md:p-8 relative text-brand-cream space-y-6 shadow-2xl"
-            >
-              {/* Corner brackets */}
-              <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-brand-gold/30" />
-              <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-brand-gold/30" />
-              <div className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-brand-gold/30" />
-              <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-brand-gold/30" />
-
-              <button
-                onClick={() => setIsPrivacyOpen(false)}
-                className="absolute top-4 right-4 text-brand-cream/60 hover:text-brand-gold transition-colors p-1"
-                aria-label="Close modal"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <div className="space-y-2 border-b border-white/10 pb-4">
-                <span className="font-mono text-[9px] text-brand-gold tracking-widest uppercase block">
-                  ✦ LEGAL CODEX // PROTOCOL
-                </span>
-                <h3 className="font-display text-2xl font-black uppercase text-brand-cream">
-                  Privacy Policy
-                </h3>
-                <p className="font-mono text-[9px] text-brand-cream/50 uppercase">
-                  Last Updated: July 2026
-                </p>
-              </div>
-
-              <div className="space-y-4 font-sans text-xs md:text-sm text-brand-cream/80 leading-relaxed font-light">
-                <p>
-                  At <strong className="text-brand-gold">Express Webcraft</strong>, we operate with complete transparency, absolute discretion, and uncompromising digital safety. This document details how we handle information submitted to our elite design consultancy.
-                </p>
-                
-                <div className="space-y-2">
-                  <h4 className="font-display text-xs font-black uppercase text-brand-cream tracking-wide">
-                    1. Information Collection
-                  </h4>
-                  <p>
-                    We collect only standard, explicitly provided business contact information via our voluntary commission inquiry form: including names, company designations, active email addresses, phone coordinates, and high-level architectural project visions.
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <h4 className="font-display text-xs font-black uppercase text-brand-cream tracking-wide">
-                    2. Strategic Data Utilization
-                  </h4>
-                  <p>
-                    Your details are processed strictly to prepare design briefs, compute precise performance target estimates, verify waitlist quotas, and schedule face-to-face brief calls on our private ledger.
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <h4 className="font-display text-xs font-black uppercase text-brand-cream tracking-wide">
-                    3. No Third-Party Tracking
-                  </h4>
-                  <p>
-                    We hold a strict stance against automated user brokerage. We do not rent, lease, trade, or distribute your email addresses or company profiles to advertising syndicates. Any client data is retained privately under high-grade secure server sandboxes.
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <h4 className="font-display text-xs font-black uppercase text-brand-cream tracking-wide">
-                    4. Analytical Telemetry
-                  </h4>
-                  <p>
-                    We employ simple, anonymized telemetry tracking to gauge application load latency and click-through optimization. No personal cookies are logged during these visual audits.
-                  </p>
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-white/10 text-center">
-                <button
-                  onClick={() => setIsPrivacyOpen(false)}
-                  className="px-6 py-2 bg-brand-gold text-brand-charcoal text-[10px] font-bold uppercase tracking-widest hover:bg-brand-cream hover:text-brand-charcoal transition-all cursor-pointer"
-                >
-                  Acknowledge Protocol
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Terms of Service Modal */}
-      <AnimatePresence>
-        {isTermsOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-brand-charcoal/90 backdrop-blur-md flex items-center justify-center p-4"
-          >
-            <motion.div
-              initial={{ scale: 0.95, y: 15 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 15 }}
-              className="bg-[#1c1d24] border-2 border-brand-gold max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 md:p-8 relative text-brand-cream space-y-6 shadow-2xl"
-            >
-              {/* Corner brackets */}
-              <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-brand-gold/30" />
-              <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-brand-gold/30" />
-              <div className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-brand-gold/30" />
-              <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-brand-gold/30" />
-
-              <button
-                onClick={() => setIsTermsOpen(false)}
-                className="absolute top-4 right-4 text-brand-cream/60 hover:text-brand-gold transition-colors p-1"
-                aria-label="Close modal"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <div className="space-y-2 border-b border-white/10 pb-4">
-                <span className="font-mono text-[9px] text-brand-gold tracking-widest uppercase block">
-                  ✦ TERMS OF ENGAGEMENT // PROTOCOL
-                </span>
-                <h3 className="font-display text-2xl font-black uppercase text-brand-cream">
-                  Terms of Service
-                </h3>
-                <p className="font-mono text-[9px] text-brand-cream/50 uppercase">
-                  Last Updated: July 2026
-                </p>
-              </div>
-
-              <div className="space-y-4 font-sans text-xs md:text-sm text-brand-cream/80 leading-relaxed font-light">
-                <p>
-                  Accessing our services or initiating a website commission proposal establishes consent to these Terms of Engagement. Please review these parameters thoroughly.
-                </p>
-
-                <div className="space-y-2">
-                  <h4 className="font-display text-xs font-black uppercase text-brand-cream tracking-wide">
-                    1. Scope of Commissions
-                  </h4>
-                  <p>
-                    All project builds are custom-tailored on top of standard Next.js, React, and Tailwind CSS architectures. Specifications, specific typography setups, and asset provisions are fully defined and agreed upon inside a dedicated Statement of Work (SOW).
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <h4 className="font-display text-xs font-black uppercase text-brand-cream tracking-wide">
-                    2. Timelines & Performance Guarantees
-                  </h4>
-                  <p>
-                    Our general delivery standard is a turnkey launch blueprint completed in approximately 7 business days from formal contract signoff. All design parameters target an outstanding mobile visual score and strict SEO validation checkpoints.
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <h4 className="font-display text-xs font-black uppercase text-brand-cream tracking-wide">
-                    3. Revision Entitlement
-                  </h4>
-                  <p>
-                    To secure absolute client satisfaction, we offer exhaustive visual refinement passes within the scope of the original blueprint, ensuring your exact aesthetic alignment is captured flawlessly.
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <h4 className="font-display text-xs font-black uppercase text-brand-cream tracking-wide">
-                    4. Intellectual Curation Ownership
-                  </h4>
-                  <p>
-                    Upon complete reconciliation of outstanding commission fees, all custom layout files, responsive assets, domain maps, and high-performance codes transition entirely and exclusively to client ownership.
-                  </p>
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-white/10 text-center">
-                <button
-                  onClick={() => setIsTermsOpen(false)}
-                  className="px-6 py-2 bg-brand-gold text-brand-charcoal text-[10px] font-bold uppercase tracking-widest hover:bg-brand-cream hover:text-brand-charcoal transition-all cursor-pointer"
-                >
-                  Accept Conditions
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* =======================================
           FLOATING CONVERSION OPTIMIZATION ELEMENTS
@@ -2487,14 +2379,14 @@ export default function Home() {
           transition={{ delay: 2, duration: 0.5 }}
           className="pointer-events-auto"
         >
-          <a
-            href="#contact"
+          <Link
+            href="/contact"
             onClick={() => Analytics.trackCtaClick("Floating Sticky Let's Talk", "sticky_bubble")}
             className="flex items-center justify-center w-10 h-10 bg-brand-charcoal border-2 border-brand-charcoal text-brand-cream shadow-[4px_4px_0px_0px_rgba(201,162,39,1)] hover:shadow-[2px_2px_0px_0px_rgba(201,162,39,1)] hover:translate-x-0.5 hover:translate-y-0.5 transition-all group"
             aria-label="Scroll to Commission Form"
           >
             <Send className="w-4 h-4 text-brand-gold group-hover:rotate-12 transition-transform" />
-          </a>
+          </Link>
         </motion.div>
       </div>
 

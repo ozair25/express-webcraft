@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function StructuredData() {
-  const baseUrl = "https://expresswebcraft.com";
+  const baseUrl = "https://www.expresswebcraft.com";
 
   // 1. Founder Person Schema
   const founderSchema = {

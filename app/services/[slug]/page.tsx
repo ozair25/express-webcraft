@@ -6,8 +6,6 @@ import {
   TrendingUp, Layers, Wrench, BarChart3, 
   ArrowLeft, ChevronRight, CheckCircle, HelpCircle 
 } from "lucide-react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 
 // Types
 interface ServiceDetail {
@@ -280,7 +278,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title,
       description,
-      url: `https://expresswebcraft.com/services/${slug}`,
+      url: `https://www.expresswebcraft.com/services/${slug}`,
       type: "website",
       siteName: "Express Webcraft",
       locale: "en_US",
@@ -326,25 +324,25 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    "@id": `https://expresswebcraft.com/services/${slug}/#breadcrumb`,
+    "@id": `https://www.expresswebcraft.com/services/${slug}/#breadcrumb`,
     "itemListElement": [
       {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://expresswebcraft.com"
+        "item": "https://www.expresswebcraft.com"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Services",
-        "item": "https://expresswebcraft.com/services"
+        "item": "https://www.expresswebcraft.com/#services"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": service.title,
-        "item": `https://expresswebcraft.com/services/${slug}`
+        "item": `https://www.expresswebcraft.com/services/${slug}`
       }
     ]
   };
@@ -352,15 +350,15 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    "@id": `https://expresswebcraft.com/services/${slug}/#service`,
+    "@id": `https://www.expresswebcraft.com/services/${slug}/#service`,
     "name": service.title,
     "description": service.longDesc,
     "serviceType": service.title,
     "provider": {
       "@type": "ProfessionalService",
-      "@id": "https://expresswebcraft.com/#localbusiness",
+      "@id": "https://www.expresswebcraft.com/#localbusiness",
       "name": "Express Webcraft",
-      "url": "https://expresswebcraft.com"
+      "url": "https://www.expresswebcraft.com"
     },
     "areaServed": {
       "@type": "Country",
@@ -398,7 +396,30 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
       />
 
-      <Header />
+      {/* TOP NAVIGATION BAR */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-brand-red border-b border-brand-gold/15 h-[80px] px-4 md:px-12 flex items-center justify-between shadow-lg">
+        <Link href="/" className="flex items-center gap-3 group" id="header-brand-logo">
+          <div className="w-10 h-10 bg-brand-cream text-brand-red font-display font-black text-xl flex items-center justify-center rounded-none shadow-[2px_2px_0px_0px_rgba(201,162,39,1)] transition-all group-hover:rotate-12">
+            EW
+          </div>
+          <div className="flex flex-col">
+            <span className="font-display text-sm font-black tracking-widest uppercase text-brand-cream">
+              EXPRESS WEBCRAFT
+            </span>
+            <span className="text-[8px] font-mono tracking-widest uppercase text-brand-gold font-bold leading-none">
+              WEB SOLUTIONS THAT INSPIRE
+            </span>
+          </div>
+        </Link>
+
+        <Link 
+          href="/#contact"
+          className="bg-brand-gold hover:bg-white text-brand-charcoal text-[9px] font-mono tracking-widest uppercase font-black px-5 py-3 transition-all shadow-[3px_3px_0px_0px_rgba(11,27,58,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+          id="header-cta-button"
+        >
+          COMMISSION US
+        </Link>
+      </header>
 
       {/* HERO SECTION / BREADCRUMB */}
       <main className="flex-1 pt-28 lg:pt-36 pb-16 px-4 md:px-12 max-w-7xl mx-auto w-full">
@@ -408,12 +429,12 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           <div className="flex items-center gap-2 text-xs font-mono text-brand-charcoal/60">
             <Link href="/" className="hover:text-brand-red transition-colors">HOME</Link>
             <ChevronRight className="w-3.5 h-3.5 text-brand-charcoal/30" />
-            <Link href="/services" className="hover:text-brand-red transition-colors">SERVICES</Link>
+            <Link href="/#services" className="hover:text-brand-red transition-colors">SERVICES</Link>
             <ChevronRight className="w-3.5 h-3.5 text-brand-charcoal/30" />
             <span className="text-brand-charcoal font-bold uppercase">{service.title}</span>
           </div>
 
-          <Link href="/services" className="inline-flex items-center gap-2 text-xs font-mono text-brand-red font-bold hover:text-brand-charcoal transition-colors group">
+          <Link href="/#services" className="inline-flex items-center gap-2 text-xs font-mono text-brand-red font-bold hover:text-brand-charcoal transition-colors group">
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             ALL SERVICES
           </Link>
@@ -517,7 +538,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                 Let us transform your vision into an elite custom digital asset built for absolute speed, beauty, and organic growth.
               </p>
               <Link 
-                href="/contact" 
+                href="/#contact" 
                 className="w-full text-center block bg-brand-gold hover:bg-white text-brand-charcoal font-mono font-black text-xs uppercase tracking-wider py-3 transition-colors shadow-[2px_2px_0px_0px_rgba(11,27,58,1)]"
                 id="sidebar-cta-btn"
               >
@@ -563,7 +584,25 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
       </main>
 
-      <Footer />
+      {/* FOOTER */}
+      <footer className="bg-brand-charcoal text-brand-cream py-12 px-4 md:px-12 mt-16 border-t border-brand-charcoal">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-3">
+            <div className="font-display font-black text-brand-cream text-lg">EW</div>
+            <span className="font-mono text-[9px] uppercase tracking-widest text-brand-cream/50">
+              © 2026 EXPRESS WEBCRAFT. DIGITAL CRAFTSMANSHIP GUARANTEED.
+            </span>
+          </div>
+
+          <div className="flex gap-4 font-mono text-[10px] uppercase text-brand-cream/60">
+            <Link href="/" className="hover:text-brand-gold transition-colors">HOME</Link>
+            <Link href="/#services" className="hover:text-brand-gold transition-colors">SERVICES</Link>
+            <Link href="/#portfolio" className="hover:text-brand-gold transition-colors">PORTFOLIO</Link>
+            <Link href="/#process" className="hover:text-brand-gold transition-colors">WHY US</Link>
+            <Link href="/#contact" className="hover:text-brand-gold transition-colors">CONTACT</Link>
+          </div>
+        </div>
+      </footer>
 
     </div>
   );
