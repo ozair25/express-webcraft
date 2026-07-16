@@ -2,17 +2,6 @@ import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.expresswebcraft.com";
-  
-  const services = [
-    "custom-website-design",
-    "web-development",
-    "landing-pages",
-    "e-commerce-solutions",
-    "seo-performance",
-    "ui-ux-design",
-    "website-maintenance-support",
-    "analytics-growth"
-  ];
 
   const corePages = [
     { path: "", priority: 1.0, changeFrequency: "weekly" as const },
@@ -20,6 +9,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "portfolio", priority: 0.9, changeFrequency: "weekly" as const },
     { path: "why-us", priority: 0.8, changeFrequency: "weekly" as const },
     { path: "contact", priority: 0.8, changeFrequency: "monthly" as const },
+    { path: "inquiry-guide", priority: 0.7, changeFrequency: "monthly" as const },
+    { path: "atelier-inquiry-guide", priority: 0.7, changeFrequency: "monthly" as const },
     { path: "privacy-policy", priority: 0.3, changeFrequency: "yearly" as const },
     { path: "terms-and-conditions", priority: 0.3, changeFrequency: "yearly" as const },
   ];
@@ -31,16 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: page.priority,
   }));
 
-  const serviceUrls = services.map(slug => ({
-    url: `${baseUrl}/services/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.8,
-  }));
-
   return [
-    ...coreUrls,
-    ...serviceUrls
+    ...coreUrls
   ];
 }
-
