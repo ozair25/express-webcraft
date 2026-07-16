@@ -1,38 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { createMetadata, DEFAULT_IMAGE_PATH } from "@/lib/metadata";
 import { ArrowLeft, ChevronRight, ArrowUpRight, Compass, Edit3, Eye, Rocket, CheckCircle } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createMetadata({
   title: "Bespoke Creative Process — Blueprint to Launch in Days",
   description: "Explore Express Webcraft's high-velocity development process. Learn how we deliver elite digital flagships across 4 curated engineering milestones.",
+  path: "/process",
+  image: DEFAULT_IMAGE_PATH,
+  imageAlt: "Express Webcraft Creative Process Workflow",
   keywords: [
     "creative web development process",
     "web design workflow milestones",
     "wireframing to launch timeline",
     "technical seo implementation steps",
-    "express webcraft methodology"
+    "express webcraft methodology",
   ],
-  alternates: {
-    canonical: "/process",
-  },
-  openGraph: {
-    title: "Bespoke Creative Process — Blueprint to Launch in Days",
-    description: "Explore Express Webcraft's high-velocity development process. Learn how we deliver elite digital flagships across 4 curated engineering milestones.",
-    url: "https://expresswebcraft.com/process",
-    siteName: "Express Webcraft",
-    images: [
-      {
-        url: "https://res.cloudinary.com/dtrvyelcg/image/upload/v1783525342/ChatGPT_Image_Jul_8_2026_03_24_57_AM_pvot5h.png",
-        width: 1200,
-        height: 630,
-        alt: "Express Webcraft Creative Process Workflow",
-      }
-    ],
-  }
-};
+});
 
 const PROCESS_STEPS = [
   {

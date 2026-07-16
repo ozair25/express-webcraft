@@ -1,38 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { createMetadata, DEFAULT_IMAGE_PATH } from "@/lib/metadata";
 import { ArrowLeft, ChevronRight, ArrowUpRight, HelpCircle, CheckCircle, Flame, Star, Coins } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createMetadata({
   title: "Premium Website Pricing — Express Webcraft Creative Packages",
   description: "Explore bespoke development packages and investment tiers. Review clear timelines, comprehensive deliverables, and call-to-actions for your custom website build.",
+  path: "/pricing",
+  image: DEFAULT_IMAGE_PATH,
+  imageAlt: "Express Webcraft Pricing Tiers",
   keywords: [
     "express webcraft pricing",
     "bespoke web design cost",
     "nextjs development package rates",
     "landing page design pricing",
-    "technical seo services cost"
+    "technical seo services cost",
   ],
-  alternates: {
-    canonical: "/pricing",
-  },
-  openGraph: {
-    title: "Premium Website Pricing — Express Webcraft Creative Packages",
-    description: "Explore bespoke development packages and investment tiers. Review clear timelines, comprehensive deliverables, and call-to-actions for your custom website build.",
-    url: "https://expresswebcraft.com/pricing",
-    siteName: "Express Webcraft",
-    images: [
-      {
-        url: "https://res.cloudinary.com/dtrvyelcg/image/upload/v1783525342/ChatGPT_Image_Jul_8_2026_03_24_57_AM_pvot5h.png",
-        width: 1200,
-        height: 630,
-        alt: "Express Webcraft Pricing Tiers",
-      }
-    ],
-  }
-};
+});
 
 const PRICE_TIERS = [
   {

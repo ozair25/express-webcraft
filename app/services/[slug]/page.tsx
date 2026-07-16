@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { createMetadata, DEFAULT_IMAGE_PATH } from "@/lib/metadata";
 import { 
   Monitor, Code, Sparkles, ShoppingCart, 
   TrendingUp, Layers, Wrench, BarChart3, 
@@ -249,20 +250,26 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const service = SERVICES_DATA[slug];
-  
+
   if (!service) {
-    return {
+    return createMetadata({
       title: "Service Not Found — Express Webcraft",
       description: "Express Webcraft service page not found.",
-    };
+      path: `/services/${slug}`,
+      image: DEFAULT_IMAGE_PATH,
+      imageAlt: "Express Webcraft service page not found",
+    });
   }
 
   const title = `${service.title} — Elite Digital Solutions | Express Webcraft`;
   const description = `${service.shortDesc} Explore our premium technical capabilities, structured workflows, and high-performance digital artistry.`;
 
-  return {
+  return createMetadata({
     title,
     description,
+    path: `/services/${slug}`,
+    image: DEFAULT_IMAGE_PATH,
+    imageAlt: `${service.title} — Express Webcraft Services`,
     keywords: [
       service.title.toLowerCase(),
       `${service.title.toLowerCase()} services`,
@@ -270,43 +277,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       "premium web agency",
       "bespoke digital agency",
       "technical seo services",
-      "high performance nextjs"
+      "high performance nextjs",
     ],
-    alternates: {
-      canonical: `/services/${slug}`,
-    },
-    openGraph: {
-      title,
-      description,
-      url: `https://www.expresswebcraft.com/services/${slug}`,
-      type: "website",
-      siteName: "Express Webcraft",
-      locale: "en_US",
-      images: [
-        {
-          url: "https://res.cloudinary.com/dtrvyelcg/image/upload/v1783525342/ChatGPT_Image_Jul_8_2026_03_24_57_AM_pvot5h.png",
-          width: 1200,
-          height: 630,
-          alt: `${service.title} — Express Webcraft Services`,
-        }
-      ]
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: ["https://res.cloudinary.com/dtrvyelcg/image/upload/v1783525342/ChatGPT_Image_Jul_8_2026_03_24_57_AM_pvot5h.png"]
-    },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-image-preview": "large",
-      }
-    }
-  };
+  });
 }
 
 export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {

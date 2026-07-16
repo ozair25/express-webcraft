@@ -75,7 +75,7 @@ export default function Footer() {
           <button
             onClick={() => {
               Analytics.trackWhatsAppClick();
-              window.open("https://wa.me/917470857424?text=Hi%20Express%20Webcraft!%20I'm%20interested%20in%20a%20premium%20website%20commission.", "_blank");
+              window.open("https://wa.me/917470857424?text=Hi%20Express%20WebCraft!%20I'm%20interested%20in%20a%20premium%20website%20for%20my%20business.%20I'd%20like%20to%20discuss%20my%20requirements%20and%20receive%20a%20custom%20quote", "_blank");
             }}
             className="flex items-center gap-2 px-4 py-2.5 bg-brand-cream border-2 border-brand-charcoal text-brand-charcoal text-[10px] font-mono uppercase tracking-wider shadow-[4px_4px_0px_0px_rgba(11,27,58,1)] hover:shadow-[2px_2px_0px_0px_rgba(11,27,58,1)] hover:translate-x-0.5 hover:translate-y-0.5 transition-all group"
             aria-label="Contact via WhatsApp"

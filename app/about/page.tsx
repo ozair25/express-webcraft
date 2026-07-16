@@ -1,39 +1,26 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { createMetadata, DEFAULT_IMAGE_PATH } from "@/lib/metadata";
 import { ChevronRight, ArrowLeft, Heart, Eye, Target, Compass, Sparkles, Code, Cpu, ShieldCheck, Zap } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createMetadata({
   title: "About Express Webcraft — Bespoke Web Artistry & High-Performance Engineering",
   description: "Learn about Express Webcraft, a premium web development studio led by Sayed Ozair. Explore our company story, mission, core values, and high-performance tech stack.",
+  path: "/about",
+  image: DEFAULT_IMAGE_PATH,
+  imageAlt: "About Express Webcraft — Company Profile",
   keywords: [
     "about express webcraft",
     "sayed ozair founder",
     "luxury web design studio",
     "high performance nextjs developers",
-    "bespoke digital agency profile"
+    "bespoke digital agency profile",
   ],
-  alternates: {
-    canonical: "/about",
-  },
-  openGraph: {
-    title: "About Express Webcraft — Bespoke Web Artistry & High-Performance Engineering",
-    description: "Learn about Express Webcraft, a premium web development studio led by Sayed Ozair. Explore our company story, mission, core values, and high-performance tech stack.",
-    url: "https://expresswebcraft.com/about",
-    siteName: "Express Webcraft",
-    images: [
-      {
-        url: "https://res.cloudinary.com/dtrvyelcg/image/upload/v1783525342/ChatGPT_Image_Jul_8_2026_03_24_57_AM_pvot5h.png",
-        width: 1200,
-        height: 630,
-        alt: "About Express Webcraft — Company Profile",
-      }
-    ],
-  }
-};
+});
 
 export default function AboutPage() {
   const breadcrumbSchema = {
