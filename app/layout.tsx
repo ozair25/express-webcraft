@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   ],
   metadataBase: new URL('https://www.expresswebcraft.com'),
   alternates: {
-    canonical: 'https://www.expresswebcraft.com/',
+    canonical: 'https://www.expresswebcraft.com',
   },
   openGraph: {
     title: 'Express Webcraft — Bespoke Web Design & High-Performance Engineering Studio',
@@ -91,6 +91,28 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable} ${alex.variable}`}>
       <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LVNGNGWWY0" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-LVNGNGWWY0');
+            `,
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "xna4kj796k");
+            `,
+          }}
+        />
         <link rel="preconnect" href="https://res.cloudinary.com" />
         <link rel="preconnect" href="https://images.unsplash.com" />
         <link rel="preconnect" href="https://picsum.photos" />

@@ -10,7 +10,6 @@ import {
 import { Analytics } from "@/lib/analytics";
 
 export default function TermsAndConditionsPage() {
-  const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeNav, setActiveNav] = useState("");
 
@@ -23,14 +22,7 @@ export default function TermsAndConditionsPage() {
     { label: "Contact Us", href: "/contact" }
   ];
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setMounted(true);
-    }, 0);
-    return () => clearTimeout(timer);
-  }, []);
 
-  if (!mounted) return null;
 
   return (
     <div className="min-h-screen bg-transparent grainy-bg relative overflow-x-hidden text-brand-charcoal select-none">

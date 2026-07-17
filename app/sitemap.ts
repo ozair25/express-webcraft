@@ -22,7 +22,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: page.priority,
   }));
 
+  const serviceSlugs = [
+    "custom-website-design",
+    "web-development",
+    "landing-pages",
+    "e-commerce-solutions",
+    "seo-performance",
+    "ui-ux-design",
+    "website-maintenance-support",
+    "analytics-growth",
+  ];
+
+  const serviceUrls = serviceSlugs.map(slug => ({
+    url: `${baseUrl}/services/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
   return [
-    ...coreUrls
+    ...coreUrls,
+    ...serviceUrls
   ];
 }

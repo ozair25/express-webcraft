@@ -69,19 +69,12 @@ export default function StructuredData() {
     "name": "Express Webcraft",
     "image": "https://res.cloudinary.com/dtrvyelcg/image/upload/v1783525342/ChatGPT_Image_Jul_8_2026_03_24_57_AM_pvot5h.png",
     "url": baseUrl,
-    "telephone": "+6281234567890",
+    "telephone": "+917470857424",
     "priceRange": "$$$$",
     "address": {
       "@type": "PostalAddress",
-      "addressLocality": "Jakarta",
-      "addressRegion": "DKI Jakarta",
-      "postalCode": "12190",
-      "addressCountry": "ID"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": -6.2088,
-      "longitude": 106.8456
+      "addressRegion": "MP",
+      "addressCountry": "IND"
     },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
@@ -97,42 +90,7 @@ export default function StructuredData() {
     },
     "parentOrganization": {
       "@id": `${baseUrl}/#organization`
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "reviewCount": "24",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
-    "review": [
-      {
-        "@type": "Review",
-        "author": {
-          "@type": "Person",
-          "name": "Aris S."
-        },
-        "datePublished": "2026-06-12",
-        "reviewBody": "Express Webcraft designed a premium, super fast wholesale platform for Gopalji Khopra. Their attention to layout calibration and technical SEO is unmatched. We saw wholesale inquiries increase significantly.",
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": "5"
-        }
-      },
-      {
-        "@type": "Review",
-        "author": {
-          "@type": "Person",
-          "name": "Hana T."
-        },
-        "datePublished": "2026-07-01",
-        "reviewBody": "Bespoke digital artistry. Our luxury travel website is fluid, beautiful, and loads instantly. Working with Sayed and his team was an absolute pleasure.",
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": "5"
-        }
-      }
-    ]
+    }
   };
 
   // 5. WebSite Schema (with SearchAction)

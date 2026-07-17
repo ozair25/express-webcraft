@@ -547,7 +547,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                 MP, 452001 <br />
                 India (GLOBAL COMMISSIONS)
               </p>
-              <p>TEL: +62 812 3456 7890</p>
+              <p>TEL: +91 74708 57424</p>
               <p>HOURS: MON - FRI, 09:00 - 18:00 </p>
             </div>
 

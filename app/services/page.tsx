@@ -11,17 +11,11 @@ import {
 import { Analytics } from "@/lib/analytics";
 
 export default function ServicesPage() {
-  const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeNav, setActiveNav] = useState("Our Services");
   const shouldReduceMotion = useReducedMotion();
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setMounted(true);
-    }, 0);
-    return () => clearTimeout(timer);
-  }, []);
+
 
   const navItems = [
     { label: "Home", href: "/" },
@@ -158,7 +152,7 @@ export default function ServicesPage() {
     }
   ];
 
-  if (!mounted) return null;
+
 
   return (
     <div className="min-h-screen bg-transparent grainy-bg relative overflow-x-hidden text-brand-charcoal select-none">
@@ -395,36 +389,41 @@ export default function ServicesPage() {
               }}
             >
               {whatWeProvideDetails.map((service, index) => (
-                <motion.div
+                <Link
                   key={index}
-                  variants={{
-                    hidden: { opacity: 0, y: 24 },
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
-                  }}
-                  className="group relative bg-[#0B1B3A] border border-white/10 p-4 sm:p-8 flex flex-col justify-between h-full hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(18,20,26,1)] hover:border-brand-gold/40 transition-all duration-300"
+                  href={`/services/${service.slug}`}
+                  className="block h-full group cursor-pointer"
                 >
-                  {service.bgSvg}
+                  <motion.div
+                    variants={{
+                      hidden: { opacity: 0, y: 24 },
+                      visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
+                    }}
+                    className="relative bg-[#0B1B3A] border border-white/10 p-4 sm:p-8 flex flex-col justify-between h-full hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(18,20,26,1)] hover:border-brand-gold/40 transition-all duration-300"
+                  >
+                    {service.bgSvg}
 
-                  <div className="absolute top-0 left-0 h-[2px] bg-brand-gold w-0 group-hover:w-full transition-all duration-500 ease-out" />
+                    <div className="absolute top-0 left-0 h-[2px] bg-brand-gold w-0 group-hover:w-full transition-all duration-500 ease-out" />
 
-                  <div className="space-y-4 sm:space-y-6 relative z-10">
-                    {/* Icon Slot */}
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-none bg-white/5 border border-white/10 flex items-center justify-center shadow-sm group-hover:border-brand-gold group-hover:bg-white/10 transition-all duration-300">
-                      <div className="transition-transform duration-300 group-hover:scale-105">
-                        {service.icon}
+                    <div className="space-y-4 sm:space-y-6 relative z-10">
+                      {/* Icon Slot */}
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-none bg-white/5 border border-white/10 flex items-center justify-center shadow-sm group-hover:border-brand-gold group-hover:bg-white/10 transition-all duration-300">
+                        <div className="transition-transform duration-300 group-hover:scale-105">
+                          {service.icon}
+                        </div>
+                      </div>
+
+                      <div className="space-y-1 sm:space-y-2">
+                        <h3 className="font-display text-xs sm:text-base md:text-lg font-black uppercase tracking-wider text-white group-hover:text-brand-gold transition-colors duration-300">
+                          {service.title}
+                        </h3>
+                        <p className="font-sans text-[10px] sm:text-xs md:text-[13px] text-white/70 group-hover:text-brand-gold/80 leading-relaxed font-light pr-0 sm:pr-8 transition-colors duration-300">
+                          {service.desc}
+                        </p>
                       </div>
                     </div>
-
-                    <div className="space-y-1 sm:space-y-2">
-                      <h3 className="font-display text-xs sm:text-base md:text-lg font-black uppercase tracking-wider text-white group-hover:text-brand-gold transition-colors duration-300">
-                        {service.title}
-                      </h3>
-                      <p className="font-sans text-[10px] sm:text-xs md:text-[13px] text-white/70 group-hover:text-brand-gold/80 leading-relaxed font-light pr-0 sm:pr-8 transition-colors duration-300">
-                        {service.desc}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
+                  </motion.div>
+                </Link>
               ))}
             </motion.div>
 

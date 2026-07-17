@@ -73,7 +73,6 @@ const TESTIMONIALS = [
 ];
 
 export default function PortfolioPage() {
-  const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeNav, setActiveNav] = useState("Portfolio");
   const shouldReduceMotion = useReducedMotion();
@@ -163,22 +162,15 @@ export default function PortfolioPage() {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setMounted(true);
-    }, 0);
-
     // Testimonial rotation interval
     const interval = setInterval(() => {
       setActiveTestimonial((prev) => (prev + 1) % TESTIMONIALS.length);
     }, 8500);
 
     return () => {
-      clearTimeout(timer);
       clearInterval(interval);
     };
   }, []);
-
-  if (!mounted) return null;
 
   return (
     <div className="min-h-screen bg-transparent grainy-bg relative overflow-x-hidden text-brand-charcoal select-none">
