@@ -1,5 +1,6 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { NextRequest, NextResponse } from "next/server";
+import { checkRateLimit } from "@/lib/services/rateLimit";
 
 // Initialize Gemini SDK with telemetry header
 const ai = new GoogleGenAI({
@@ -13,6 +14,24 @@ const ai = new GoogleGenAI({
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
+    
+    // Rate Limit: 10 requests per minute per IP for AI generation to prevent API billing abuse
+    const limitResult = await checkRateLimit(ip, 10, 60 * 1000, "craft");
+    if (!limitResult.success) {
+      const retryAfter = Math.ceil((limitResult.reset - Date.now()) / 1000);
+      return new NextResponse(
+        JSON.stringify({ error: "Too many brand content generation requests. Please try again later." }),
+        {
+          status: 429,
+          headers: {
+            "Content-Type": "application/json",
+            "Retry-After": retryAfter.toString(),
+          },
+        }
+      );
+    }
+
     const body = await req.json();
     const { prompt, industry } = body;
 

@@ -32,10 +32,6 @@ const nextConfig: NextConfig = {
           {
             key: "X-XSS-Protection",
             value: "1; mode=block",
-          },
-          {
-            key: "Content-Security-Policy",
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googletagmanager.com https://*.google-analytics.com https://assets.mixkit.co; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://images.unsplash.com https://picsum.photos https://res.cloudinary.com https://*.google-analytics.com https://*.analytics.google.com; media-src 'self' https://assets.mixkit.co https://res.cloudinary.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; frame-ancestors 'self' https://*.google.com https://*.run.app https://*.ai.studio https://ai.studio; object-src 'none';",
           }
         ],
       },

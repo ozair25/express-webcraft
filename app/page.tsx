@@ -1367,10 +1367,9 @@ export default function Home() {
             }}
           >
             {whatWeProvideDetails.map((service, index) => (
-              <Link
+              <div
                 key={index}
-                href={`/services/${service.slug}`}
-                className="block h-full group cursor-pointer"
+                className="block h-full group cursor-default"
               >
                 <motion.div
                   variants={{
@@ -1403,7 +1402,7 @@ export default function Home() {
                     </div>
                   </div>
                 </motion.div>
-              </Link>
+              </div>
             ))}
           </motion.div>
 

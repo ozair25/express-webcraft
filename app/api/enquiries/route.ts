@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
     
     // Rate Limit: 10 requests per minute per IP for enquiries submission to avoid spam
-    const limitResult = checkRateLimit(ip, 10, 60 * 1000);
+    const limitResult = await checkRateLimit(ip, 10, 60 * 1000, "enquiries");
     if (!limitResult.success) {
       const retryAfter = Math.ceil((limitResult.reset - Date.now()) / 1000);
       return new NextResponse(

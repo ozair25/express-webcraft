@@ -87,12 +87,18 @@ export const metadata: Metadata = {
   applicationName: 'Express Webcraft',
 };
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+import { headers } from 'next/headers';
+
+export default async function RootLayout({children}: {children: React.ReactNode}) {
+  const headersList = await headers();
+  const nonce = headersList.get('x-nonce') || '';
+
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable} ${alex.variable}`}>
       <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LVNGNGWWY0" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LVNGNGWWY0" nonce={nonce} />
         <script
+          nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -103,6 +109,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           }}
         />
         <script
+          nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: `
               (function(c,l,a,r,i,t,y){
