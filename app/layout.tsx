@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   ],
   metadataBase: new URL('https://www.expresswebcraft.com'),
   alternates: {
-    canonical: 'https://www.expresswebcraft.com',
+    canonical: '/',
   },
   openGraph: {
     title: 'Express Webcraft — Bespoke Web Design & High-Performance Engineering Studio',
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://www.expresswebcraft.com/og-image.png',
+        url: 'https://res.cloudinary.com/dtrvyelcg/image/upload/v1784138035/ChatGPT_Image_Jul_15_2026_11_13_18_PM_kajaoz.jpg',
         width: 1200,
         height: 630,
         alt: 'Express Webcraft — What We Provide - Services Overview',
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Express Webcraft — Bespoke Web Design & High-Performance Engineering Studio',
     description: 'Explore our elite digital services: bespoke Website Design, scalable Web Development, conversion-optimized Landing Pages, E-commerce, Technical SEO, UI/UX design, Maintenance, and Analytics.',
-    images: ['https://www.expresswebcraft.com/og-image.png'],
+    images: ['https://res.cloudinary.com/dtrvyelcg/image/upload/v1784138035/ChatGPT_Image_Jul_15_2026_11_13_18_PM_kajaoz.jpg'],
   },
   robots: {
     index: true,

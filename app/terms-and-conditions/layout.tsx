@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Terms of Service — Express Webcraft',
   description: 'Terms of engagement, design blueprint timelines, revision entitlements, and digital ownership transfer guidelines.',
   alternates: {
-    canonical: 'https://www.expresswebcraft.com/terms-and-conditions',
+    canonical: '/terms-and-conditions',
   },
   openGraph: {
     title: 'Terms of Service — Express Webcraft',
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     images: [
       {
-        url: 'https://www.expresswebcraft.com/og-image.png',
+        url: 'https://res.cloudinary.com/dtrvyelcg/image/upload/v1784138035/ChatGPT_Image_Jul_15_2026_11_13_18_PM_kajaoz.jpg',
         width: 1200,
         height: 630,
         alt: 'Terms of Engagement — Express Webcraft',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Terms of Service — Express Webcraft',
     description: 'Terms of engagement, design blueprint timelines, revision entitlements, and digital ownership transfer guidelines.',
-    images: ['https://www.expresswebcraft.com/og-image.png'],
+    images: ['https://res.cloudinary.com/dtrvyelcg/image/upload/v1784138035/ChatGPT_Image_Jul_15_2026_11_13_18_PM_kajaoz.jpg'],
   },
 };
 
